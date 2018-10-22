@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="Models\Bet.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +216,7 @@
     <Content Include="Views\Bets\Edit.cshtml" />
     <Content Include="Views\Bets\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
