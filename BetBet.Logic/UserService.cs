@@ -28,17 +28,25 @@ namespace BetBet.Logic
             }
         }
 
-        public bool ComparePassword(User user)
+        public bool ComparePassword(string username, string password)
         {
-            bool checkPassword = UserRep.ComparePassword(user);
-
-            if (checkPassword == true)
+            if (string.IsNullOrEmpty(password) || string.IsNullOrWhiteSpace(password) 
+                || string.IsNullOrEmpty(password) || string.IsNullOrWhiteSpace(password))
             {
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                bool checkPassword = UserRep.ComparePassword(username, password);
+
+                if (checkPassword == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
     }

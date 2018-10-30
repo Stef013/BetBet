@@ -9,27 +9,38 @@ namespace BetBet.Data
 {
     public class UserRepository
     {
-        BetBetDB db = new BetBetDB();
+        BetBetDB database = new BetBetDB();
 
         public void AddUser(User user)
         {
             if (user != null)
             {
-                db.Users.Add(user);
-                db.SaveChanges();
+                string command = $"INSERT into Users (UserName, Password, Balance) VALUES ('{user.Username}','{user.Password}','{0.00}')";
+                database.InsertOrRemoveCMD(command);
+                //db.Users.Add(user);
+                //db.SaveChanges();
             }           
         } 
-        public bool ComparePassword(User user)
+        public bool ComparePassword(string username, string password)
         {
-            var v = db.Users.Where(a => a.Username == user.Username).FirstOrDefault();
+            //var v = db.Users.Where(a => a.Username == username).FirstOrDefault();
+            /*var v = 12;
             if (v != null)
             {
-                return true;
+                if (string.Compare(password, v.Password) == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
                 return false;
-            }
+            }*/
+            return false;
         }
     }
 }
