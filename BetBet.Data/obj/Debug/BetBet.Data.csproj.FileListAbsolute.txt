@@ -1,0 +1,15 @@
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\BetBet.Data.dll.config
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\BetBet.Data.dll
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\BetBet.Data.pdb
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\BetBet.Model.dll
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\EntityFramework.dll
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\BetBet.Model.pdb
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\BetBet.Model.dll.config
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\EntityFramework.xml
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\obj\Debug\BetBet.Data.csprojAssemblyReference.cache
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\obj\Debug\BetBet.Data.csproj.CoreCompileInputs.cache
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\obj\Debug\BetBet.Data.csproj.CopyComplete
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\obj\Debug\BetBet.Data.dll
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\obj\Debug\BetBet.Data.pdb

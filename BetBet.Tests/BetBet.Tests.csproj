@@ -105,9 +105,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BetBet\BetBet.csproj">
+    <ProjectReference Include="..\BetBet\BetBet.MVC.csproj">
       <Project>{9E3E139B-CB4C-4885-86CE-9DE3691B8C9F}</Project>
-      <Name>BetBet</Name>
+      <Name>BetBet.MVC</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

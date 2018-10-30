@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using BetBet.Models;
+using BetBet.ViewModels;
 
 namespace BetBet.Controllers
 {
@@ -27,7 +27,7 @@ namespace BetBet.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bet bet = db.Bets.Find(id);
+            BetViewModel bet = db.Bets.Find(id);
             if (bet == null)
             {
                 return HttpNotFound();
@@ -46,7 +46,7 @@ namespace BetBet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,MatchID,Amount,Prediction")] Bet bet)
+        public ActionResult Create([Bind(Include = "UserID,MatchID,Amount,Prediction")] BetViewModel bet)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace BetBet.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bet bet = db.Bets.Find(id);
+            BetViewModel bet = db.Bets.Find(id);
             if (bet == null)
             {
                 return HttpNotFound();
@@ -78,7 +78,7 @@ namespace BetBet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,MatchID,Amount,Prediction")] Bet bet)
+        public ActionResult Edit([Bind(Include = "UserID,MatchID,Amount,Prediction")] BetViewModel bet)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace BetBet.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bet bet = db.Bets.Find(id);
+            BetViewModel bet = db.Bets.Find(id);
             if (bet == null)
             {
                 return HttpNotFound();
@@ -109,7 +109,7 @@ namespace BetBet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Bet bet = db.Bets.Find(id);
+            BetViewModel bet = db.Bets.Find(id);
             db.Bets.Remove(bet);
             db.SaveChanges();
             return RedirectToAction("Index");
