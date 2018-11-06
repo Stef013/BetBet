@@ -13,3 +13,7 @@ C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\obj\Debug\Bet
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\obj\Debug\BetBet.Data.csproj.CopyComplete
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\obj\Debug\BetBet.Data.dll
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\obj\Debug\BetBet.Data.pdb
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\Google.Protobuf.dll
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\MySql.Data.dll
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\Google.Protobuf.xml
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Data\bin\Debug\MySql.Data.xml

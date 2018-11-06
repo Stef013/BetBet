@@ -64,7 +64,6 @@ namespace BetBet.Controllers
         {
             string message = "";
             
-            
             bool usercheck = userservice.ComparePassword(login.Username, login.Password);
 
             if(usercheck == true)
@@ -88,7 +87,7 @@ namespace BetBet.Controllers
             }
             else
             {
-                message = "Invalid credential provided";
+                message = "Invalid credentials provided";
             }
 
             ViewBag.Message = message;

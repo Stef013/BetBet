@@ -3,62 +3,118 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using System.Data.Entity;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
+using MySql.Data;
 using BetBet.Model;
+using System.Data;
 
 namespace BetBet.Data
 {
     public class BetBetDB
     {
-        string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet\App_Data\BetBetDB.mdf;Initial Catalog=aspnet-BetBet;Integrated Security=True";
-        //SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet\App_Data\BetBetDB.mdf;Initial Catalog=aspnet-BetBet;Integrated Security=True");
-
-        /*public void Connect()
+        string connString = @"Server=studmyMysql01.fhict.local;Uid=dbi382222;Database=dbi382222;Pwd=Kingtuja1;Integrated Security=True";
+        
+        public void executeCMD(string command)
         {
-            conn.Open();
-            
-        }*/
-        public void InsertOrRemoveCMD(string command)
-        {
-            SqlConnection sqlcon = new SqlConnection(connString);
+            MySqlConnection mySqlcon = new MySqlConnection(connString);
             try
             {
-                sqlcon.Open();
-                SqlCommand cmd = new SqlCommand(command, sqlcon);
+                mySqlcon.Open();
+                MySqlCommand cmd = new MySqlCommand(command, mySqlcon);
                 cmd.ExecuteNonQuery();
-                sqlcon.Close();
+                mySqlcon.Close();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                sqlError(ex);
+                MysqlError(ex);
             }
         }
 
+        public string getString(string command)
+        {
+            MySqlConnection mySqlcon = new MySqlConnection(connString);
+            string result = null;
+            try
+            {
+                mySqlcon.Open();
+                MySqlCommand cmd = new MySqlCommand(command, mySqlcon);
+                result = (string)cmd.ExecuteScalar();
+                mySqlcon.Close();
+                return result;
 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                MysqlError(ex);
+                return result;
+            }
+        }
+        public int getID(string command)
+        {
+            MySqlConnection mySqlcon = new MySqlConnection(connString);
+            int result = 0;
+            try
+            {
+                mySqlcon.Open();
+                MySqlCommand cmd = new MySqlCommand(command, mySqlcon);
+                result = (int)cmd.ExecuteScalar();
+                mySqlcon.Close();
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                MysqlError(ex);
+                return result;
+            }
+        }
+
+        public MySqlDataReader ReadMysql(string command)
+        {
+            MySqlConnection mySqlcon = new MySqlConnection(connString);
+            MySqlDataReader result = null;
+            try
+            {
+                mySqlcon.Open();
+                MySqlCommand cmd = new MySqlCommand(command, mySqlcon);
+                //result = (string)cmd.ExecuteScalar();
+                result = cmd.ExecuteReader();
+                // Mysqlc.Close();
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                MysqlError(ex);
+                return result;
+            }
+        }
 
         public void testDbCon()
         {
-            SqlConnection sqlcon = new SqlConnection(connString);
+            MySqlConnection mySqlcon = new MySqlConnection(connString);
             try
             {
-                sqlcon.Open();
-                Console.WriteLine("SQL server connected!");
-                sqlcon.Close();
+                mySqlcon.Open();
+                Console.WriteLine("Mysql server connected!");
+                mySqlcon.Close();
             }
             catch
             {
-                sqlError();
+                MySqlError();
             }
         }
 
-        private void sqlError()
+        private void MySqlError()
         {
-            Console.WriteLine("Can't connect to the SQL Server!");
+            Console.WriteLine("Can't connect to the Mysql Server!");
         }
 
-        private void sqlError(Exception ex)
+        private void MysqlError(Exception ex)
         {
             Console.WriteLine("Something went wrong!" + "Environment.NewLine" + ex.ToString());
         }

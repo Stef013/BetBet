@@ -15,19 +15,18 @@ namespace BetBet.Data
         {
             if (user != null)
             {
-                string command = $"INSERT into Users (UserName, Password, Balance) VALUES ('{user.Username}','{user.Password}','{0.00}')";
-                database.InsertOrRemoveCMD(command);
-                //db.Users.Add(user);
-                //db.SaveChanges();
+                string command = $"INSERT into users (Username, Password, Balance, IsAdmin) VALUES ('{user.Username}','{user.Password}','{0.00}','{0}')";
+                database.executeCMD(command);
             }           
         } 
         public bool ComparePassword(string username, string password)
         {
-            //var v = db.Users.Where(a => a.Username == username).FirstOrDefault();
-            /*var v = 12;
-            if (v != null)
+            string getPW = $"SELECT Password FROM Users WHERE Username = '{username}'";
+            string pw = database.getString(getPW);
+            
+            if (pw != null)
             {
-                if (string.Compare(password, v.Password) == 0)
+                if (string.Compare(password, pw) == 0)
                 {
                     return true;
                 }
@@ -39,8 +38,7 @@ namespace BetBet.Data
             else
             {
                 return false;
-            }*/
-            return false;
+            }      
         }
     }
 }

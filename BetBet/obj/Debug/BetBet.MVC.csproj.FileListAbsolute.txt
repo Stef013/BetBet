@@ -102,3 +102,7 @@ C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet\obj\Debug\BetBet.p
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet\bin\BetBet.Data.dll
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet\bin\BetBet.Data.pdb
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet\bin\BetBet.Data.dll.config
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet\bin\MySql.Data.dll
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet\bin\Google.Protobuf.dll
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet\bin\MySql.Data.xml
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet\bin\Google.Protobuf.xml
