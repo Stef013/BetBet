@@ -12,11 +12,20 @@ namespace BetBet.Data
 {
     public class BetBetDB
     {
-        string connString = @"Server=studmyMysql01.fhict.local;Uid=dbi382222;Database=dbi382222;Pwd=Kingtuja1;Integrated Security=True";
-        
+        public string Hostname = "studmysql01.fhict.local";
+        public string DBName = "dbi382222";
+        public string ID = "dbi382222";
+        public string Password = "vQzTCdskA2UBvfzp";
+
+        private string connectionString()
+        {
+            return $"SERVER={Hostname};DATABASE={DBName};UID={ID};PASSWORD={Password};SslMode=none";
+
+        }
+
         public void executeCMD(string command)
         {
-            MySqlConnection mySqlcon = new MySqlConnection(connString);
+            MySqlConnection mySqlcon = new MySqlConnection(connectionString());
             try
             {
                 mySqlcon.Open();
@@ -33,7 +42,7 @@ namespace BetBet.Data
 
         public string getString(string command)
         {
-            MySqlConnection mySqlcon = new MySqlConnection(connString);
+            MySqlConnection mySqlcon = new MySqlConnection(connectionString());
             string result = null;
             try
             {
@@ -53,7 +62,7 @@ namespace BetBet.Data
         }
         public int getID(string command)
         {
-            MySqlConnection mySqlcon = new MySqlConnection(connString);
+            MySqlConnection mySqlcon = new MySqlConnection(connectionString());
             int result = 0;
             try
             {
@@ -74,7 +83,7 @@ namespace BetBet.Data
 
         public MySqlDataReader ReadMysql(string command)
         {
-            MySqlConnection mySqlcon = new MySqlConnection(connString);
+            MySqlConnection mySqlcon = new MySqlConnection(connectionString());
             MySqlDataReader result = null;
             try
             {
@@ -96,7 +105,7 @@ namespace BetBet.Data
 
         public void testDbCon()
         {
-            MySqlConnection mySqlcon = new MySqlConnection(connString);
+            MySqlConnection mySqlcon = new MySqlConnection(connectionString());
             try
             {
                 mySqlcon.Open();
