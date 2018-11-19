@@ -49,6 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bet.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="FinishedMatch.cs" />
+    <Compile Include="Match.cs" />
+    <Compile Include="Team.cs" />
+    <Compile Include="UpcomingMatch.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

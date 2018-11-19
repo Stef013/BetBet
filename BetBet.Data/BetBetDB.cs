@@ -89,7 +89,6 @@ namespace BetBet.Data
             {
                 mySqlcon.Open();
                 MySqlCommand cmd = new MySqlCommand(command, mySqlcon);
-                //result = (string)cmd.ExecuteScalar();
                 result = cmd.ExecuteReader();
                 // Mysqlc.Close();
                 return result;
