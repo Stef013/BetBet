@@ -18,8 +18,8 @@ namespace BetBet.Logic
 
             if (user != null)
             {
-                UserRep.AddUser(user);
-                usercheck = true;
+                usercheck = UserRep.Create(user);
+                
                 return usercheck;
             }
             else
@@ -39,14 +39,7 @@ namespace BetBet.Logic
             {
                 bool checkPassword = UserRep.ComparePassword(username, password);
 
-                if (checkPassword == true)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return checkPassword;
             }
         }
     }

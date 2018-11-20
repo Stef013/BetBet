@@ -15,7 +15,7 @@ namespace BetBet.Controllers
         private BetBetDB db = new BetBetDB();
         private UserService userservice = new UserService();
 
-        // GET: User
+       
         public ActionResult Index()
         {
             return View();
@@ -27,7 +27,7 @@ namespace BetBet.Controllers
             return View();
         }
 
-        // POST: Bets/Create
+        
         
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -36,10 +36,19 @@ namespace BetBet.Controllers
             bool status = false;
             string message;
 
+
+            //moet gefixt worden dat lege wachtwoorden niet mogen---------------------------------
             if (ModelState.IsValid)
             {              
                 status = userservice.CreateUser(user);
-                message = "Account created successfully.";
+                if ( status == true)
+                {
+                    message = "Account created successfully.";
+                }
+                else
+                {
+                    message = "Username already exists.";
+                }
             }
 
             else
