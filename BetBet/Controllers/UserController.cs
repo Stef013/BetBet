@@ -26,12 +26,10 @@ namespace BetBet.Controllers
         {
             return View();
         }
-
-        
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "UserID, Balance")] User user)
+        public ActionResult Create([Bind(Exclude = "UserID, Balance")] UserViewModel user)
         {
             bool status = false;
             string message;
@@ -39,8 +37,9 @@ namespace BetBet.Controllers
 
             //moet gefixt worden dat lege wachtwoorden niet mogen---------------------------------
             if (ModelState.IsValid)
-            {              
-                status = userservice.CreateUser(user);
+            {
+                User newUser = new User(user.Username, user.Password);
+                status = userservice.CreateUser(newUser);
                 if ( status == true)
                 {
                     message = "Account created successfully.";
