@@ -35,7 +35,6 @@ namespace BetBet.Controllers
             string message;
 
 
-            //moet gefixt worden dat lege wachtwoorden niet mogen---------------------------------
             if (ModelState.IsValid)
             {
                 User newUser = new User(user.Username, user.Password);

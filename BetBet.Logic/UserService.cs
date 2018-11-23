@@ -16,6 +16,8 @@ namespace BetBet.Logic
         {
             bool usercheck = false;
 
+            user.Password = Hash(user.Password);
+
             if (user != null)
             {
                 usercheck = UserRep.Create(user);
@@ -28,6 +30,14 @@ namespace BetBet.Logic
             }
         }
 
+        public static string Hash(string value)
+        {
+            return Convert.ToBase64String(
+                System.Security.Cryptography.SHA256.Create()
+                .ComputeHash(Encoding.UTF8.GetBytes(value))
+                );
+        }
+
         public bool ComparePassword(string username, string password)
         {
             if (string.IsNullOrEmpty(password) || string.IsNullOrWhiteSpace(password) 
@@ -37,6 +47,7 @@ namespace BetBet.Logic
             }
             else
             {
+                password = Hash(password);
                 bool checkPassword = UserRep.ComparePassword(username, password);
 
                 return checkPassword;

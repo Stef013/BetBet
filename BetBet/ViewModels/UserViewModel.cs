@@ -29,7 +29,5 @@ namespace BetBet.ViewModels
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-        public decimal Balance { get; set; }
-
     }
 }
