@@ -8,7 +8,7 @@ namespace BetBet.Model
 {
     public class UpcomingMatch : Match
     {
-        public UpcomingMatch(Team hometeam, Team awayteam, decimal multiplierteamhome, decimal multiplierteamaway, DateTime date) : base(hometeam, awayteam, multiplierteamhome, multiplierteamaway, date)
+        public UpcomingMatch(int hometeamID, int awayteamID, decimal multiplierteamhome, decimal multiplierteamaway, DateTime date) : base(hometeamID, awayteamID, multiplierteamhome, multiplierteamaway, date)
         {
 
         }

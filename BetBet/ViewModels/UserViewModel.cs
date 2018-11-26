@@ -11,8 +11,6 @@ namespace BetBet.ViewModels
 {
     public class UserViewModel
     {
-        public int UserID { get; set; }
-
         [Display(Name = "Username")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Username required")]
         public string Username { get; set; }

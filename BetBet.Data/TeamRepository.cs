@@ -33,6 +33,7 @@ namespace BetBet.Data
             {
                 Team team = new Team
                 {
+                    TeamID = (int)reader["TeamID"],
                     TeamName = (string)reader["TeamName"],
                     City = (string)reader["City"],
                     GamesPlayed = (int)reader["GamesPlayed"],

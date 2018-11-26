@@ -29,7 +29,7 @@ namespace BetBet.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "UserID, Balance")] UserViewModel user)
+        public ActionResult Create(UserViewModel user)
         {
             bool status = false;
             string message;
