@@ -10,22 +10,26 @@ namespace BetBet.Data
     public class UserRepository : IRepository<User>
     {
         BetBetDB database = new BetBetDB();
+        BetBetDBGoede dBGoede = new BetBetDBGoede();
 
         public bool Create(User user)
         {
-            string checkUsername = $"SELECT Username FROM users WHERE Username = '{user.Username}'";
-            var namecheck = database.getString(checkUsername);
+            /* string checkUsername = $"SELECT Username FROM users WHERE Username = '{user.Username}'";
+             var namecheck = database.getString(checkUsername);
 
-            if(namecheck == null)
-            {
-                string command = $"INSERT into users (Username, Password, Balance, IsAdmin) VALUES ('{user.Username}','{user.Password}','{0.00}','{0}')";
-                database.executeCMD(command);
-                return true;
-            }
-            else
-            {
-                return false;
-            }           
+             if(namecheck == null)
+             {
+                 string command = $"INSERT into users (Username, Password, Balance, IsAdmin) VALUES ('{user.Username}','{user.Password}','{0.00}','{0}')";
+                 database.executeCMD(command);
+                 return true;
+             }
+             else
+             {
+                 return false;
+             } */
+
+            List<User> users = dBGoede.GetAllUsers();
+            return true;
         } 
 
         public int GetID(User user)

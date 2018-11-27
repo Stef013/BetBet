@@ -5,12 +5,22 @@
 }
 
 <h2>Create</h2>
-
-
-@using (Html.BeginForm()) 
+@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
 {
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong>@ViewBag.Message
+        </div>
+    }
+}
+
+else
+{
+    using (Html.BeginForm())
+    {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>MatchViewModel</h4>
         <hr />
@@ -61,6 +71,13 @@
             </div>
         </div>
     </div>
+        if (ViewBag.Message != null)
+        {
+        <div class="alert alert-danger">
+            <strong>Error!</strong>@ViewBag.Message
+        </div>
+        }
+    }
 }
 
 <div>

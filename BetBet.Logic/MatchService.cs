@@ -12,9 +12,9 @@ namespace BetBet.Logic
     {
         MatchRepository matchrep = new MatchRepository();
 
-        public bool CreateMatch(Match match)
+        public void CreateMatch(Match match)
         {
-            //---------match checke--------
+            matchrep.Create(match);
         }
 
     }
