@@ -46,7 +46,7 @@ namespace BetBet.Data
             {
                 int id = GetID(user);
                 string command = $"DELETE * Where UserID =  '{id}'";
-                database.executeCMD(command);
+                database.ExecuteCMD(command);
                 return true;
             }
             else

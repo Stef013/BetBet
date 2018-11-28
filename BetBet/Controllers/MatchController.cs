@@ -16,6 +16,8 @@ namespace BetBet.Controllers
         // GET: Match
         public ActionResult Index()
         {
+
+
             return View();
         }
 

@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 using MySql.Data;
 using BetBet.Model;
 using System.Data;
+using System.Diagnostics;
 
 namespace BetBet.Data
 {
@@ -17,114 +18,152 @@ namespace BetBet.Data
         public string ID = "dbi382222";
         public string Password = "vQzTCdskA2UBvfzp";
 
-        private string connectionString()
-        {
-            return $"SERVER={Hostname};DATABASE={DBName};UID={ID};PASSWORD={Password};SslMode=none";
+        private MySqlConnection connection;
 
+        public BetBetDB()
+        {
+            connection = new MySqlConnection($"SERVER={Hostname};DATABASE={DBName};UID={ID};PASSWORD={Password};SslMode=none");
         }
 
-        public void executeCMD(string command)
+        private void OpenConnectionIfClosed()
         {
-            MySqlConnection mySqlcon = new MySqlConnection(connectionString());
-            try
+            if (connection.State != ConnectionState.Open)
             {
-                mySqlcon.Open();
-                MySqlCommand cmd = new MySqlCommand(command, mySqlcon);
-                cmd.ExecuteNonQuery();
-                mySqlcon.Close();
+                connection.Open();
             }
-            catch (Exception ex)
+        }
+
+        public void ExecuteCMD(string command)
+        {
+            
+            using (MySqlCommand cmd = new MySqlCommand(command, connection))
             {
-                Console.WriteLine(ex.ToString());
-                MysqlError(ex);
+                try
+                {
+                    OpenConnectionIfClosed();
+                    cmd.ExecuteNonQuery();         
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
+                        
+        }
+
+        public int ExecuteAndGetID(string command)
+        {
+            int id = 0;
+            using (MySqlCommand cmd = new MySqlCommand(command, connection))
+            {
+                try
+                {
+                    OpenConnectionIfClosed();
+                    cmd.ExecuteNonQuery();
+                    id = (int)cmd.LastInsertedId;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return id;
         }
 
         public string getString(string command)
         {
-            MySqlConnection mySqlcon = new MySqlConnection(connectionString());
             string result = null;
-            try
+            using (MySqlCommand cmd = new MySqlCommand(command, connection))
             {
-                mySqlcon.Open();
-                MySqlCommand cmd = new MySqlCommand(command, mySqlcon);
-                result = (string)cmd.ExecuteScalar();
-                mySqlcon.Close();
-                return result;
+                try
+                {
+                    OpenConnectionIfClosed();
+                    result = (string)cmd.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                MysqlError(ex);
-                return result;
-            }
+            return result;
         }
         public int getID(string command)
         {
-            MySqlConnection mySqlcon = new MySqlConnection(connectionString());
             int result = 0;
-            try
-            {
-                mySqlcon.Open();
-                MySqlCommand cmd = new MySqlCommand(command, mySqlcon);
-                result = (int)cmd.ExecuteScalar();
-                mySqlcon.Close();
-                return result;
 
-            }
-            catch (Exception ex)
+            using (MySqlCommand cmd = new MySqlCommand(command, connection))
             {
-                Console.WriteLine(ex.ToString());
-                MysqlError(ex);
-                return result;
+                try
+                {
+                    OpenConnectionIfClosed();
+                    result = (int)cmd.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
+            return result;
         }
 
-        public MySqlDataReader ReadMysql(string command)
+        public List<Team> getTeams()
         {
-            MySqlConnection mySqlcon = new MySqlConnection(connectionString());
-            MySqlDataReader result = null;
-            try
+            List<Team> teamList = new List<Team>();
+ 
+            using (MySqlCommand cmd = new MySqlCommand($"SELECT * FROM teams", connection))
             {
-                mySqlcon.Open();
-                MySqlCommand cmd = new MySqlCommand(command, mySqlcon);
-                result = cmd.ExecuteReader();
-                // Mysqlc.Close();
-                return result;
+                try
+                {
+                    OpenConnectionIfClosed();
+                    MySqlDataReader reader = cmd.ExecuteReader();
 
+                    while (reader.Read())
+                    {
+                        Team team = new Team
+                        {
+                            TeamID = (int)reader["TeamID"],
+                            TeamName = (string)reader["TeamName"],
+                            City = (string)reader["City"],
+                            GamesPlayed = (int)reader["GamesPlayed"],
+                            GamesWon = (int)reader["GamesWon"],
+                            Draws = (int)reader["Draws"],
+                            GamesLost = (int)reader["GamesLost"],
+                            GoalsFor = (int)reader["GoalsFor"],
+                            GoalsAgainst = (int)reader["GoalsAgainst"],
+                            GoalSaldo = (int)reader["GoalSaldo"],
+                            Points = (int)reader["Points"],
+                        };
+                        teamList.Add(team);
+                    }
+                    return teamList;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    return null;
+                }
+                finally
+                {
+                    connection.Close();
+                }                 
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                MysqlError(ex);
-                return result;
-            }
-        }
-
-        public void testDbCon()
-        {
-            MySqlConnection mySqlcon = new MySqlConnection(connectionString());
-            try
-            {
-                mySqlcon.Open();
-                Console.WriteLine("Mysql server connected!");
-                mySqlcon.Close();
-            }
-            catch
-            {
-                MySqlError();
-            }
-        }
-
-        private void MySqlError()
-        {
-            Console.WriteLine("Can't connect to the Mysql Server!");
-        }
-
-        private void MysqlError(Exception ex)
-        {
-            Console.WriteLine("Something went wrong!" + "Environment.NewLine" + ex.ToString());
         }
     }
 }

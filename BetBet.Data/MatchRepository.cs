@@ -40,7 +40,7 @@ namespace BetBet.Data
             {
                 int id = GetID(match);
                 string command = $"DELETE * FROM match Where MatchID =  '{id}'";
-                database.executeCMD(command);
+                database.ExecuteCMD(command);
                 return true;
             }
             else
