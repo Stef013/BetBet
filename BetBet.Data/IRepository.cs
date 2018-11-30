@@ -12,6 +12,5 @@ namespace BetBet.Data
         bool Create(T obj);
         bool Delete(T obj);
         bool Update(T obj);
-        
     }
 }

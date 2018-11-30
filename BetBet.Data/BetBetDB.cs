@@ -33,6 +33,11 @@ namespace BetBet.Data
             }
         }
 
+        public void CloseConnection()
+        {
+            connection.Close();
+        }
+
         public void ExecuteCMD(string command)
         {
             
@@ -123,18 +128,19 @@ namespace BetBet.Data
             return result;
         }
 
-        public List<Team> getTeams()
+        public MySqlDataReader ReadMysql(string command)
         {
             List<Team> teamList = new List<Team>();
- 
-            using (MySqlCommand cmd = new MySqlCommand($"SELECT * FROM teams", connection))
-            {
+
+            //using (MySqlCommand cmd = new MySqlCommand($"SELECT * FROM teams", connection))
+            // {
+            MySqlCommand cmd = new MySqlCommand(command, connection);
                 try
                 {
                     OpenConnectionIfClosed();
                     MySqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
+                    return reader;
+                    /*while (reader.Read())
                     {
                         Team team = new Team
                         {
@@ -152,18 +158,15 @@ namespace BetBet.Data
                         };
                         teamList.Add(team);
                     }
-                    return teamList;
+                    return teamList;*/
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
                     return null;
                 }
-                finally
-                {
-                    connection.Close();
-                }                 
-            }
+                                 
+            //}
         }
     }
 }

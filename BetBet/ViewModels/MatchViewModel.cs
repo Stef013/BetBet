@@ -10,14 +10,25 @@ namespace BetBet.ViewModels
 {
     public class MatchViewModel
     {
+        [Required]
         public string HomeTeam { get; set; }
+        [Required]
         public string AwayTeam { get; set; }
-        public int SelectedHomeTeam { get; set; }
-        public int SelectedAwayTeam { get; set; }
+        public int HomeTeamID { get; set; }
+        public int AwayTeamID { get; set; }
         public List<Team> TeamList { get; set; }
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
         public decimal MultiplierTeamHome { get; set; }
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
         public decimal MultiplierTeamAway { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString = "{0:n0}", ApplyFormatInEditMode = true)]
+        public decimal MultiplierDraw { get; set; }
+        [Required]
+        [Display(Name = "Select Date:")]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
     }
 }

@@ -13,14 +13,17 @@ namespace BetBet.Model
         public int AwayTeamID { get; set; }
         public decimal MultiplierTeamHome { get; set; }
         public decimal MultiplierTeamAway { get; set; }
+        public decimal MultiplierDraw { get; set; }
+
         public DateTime Date { get; set; }
 
-        public Match (int hometeamID, int awayteamID, decimal multiplierteamhome, decimal multiplierteamaway, DateTime date)
+        public Match (int hometeamID, int awayteamID, decimal multiplierteamhome, decimal multiplierteamaway, decimal multiplierdraw, DateTime date)
         {
             HomeTeamID = hometeamID;
             AwayTeamID = awayteamID;
             MultiplierTeamHome = multiplierteamhome;
             MultiplierTeamAway = multiplierteamaway;
+            MultiplierDraw = multiplierdraw;
             Date = date;
 
         }

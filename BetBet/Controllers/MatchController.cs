@@ -31,6 +31,7 @@ namespace BetBet.Controllers
 
             mv.TeamList = TeamList.ToList();
 
+            TempData["VM"] = mv;
 
             return View(mv);
         }
@@ -42,26 +43,47 @@ namespace BetBet.Controllers
             bool status = false;
             string message;
 
-            int hometeamID = match.SelectedHomeTeam;
-            int awayteamID = match.SelectedAwayTeam;
+            int hometeamID = match.HomeTeamID;
+            int awayteamID = match.AwayTeamID;
+
+            decimal multiplierhome = Convert.ToDecimal(match.MultiplierTeamHome);
 
             if (hometeamID != 0 && awayteamID != 0 && hometeamID != awayteamID)
             {
-                UpcomingMatch newMatch = new UpcomingMatch(hometeamID, awayteamID, match.MultiplierTeamHome, match.MultiplierTeamAway, match.Date);
-                matchService.CreateMatch(newMatch);
+                if (match.MultiplierTeamHome != 0 && match.MultiplierTeamAway != 0 && match.MultiplierDraw != 0)
+                {
+                    UpcomingMatch newMatch = new UpcomingMatch(hometeamID, awayteamID, match.MultiplierTeamHome, match.MultiplierTeamAway, match.MultiplierDraw, match.Date);
+                    status = matchService.CreateMatch(newMatch);
 
-                status = true;
-                message = "Match created successfully.";
+                    if (status == true)
+                    {
+                        message = "Match created successfully.";
+                    }
+                    else
+                    {
+                        message = "Match could not be created.";
+                    }
+                }
+                else
+                {
+                    status = false;
+                    message = "Multipliers are invalid.";
+                }
+                    
             }
             else
             {
-                status = true;
+                status = false;
                 message = "Select 2 different teams.";
             }
 
             ViewBag.Status = status;
             ViewBag.Message = message;
-            return View();
+
+            //-----------------------------hier gebleven------------------\\\\\
+
+            MatchViewModel mv = (MatchViewModel)TempData["ID"];
+            return View(mv);
         }
     }
 }

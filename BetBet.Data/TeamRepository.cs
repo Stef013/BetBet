@@ -26,9 +26,9 @@ namespace BetBet.Data
         {
             List<Team> TeamList = new List<Team>();
 
-            //string command = $"SELECT * FROM teams";
-            TeamList = database.getTeams();
-            /*MySqlDataReader reader = database.ReadMysql(command);
+            string command = $"SELECT * FROM teams";
+            //TeamList = database.ExecuteReader(command);
+            MySqlDataReader reader = database.ReadMysql(command);
             
             while (reader.Read())
             {
@@ -49,8 +49,8 @@ namespace BetBet.Data
 
                 TeamList.Add(team);
             }
-           // reader.Close();
-           */
+            // reader.Close();
+            database.CloseConnection();
             return TeamList;
             
         }

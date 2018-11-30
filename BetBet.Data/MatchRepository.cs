@@ -10,25 +10,44 @@ namespace BetBet.Data
     public class MatchRepository : IRepository<Match>
     {
         BetBetDB database = new BetBetDB();
-        BetBetDBGoede database2 = new BetBetDBGoede();
+        
         public bool Create(Match match)
         {
-            /*string createMatchCMD = $"INSERT INTO match (Date, IsFinished) VALUES ('{match.Date}', '{0}')";
-            database.executeCMD(createMatchCMD);
+            bool result;
 
-            int matchID = GetID(match);
+            int matchExists = GetID(match);
 
-            string addParticipantsCMD = $"INSERT INTO matchparticipants (MatchID, TeamHome, TeamAway) VALUES ('{matchID}', '{match.HomeTeamID}', '{match.AwayTeamID}'";
-            database.executeCMD(addParticipantsCMD);
-            */
-            database2.CreateMatch(match);
+            if (matchExists == 0)
+            {
+                string createMatchCMD = $"INSERT INTO matches (Date, MultiplierHome, MultiplierAway, MultiplierDraw, IsFinished, ) VALUES " +
+                    $"('{match.Date.ToShortDateString()}', '{match.MultiplierTeamHome}', '{match.MultiplierTeamAway}', '{match.MultiplierDraw}', '{0}')";
 
-            return true;
+                int matchID = database.ExecuteAndGetID(createMatchCMD);
+
+                if (matchID != 0)
+                {
+                    string addParticipantsCMD = $"INSERT INTO matchparticipants (MatchID, TeamHome, TeamAway) VALUES ('{matchID}', '{match.HomeTeamID}', '{match.AwayTeamID}'";
+                    database.ExecuteCMD(addParticipantsCMD);
+                    result = true;
+                }
+
+                else
+                {
+                    result = false;
+                }
+               
+            }
+            else
+            {
+                result = false;
+            }
+            
+            return result;
         }
 
         public int GetID(Match match)
         {
-            string command = $"SELECT MatchID FROM match WHERE Date  = '{match.Date}'";
+            string command = $"SELECT MatchID FROM matchparticipants WHERE HomeTeam = '{match.HomeTeamID}' AND AwayTeam = {match.AwayTeamID}'";
             int id = database.getID(command);
 
             return id;
