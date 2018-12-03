@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using BetBet.ViewModels;
 using BetBet.Model;
 using BetBet.Logic;
+using System.Globalization;
+using System.Threading;
 
 namespace BetBet.Controllers
 {
@@ -31,7 +33,7 @@ namespace BetBet.Controllers
 
             mv.TeamList = TeamList.ToList();
 
-            TempData["VM"] = mv;
+            //TempData["VM"] = mv;
 
             return View(mv);
         }
@@ -45,8 +47,6 @@ namespace BetBet.Controllers
 
             int hometeamID = match.HomeTeamID;
             int awayteamID = match.AwayTeamID;
-
-            decimal multiplierhome = Convert.ToDecimal(match.MultiplierTeamHome);
 
             if (hometeamID != 0 && awayteamID != 0 && hometeamID != awayteamID)
             {
@@ -80,10 +80,7 @@ namespace BetBet.Controllers
             ViewBag.Status = status;
             ViewBag.Message = message;
 
-            //-----------------------------hier gebleven------------------\\\\\
-
-            MatchViewModel mv = (MatchViewModel)TempData["ID"];
-            return View(mv);
+            return View();
         }
     }
 }

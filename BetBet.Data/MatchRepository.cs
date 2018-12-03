@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using BetBet.Model;
 
@@ -19,14 +21,16 @@ namespace BetBet.Data
 
             if (matchExists == 0)
             {
-                string createMatchCMD = $"INSERT INTO matches (Date, MultiplierHome, MultiplierAway, MultiplierDraw, IsFinished, ) VALUES " +
-                    $"('{match.Date.ToShortDateString()}', '{match.MultiplierTeamHome}', '{match.MultiplierTeamAway}', '{match.MultiplierDraw}', '{0}')";
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
+                string createMatchCMD = $"INSERT INTO matches (Date, MultiplierHome, MultiplierAway, MultiplierDraw, IsFinished) VALUES " +
+                    $"('{match.Date.ToString("yyyy-MM-dd")}','{match.MultiplierTeamHome.ToString(CultureInfo.InvariantCulture)}','{match.MultiplierTeamAway.ToString(CultureInfo.InvariantCulture)}','{match.MultiplierDraw.ToString(CultureInfo.InvariantCulture)}','{0}')";
 
                 int matchID = database.ExecuteAndGetID(createMatchCMD);
 
                 if (matchID != 0)
                 {
-                    string addParticipantsCMD = $"INSERT INTO matchparticipants (MatchID, TeamHome, TeamAway) VALUES ('{matchID}', '{match.HomeTeamID}', '{match.AwayTeamID}'";
+                    string addParticipantsCMD = $"INSERT INTO matchparticipants (MatchID, TeamHome, TeamAway) VALUES ('{matchID}','{match.HomeTeamID}','{match.AwayTeamID}')";
                     database.ExecuteCMD(addParticipantsCMD);
                     result = true;
                 }
