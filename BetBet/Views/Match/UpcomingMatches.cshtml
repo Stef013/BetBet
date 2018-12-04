@@ -1,0 +1,30 @@
+﻿@model IEnumerable<BetBet.Model.Match>
+
+@{
+    ViewBag.Title = "UpcomingMatches";
+}
+
+<div class="row"> 
+<div style="float: left"> <h2>Upcoming Matches</h2></div>
+<div style="float: right"><h2><b> @Html.ActionLink("Finished Matches", "Create") > </b></h2></div>
+</div>
+<hr />
+
+
+<p>
+    @Html.ActionLink("Create New Match", "Create")
+</p>
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        
+        <div ALIGN="center">
+            <h3><b>@item.HomeTeamName vs @item.AwayTeamName</b></h3>
+            <p><h4><b>@item.Date.ToShortDateString()</b></h4></p>
+            <b>@Html.ActionLink("Bet on this match", "Edit", new { id = item.MatchID })</b><hr />
+        </div>
+    </div>
+    
+}
+

@@ -266,8 +266,8 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Team\Ranking.cshtml" />
-    <Content Include="Views\Match\Index.cshtml" />
     <Content Include="Views\Match\Create.cshtml" />
+    <Content Include="Views\Match\UpcomingMatches.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BetBet.Logic\BetBet.Logic.csproj">

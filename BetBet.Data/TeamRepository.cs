@@ -22,12 +22,19 @@ namespace BetBet.Data
             return 1;
         }
 
+        public string GetName(int id)
+        {
+            string command = $"SELECT TeamName FROM teams WHERE TeamID = '{id}'";
+            string result = database.getString(command);
+
+            return result;
+        }
+
         public List<Team> GetTeams()
         {
             List<Team> TeamList = new List<Team>();
 
             string command = $"SELECT * FROM teams";
-            //TeamList = database.ExecuteReader(command);
             MySqlDataReader reader = database.ReadMysql(command);
             
             while (reader.Read())
@@ -46,13 +53,11 @@ namespace BetBet.Data
                     GoalSaldo = (int)reader["GoalSaldo"],
                     Points = (int)reader["Points"],
                 };
-
                 TeamList.Add(team);
             }
-            // reader.Close();
+            
             database.CloseConnection();
             return TeamList;
-            
         }
 
         public bool Delete(Team team)

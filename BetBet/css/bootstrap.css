@@ -289,12 +289,12 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #df691a;
+  color: #40d590;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #df691a;
+  color: #84ff8b;
   text-decoration: underline;
 }
 a:focus {
@@ -4019,8 +4019,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #ebebeb;
 }
 .navbar-inverse {
-  background-color: #df691a;
-  border-color: transparent;
+    background-color: #27b775cc;
+    border-color: transparent;
 }
 .navbar-inverse .navbar-brand {
   color: #ebebeb;

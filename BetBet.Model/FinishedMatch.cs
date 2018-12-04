@@ -13,8 +13,8 @@ namespace BetBet.Model
         public int CardsHome { get; set; }
         public int CardsAway { get; set; }
 
-        public FinishedMatch (int hometeamID, int awayteamID, decimal multiplierteamhome, decimal multiplierteamaway, decimal multiplierdraw, DateTime date, int scoreteamhome, int scoreteamaway,
-            int cardshome, int cardsaway) : base(hometeamID, awayteamID, multiplierteamhome, multiplierteamaway, multiplierdraw, date)
+        public FinishedMatch (int matchID, int hometeamID, int awayteamID, string hometeamname, string awayteamname, decimal multiplierhome, decimal multiplieraway, decimal multiplierdraw, DateTime date, int scoreteamhome, int scoreteamaway,
+            int cardshome, int cardsaway) : base(matchID, hometeamID, awayteamID, hometeamname, awayteamname, multiplierhome, multiplieraway, multiplierdraw, date)
         {
             ScoreTeamHome = scoreteamhome;
             ScoreTeamAway = scoreteamaway;

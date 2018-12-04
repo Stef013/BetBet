@@ -16,11 +16,20 @@ namespace BetBet.Controllers
         TeamService teamservice = new TeamService();
         MatchService matchService = new MatchService();
         // GET: Match
-        public ActionResult Index()
+        public ActionResult UpcomingMatches()
         {
+            List<UpcomingMatch> matchList = new List<UpcomingMatch>();
+            matchList = matchService.getUpcomingMatches();
 
+            return View(matchList);
+        }
 
-            return View();
+        public ActionResult FinishedMatches()
+        {
+            List<UpcomingMatch> matchList = new List<UpcomingMatch>();
+            matchList = matchService.getUpcomingMatches();
+
+            return View(matchList);
         }
 
         [HttpGet]

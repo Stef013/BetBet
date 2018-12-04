@@ -18,5 +18,12 @@ namespace BetBet.Logic
             return result;
         }
 
+        public List<UpcomingMatch> getUpcomingMatches()
+        {
+            List<UpcomingMatch> matchList = new List<UpcomingMatch>();
+            matchList = matchrep.GetUpcomingMatches();
+
+            return matchList;
+        }
     }
 }
