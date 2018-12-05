@@ -268,6 +268,7 @@
     <Content Include="Views\Team\Ranking.cshtml" />
     <Content Include="Views\Match\Create.cshtml" />
     <Content Include="Views\Match\UpcomingMatches.cshtml" />
+    <Content Include="Views\Match\FinishedMatches.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BetBet.Logic\BetBet.Logic.csproj">

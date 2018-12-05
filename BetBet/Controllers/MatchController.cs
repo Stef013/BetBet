@@ -19,17 +19,25 @@ namespace BetBet.Controllers
         public ActionResult UpcomingMatches()
         {
             List<UpcomingMatch> matchList = new List<UpcomingMatch>();
-            matchList = matchService.getUpcomingMatches();
+            matchList = matchService.GetUpcomingMatches();
 
             return View(matchList);
         }
 
         public ActionResult FinishedMatches()
         {
-            List<UpcomingMatch> matchList = new List<UpcomingMatch>();
-            matchList = matchService.getUpcomingMatches();
+            List<FinishedMatch> matchList = new List<FinishedMatch>();
+            matchList = matchService.GetFinishedMatches();
 
             return View(matchList);
+        }
+
+        public ActionResult FinishMatch(int count)
+        {
+            //----------------------------------Fixen---------------------------------------------------
+            UpcomingMatch match = (UpcomingMatch)TempData["Match" + count];
+            matchService.GenerateResult(match);
+            return RedirectToAction("FinishedMatches", "Match");
         }
 
         [HttpGet]
@@ -42,8 +50,7 @@ namespace BetBet.Controllers
 
             mv.TeamList = TeamList.ToList();
 
-            //TempData["VM"] = mv;
-
+           
             return View(mv);
         }
 

@@ -5,7 +5,6 @@ C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\bin\Debug\En
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\bin\Debug\EntityFramework.xml
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\obj\Debug\BetBet.Model.csprojAssemblyReference.cache
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\obj\Debug\BetBet.Model.csproj.CoreCompileInputs.cache
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\obj\Debug\BetBet.Model.csproj.CopyComplete
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\obj\Debug\BetBet.Model.dll
