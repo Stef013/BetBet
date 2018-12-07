@@ -16,20 +16,27 @@ namespace BetBet.Data
 
         public bool Create(User user)
         {
-
              string checkUsername = $"SELECT Username FROM users WHERE Username = '{user.Username}'";
              var namecheck = database.getString(checkUsername);
 
-             if(namecheck == null)
-             {
-                 string command = $"INSERT into users (Username, Password, Balance, IsAdmin) VALUES ('{user.Username}','{user.Password}','{0.00}','{0}')";
-                 database.ExecuteCMD(command);
-                 return true;
-             }
-             else
-             {
-                 return false;
-             } 
+            if(namecheck == null)
+            {
+                MySqlCommand command = new  MySqlCommand("CreateUser");
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add("@Username", MySqlDbType.VarChar).Value = user.Username;
+                command.Parameters.Add("@Password", MySqlDbType.VarChar).Value = user.Password;
+                command.Parameters.Add("@Balance", MySqlDbType.Decimal).Value = 0.00;
+                command.Parameters.Add("@IsAdmin", MySqlDbType.Binary).Value = 0;
+
+               // string command = $"INSERT into users (Username, Password, Balance, IsAdmin) VALUES ('{user.Username}','{user.Password}','{0.00}','{0}')";
+                database.ExecuteCMD(command);
+                return true;
+            }
+            else
+            {
+                return false;
+            } 
         }
 
         public int GetID(User user)

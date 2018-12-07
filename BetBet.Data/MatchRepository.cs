@@ -40,7 +40,6 @@ namespace BetBet.Data
                 {
                     result = false;
                 }
-               
             }
             else
             {
@@ -97,8 +96,8 @@ namespace BetBet.Data
         public bool AddFinishedMatch(FinishedMatch match)
         {
             //-------------------------------------------------query fixen------------------------------------------
-            string command = $"INSERT IsFinished, ScoreHome, ScoreAway, CardsHome, CardsAway INTO matches VALUES ('{1}','{match.ScoreHome}','{match.ScoreAway}','{match.CardsHome}'," +
-                $"'{match.CardsAway}'";
+            string command = $"UPDATE matches SET `IsFinished`= {1},`ScoreHome`= {match.ScoreHome},`ScoreAway`= {match.ScoreAway},`CardsHome`= {match.CardsHome}," +
+                $"`CardsAway`= {match.CardsAway} WHERE MatchID = '{match.MatchID}'";
 
             database.ExecuteCMD(command);
             return true;

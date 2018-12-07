@@ -9,3 +9,4 @@ C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\obj\Debug\Be
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\obj\Debug\BetBet.Model.csproj.CopyComplete
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\obj\Debug\BetBet.Model.dll
 C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\obj\Debug\BetBet.Model.pdb
+C:\Users\Stefan\Documents\School\S2 Software\LP\BetBet\BetBet.Model\obj\Debug\BetBet.Model.csprojAssemblyReference.cache

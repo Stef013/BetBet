@@ -24,7 +24,7 @@ namespace BetBet.Model
             Username = username;
             Password = password;
         }
-
+        public bool IsAdmin { get; set; }
         
     }
 }

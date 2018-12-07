@@ -38,15 +38,35 @@ namespace BetBet.Data
             connection.Close();
         }
 
+        public void ExecuteCMD(MySqlCommand command)
+        {
+            command.Connection = connection;
+            //using (MySqlCommand cmd = new MySqlCommand(command, connection))
+            using (command)
+            {
+                try
+                {
+                    OpenConnectionIfClosed();
+                    command.ExecuteNonQuery();         
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }             
+        }
         public void ExecuteCMD(string command)
         {
-            
             using (MySqlCommand cmd = new MySqlCommand(command, connection))
             {
                 try
                 {
                     OpenConnectionIfClosed();
-                    cmd.ExecuteNonQuery();         
+                    cmd.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
@@ -57,9 +77,7 @@ namespace BetBet.Data
                     connection.Close();
                 }
             }
-                        
         }
-
         public int ExecuteAndGetID(string command)
         {
             int id = 0;
@@ -130,8 +148,7 @@ namespace BetBet.Data
 
         public MySqlDataReader ReadMysql(string command)
         {
-            List<Team> teamList = new List<Team>();
-
+            
             //using (MySqlCommand cmd = new MySqlCommand($"SELECT * FROM teams", connection))
             // {
             MySqlCommand cmd = new MySqlCommand(command, connection);
