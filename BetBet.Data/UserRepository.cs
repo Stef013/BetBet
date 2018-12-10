@@ -42,9 +42,28 @@ namespace BetBet.Data
         public int GetID(User user)
         {
             string command = $"SELECT UserID FROM users WHERE Username = '{user.Username}'";
-            int id = database.getID(command);
+            int id = database.GetInt(command);
 
             return id;
+        }
+
+        public bool GetIsAdmin(User user)
+        {
+            bool result;
+
+            string command = $"SELECT IsAdmin FROM users WHERE UserID = '{user.UserID}'";
+            int admin = database.GetInt(command);
+
+            if (admin == 1)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+
+            return result;
         }
 
         public bool Delete(User user)

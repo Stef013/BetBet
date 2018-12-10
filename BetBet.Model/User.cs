@@ -10,21 +10,23 @@ namespace BetBet.Model
 {
     public class User
     {
-        
         public int UserID { get; set; }
-        
         public string Username { get; set; }
-        
         public string Password { get; set; }
-        
         public decimal Balance { get; set; }
+        public bool IsAdmin { get; set; }
 
         public User (string username, string password)
         {
             Username = username;
             Password = password;
         }
-        public bool IsAdmin { get; set; }
-        
+
+        public User (int userid, string username, bool isadmin)
+        {
+            UserID = userid;
+            Username = username;
+            IsAdmin = isadmin;
+        }
     }
 }

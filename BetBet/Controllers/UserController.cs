@@ -83,6 +83,10 @@ namespace BetBet.Controllers
                 cookie.HttpOnly = true;
                 Response.Cookies.Add(cookie);
 
+                User loggedinUser = userservice.getLoggedinUserData(login.Username);
+
+                Session["LoggedinUser"] = loggedinUser;
+
                 if (Url.IsLocalUrl(ReturnUrl))
                 {
                     return Redirect(ReturnUrl);

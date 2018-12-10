@@ -52,7 +52,7 @@ namespace BetBet.Data
         public int GetID(Match match)
         {
             string command = $"SELECT MatchID FROM matchparticipants WHERE HomeTeam = '{match.HomeTeamID}' AND AwayTeam = {match.AwayTeamID}'";
-            int id = database.getID(command);
+            int id = database.GetInt(command);
 
             return id;
         }
@@ -60,7 +60,7 @@ namespace BetBet.Data
         public int GetHomeTeamID(int matchid)
         {
             string command = $"SELECT HomeTeamID FROM matchparticipants WHERE MatchID = '{matchid}'";
-            int id = database.getID(command);
+            int id = database.GetInt(command);
 
             return id;
         }
@@ -68,7 +68,7 @@ namespace BetBet.Data
         public int GetAwayTeamID(int matchid)
         {
             string command = $"SELECT AwayTeamID FROM matchparticipants WHERE MatchID = '{matchid}'";
-            int id = database.getID(command);
+            int id = database.GetInt(command);
 
             return id;
         }

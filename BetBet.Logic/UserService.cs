@@ -38,6 +38,15 @@ namespace BetBet.Logic
                 );
         }
 
+        public User getLoggedinUserData(string username)
+        {
+            User user = new User(0, username, false);
+            user.UserID = UserRep.GetID(user);
+            user.IsAdmin = UserRep.GetIsAdmin(user);
+
+            return user;
+        }
+
         public bool ComparePassword(string username, string password)
         {
             if (string.IsNullOrEmpty(password) || string.IsNullOrWhiteSpace(password) 

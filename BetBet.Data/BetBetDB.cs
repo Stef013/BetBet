@@ -123,7 +123,7 @@ namespace BetBet.Data
 
             return result;
         }
-        public int getID(string command)
+        public int GetInt(string command)
         {
             int result = 0;
 
