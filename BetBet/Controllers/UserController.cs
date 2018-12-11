@@ -12,10 +12,8 @@ namespace BetBet.Controllers
 {
     public class UserController : Controller
     {
-        private BetBetDB db = new BetBetDB();
         private UserService userservice = new UserService();
 
-       
         public ActionResult Index()
         {
             return View();

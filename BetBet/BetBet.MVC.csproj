@@ -153,7 +153,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\BetsController.cs" />
+    <Compile Include="Controllers\BetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
@@ -258,11 +258,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Bets\Create.cshtml" />
-    <Content Include="Views\Bets\Delete.cshtml" />
-    <Content Include="Views\Bets\Details.cshtml" />
-    <Content Include="Views\Bets\Edit.cshtml" />
-    <Content Include="Views\Bets\Index.cshtml" />
+    <Content Include="Views\Bet\Create.cshtml" />
+    <Content Include="Views\Bet\Delete.cshtml" />
+    <Content Include="Views\Bet\Details.cshtml" />
+    <Content Include="Views\Bet\Edit.cshtml" />
+    <Content Include="Views\Bet\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Team\Ranking.cshtml" />

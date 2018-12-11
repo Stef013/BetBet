@@ -4,31 +4,59 @@
     ViewBag.Title = "UpcomingMatches";
 }
 
-<div class="row"> 
-<div style="float: left"> <h2>Upcoming Matches</h2></div>
-<div style="float: right"><h2><b> @Html.ActionLink("Finished Matches>", "FinishedMatches")</b></h2></div>
+<div class="row">
+    <div style="float: left"> <h2>Upcoming Matches</h2></div>
+    <div style="float: right"><h2><b> @Html.ActionLink("Finished Matches>", "FinishedMatches")</b></h2></div>
 </div>
 <hr />
 
 
-<p>
-    @Html.ActionLink("Create New Match", "Create")
-</p>
 
-@{ 
-    foreach (var item in Model)
+
+@{
+    bool IsAdmin = (bool)TempData["IsAdmin"];
+
+    if (IsAdmin == true)
     {
-        int count = 1;
-        TempData["Match" + count] = item;
-    <div class="row">
-        
-        <div ALIGN="center">
-            <h3><b>@item.HomeTeamName vs @item.AwayTeamName</b></h3> 
-            <div style="float: right"><a href="@Url.Action("FinishMatch", "Match", new RouteValueDictionary { { "count", count} })"class="btn btn-default">End Match</a></div>
-            <h4><b>@item.Date.ToShortDateString()</b></h4>
-            <b>@Html.ActionLink("Bet on this match", "Edit", new { id = item.MatchID })</b><hr />
-        </div>
-    </div>
-        count++;
+        <p>
+            @Html.ActionLink("Create New Match", "Create")
+        </p>
+
+        foreach (var item in Model)
+        {
+            int count = 1;
+            TempData["Match" + count] = item;
+            <div class="row">
+
+                <div ALIGN="center">
+                    <h3><b>@item.HomeTeamName vs @item.AwayTeamName</b></h3>
+                    <h4><b>@item.Date.ToShortDateString()</b></h4>  
+                    <a href="@Url.Action("FinishMatch", "Match", new RouteValueDictionary { { "count", count} })" class="btn btn-default">End Match</a>
+                    
+                    @*<b>@Html.ActionLink("Bet on this match", "Edit", new { id = item.MatchID })</b><hr />*@
+                </div>
+            </div>
+            count++;
+        }
     }
+    else
+    {
+        foreach (var item in Model)
+        {
+            int count = 1;
+            TempData["Match" + count] = item;
+            <div class="row">
+
+                <div ALIGN="center">
+                    <h3><b>@item.HomeTeamName vs @item.AwayTeamName</b></h3>
+                    <h4><b>@item.Date.ToShortDateString()</b></h4>
+                    <a href="@Url.Action("Create", "Bet", new RouteValueDictionary { { "count", count} })" class="btn btn-default">Bet</a>
+                    @*<b>@Html.ActionLink("Bet on this match", "Edit", new { id = item.MatchID })</b><hr />*@
+                </div>
+            </div>
+            count++;
+        }
+    }
+
+
 }

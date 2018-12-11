@@ -15,13 +15,27 @@ namespace BetBet.Controllers
     {
         TeamService teamservice = new TeamService();
         MatchService matchService = new MatchService();
+
+        User loggedInUser;
+        
         // GET: Match
         public ActionResult UpcomingMatches()
         {
-            List<UpcomingMatch> matchList = new List<UpcomingMatch>();
-            matchList = matchService.GetUpcomingMatches();
+            loggedInUser = (User)Session["LoggedInUser"];
 
-            return View(matchList);
+            if (loggedInUser != null)
+            {
+                List<UpcomingMatch> matchList = new List<UpcomingMatch>();
+                matchList = matchService.GetUpcomingMatches();
+
+                TempData["IsAdmin"] = loggedInUser.IsAdmin;
+
+                return View(matchList);
+            }
+            else
+            {
+                return RedirectToAction("Login", "User");
+            }
         }
 
         public ActionResult FinishedMatches()

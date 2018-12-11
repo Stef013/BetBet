@@ -8,12 +8,18 @@
 
 </div>
 
-Welcome @HttpContext.Current.User.Identity.Name
+@*Welcome @HttpContext.Current.User.Identity.Name*@
+Welcome @TempData["LoggedinUser"];
 
-@if (Request.IsAuthenticated)
+@using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+    }
+
+@*if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
     {
         <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
     }
-}
+}*@

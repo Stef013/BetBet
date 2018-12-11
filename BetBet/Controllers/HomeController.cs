@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BetBet.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,18 @@ namespace BetBet.Controllers
 {
     public class HomeController : Controller
     {
-        [Authorize]
+        
         public ActionResult Index()
         {
-            return View();
+            User loggedInUser = (User)Session["LoggedInUser"];
+
+            if ( loggedInUser != null)
+            {
+                TempData["LoggedInUser"] = loggedInUser.Username;
+                return View();
+            }
+
+            return RedirectToAction("Login", "User");
         }
 
         public ActionResult About()

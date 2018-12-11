@@ -8,18 +8,20 @@ namespace BetBet.Model
 {
     public class Enums
     {
-        enum Prediction
-        {
-            HomeTeam,
-            AwayTeam,
-            Draw,
-        }
+        
+    }
 
-        enum MatchResult
-        {
-            Win,
-            Loss,
-            Draw,
-        }
+    public enum PredictionEnum
+    {
+        HomeTeam,
+        AwayTeam,
+        Draw,
+    }
+
+    public enum MatchResultEnum
+    {
+        Win,
+        Loss,
+        Draw,
     }
 }

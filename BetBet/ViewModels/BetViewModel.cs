@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using BetBet.Model;
 
 namespace BetBet.ViewModels
 {
@@ -7,14 +8,9 @@ namespace BetBet.ViewModels
     {
         public int BetID { get; set; }
         public int UserID { get; set; }
+        public UpcomingMatch Match { get; set; }
         public int MatchID { get; set; }
         public decimal Amount { get; set; }
-        public string Prediction { get; set; }
-    }
-
-    public class BetBetDB : DbContext
-    {
-        public DbSet<BetViewModel> Bets { get; set; }
-        public DbSet<UserViewModel> Users { get; set; }
+        public PredictionEnum Prediction { get; set; }
     }
 }
