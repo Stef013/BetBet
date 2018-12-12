@@ -1659,7 +1659,7 @@ input[type="search"] {
 }
 input[type="radio"],
 input[type="checkbox"] {
-  margin: 4px 0 0;
+  margin: 5px 5px 5px;
   margin-top: 1px \9;
   /* IE8-9 */
   line-height: normal;
@@ -5781,8 +5781,8 @@ label,
 .radio label,
 .checkbox label,
 .help-block {
-  font-size: 12px;
-  font-weight: 300;
+  font-size: 18px;
+  font-weight: 500;
 }
 .input-addon,
 .input-group-addon {

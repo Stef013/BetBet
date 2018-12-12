@@ -5,21 +5,22 @@
     ViewBag.UserID = "Create";
 }
 
-<h2>Create Bet</h2>
+<div class="row">
+    <div style="float: right"> <h2><b>Create Bet</b></h2></div>
+    <div style="float: left"><h2><b> @Html.ActionLink("<Back", "UpcomingMatches")</b></h2></div>
+</div>
+<hr />
+@*<h2>Create Bet</h2>*@
 
 <div ALIGN="center">
-    <h3><b>@Model.Match.HomeTeamName vs @Model.Match.AwayTeamName</b></h3>
-
-</div>
-
-<div class="form-horizontal">
-    <hr />
+    <h3><b>@Model.Match.HomeTeamName - @Model.Match.AwayTeamName</b></h3>
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @*-------------------------Hier gebleven, labels en multiplier moeten toegevoegd worden---------------------------------*@
-    @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.HomeTeam)@Html.Label(Model.Match.HomeTeamName)
-    @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.Draw)@Html.Label("       Draw       ")
-    @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.AwayTeam)@Html.Label(Model.Match.AwayTeamName)<br />
-
+    <p><b>Who will win the match?:</b></p></p>
+    @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.HomeTeam)@Html.Label(Model.Match.HomeTeamName + "  (" + Model.Match.MultiplierHome + ")  ")
+    @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.Draw)@Html.Label("X" + "  (" + Model.Match.MultiplierDraw + ")  ")
+    @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.AwayTeam)@Html.Label(Model.Match.AwayTeamName + "  (" + Model.Match.MultiplierAway + ")  ")<br />
+    <br />
     <div class="form-group">
         @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -33,8 +34,12 @@
             <input type="submit" value="Create" class="btn btn-default" />
         </div>
     </div>
-</div>
 
+    <div class="form-horizontal">
+
+
+    </div>
+</div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
