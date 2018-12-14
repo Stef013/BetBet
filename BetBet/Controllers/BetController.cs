@@ -25,14 +25,14 @@ namespace BetBet.Controllers
         
 
         // GET: Bets/Create
-        public ActionResult Create(int count)
+        [HttpGet]
+        public ActionResult Create()
         {
             User loggedInUser = (User)Session["LoggedInUser"];
 
             if (loggedInUser != null)
             {
-                UpcomingMatch match = (UpcomingMatch)TempData["Match" + count];
-
+                UpcomingMatch match = (UpcomingMatch)Session["SelectedMatch"];
                 BetViewModel newbet = new BetViewModel();
                 newbet.Match = match;
                 return View(newbet);
@@ -48,19 +48,57 @@ namespace BetBet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(BetViewModel bet)
         {
+            bool status = false;
+            string message;
+
+            User loggedinUser = (User)Session["LoggedInUser"];
+            UpcomingMatch match = (UpcomingMatch)Session["SelectedMatch"];
 
             if (ModelState.IsValid)
             {
-               
-                return RedirectToAction("Index");
+                if (bet.Prediction != 0)
+                {
+                    if(bet.Amount > 5)
+                    {
+                        if(bet.Amount < loggedinUser.Balance)
+                        {
+                            Bet newbet = new Bet()
+                            {
+                                UserID = loggedinUser.UserID,
+                                MatchID = match.MatchID,
+                                Prediction = bet.Prediction,
+                                Amount = bet.Amount
+                            };
+                            //--------------------------Bet aanmaken afmaken, service/repository-------------------------
+                            status = true;
+                            message = "Bet succesfully placed!";
+                        }
+                        else
+                        {
+                            message = "Not enough funds to make this bet.";
+                        }
+                        
+                    }
+                    else
+                    {
+                        message = "Bet amount must be higher than 5,-";
+                    }
+
+                }
+                else
+                {
+                    message = "No prediction selected.";
+                }  
+            }
+            else
+            {
+                message = "Invalid request.";
             }
 
-            return View(bet);
+            ViewBag.Status = status;
+            ViewBag.Message = message;
+
+            return View();
         }
-
-      
-
-        
-        
     }
 }

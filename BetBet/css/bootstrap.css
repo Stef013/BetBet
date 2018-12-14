@@ -771,8 +771,18 @@ pre code {
   padding-left: 15px;
   padding-right: 15px;
 }
+.amount-box-1 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.amount-box-1 {
+    width: 16.66666667%;
+}
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
-  float: left;
+  /*float: left;*/
+  
 }
 .col-xs-12 {
   width: 100%;

@@ -50,7 +50,7 @@
                 <div ALIGN="center">
                     <h3><b>@item.HomeTeamName vs @item.AwayTeamName</b></h3>
                     <h4><b>@item.Date.ToShortDateString()</b></h4>
-                    <a href="@Url.Action("Create", "Bet", new RouteValueDictionary { { "count", count} })" class="btn btn-default">Bet</a>
+                    <a href="@Url.Action("GetSelectedMatch", "Match", new RouteValueDictionary { { "count", count} })" class="btn btn-default">Bet</a>
                     @*<b>@Html.ActionLink("Bet on this match", "Edit", new { id = item.MatchID })</b><hr />*@
                 </div>
             </div>

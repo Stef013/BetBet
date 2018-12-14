@@ -48,11 +48,19 @@ namespace BetBet.Controllers
 
         public ActionResult FinishMatch(int count)
         {
-            //----------------------------------Fixen---------------------------------------------------
             UpcomingMatch match = (UpcomingMatch)TempData["Match" + count];
             matchService.GenerateResult(match);
             return RedirectToAction("FinishedMatches", "Match");
         }
+
+        public ActionResult GetSelectedMatch(int count)
+        {
+            //----------------------------------Fixen---------------------------------------------------
+            UpcomingMatch match = (UpcomingMatch)TempData["Match" + count];
+            Session["SelectedMatch"] = match;
+            return RedirectToAction("Create", "Bet");
+        }
+
 
         [HttpGet]
         public ActionResult Create()
@@ -96,14 +104,12 @@ namespace BetBet.Controllers
                 }
                 else
                 {
-                    status = false;
                     message = "Multipliers are invalid.";
                 }
                     
             }
             else
             {
-                status = false;
                 message = "Select 2 different teams.";
             }
 

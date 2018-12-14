@@ -2,8 +2,12 @@
 @using BetBet.Model;
 
 @{
+    /**/
+
     ViewBag.UserID = "Create";
 }
+
+
 
 <div class="row">
     <div style="float: right"> <h2><b>Create Bet</b></h2></div>
@@ -12,38 +16,63 @@
 <hr />
 @*<h2>Create Bet</h2>*@
 
-<div ALIGN="center">
-    <h3><b>@Model.Match.HomeTeamName - @Model.Match.AwayTeamName</b></h3>
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @*-------------------------Hier gebleven, labels en multiplier moeten toegevoegd worden---------------------------------*@
-    <p><b>Who will win the match?:</b></p></p>
-    @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.HomeTeam)@Html.Label(Model.Match.HomeTeamName + "  (" + Model.Match.MultiplierHome + ")  ")
-    @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.Draw)@Html.Label("X" + "  (" + Model.Match.MultiplierDraw + ")  ")
-    @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.AwayTeam)@Html.Label(Model.Match.AwayTeamName + "  (" + Model.Match.MultiplierAway + ")  ")<br />
-    <br />
-    <div class="form-group">
-        @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+{
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong>@ViewBag.Message
         </div>
-    </div>
+    }
+}
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
+else
+{
+    
+    Model.Match = (UpcomingMatch)Session["SelectedMatch"];
+    
 
-    <div class="form-horizontal">
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            <div ALIGN="center">
+                <h2><b>@Model.Match.HomeTeamName - @Model.Match.AwayTeamName</b></h2><br />
+                @*Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
 
+                <p><h4><b>Who will win the match?:</b></h4></p>
+                @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.HomeTeam)@Html.Label(Model.Match.HomeTeamName + "  (" + Model.Match.MultiplierHome + ")  ")
+                @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.Draw)@Html.Label("X" + "  (" + Model.Match.MultiplierDraw + ")  ")
+                @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.AwayTeam)@Html.Label(Model.Match.AwayTeamName + "  (" + Model.Match.MultiplierAway + ")  ")<br />
+                <br />
 
-    </div>
-</div>
+                <div class="form-group">
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+                    @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-xs-1" })
+                    <div class="col-xs-2">
+                        @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                        <br />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-xs-2">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        if (ViewBag.Message != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Error!</strong>@ViewBag.Message
+            </div>
+        }
+    }
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
