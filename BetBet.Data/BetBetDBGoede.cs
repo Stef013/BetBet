@@ -12,7 +12,7 @@ namespace BetBet.Data
 {
     public class BetBetDBGoede
     {
-        public string Hostname = "studmysql01.fhict.local";
+        /*public string Hostname = "studmysql01.fhict.local";
         public string DBName = "dbi382222";
         public string ID = "dbi382222";
         public string Password = "vQzTCdskA2UBvfzp";
@@ -105,6 +105,6 @@ namespace BetBet.Data
             {
                 connection.Open();
             }
-        }
+        }*/
     }
 }

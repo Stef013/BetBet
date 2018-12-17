@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="BetBetDB.cs" />
     <Compile Include="BetBetDBGoede.cs" />
+    <Compile Include="BetRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="MatchRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

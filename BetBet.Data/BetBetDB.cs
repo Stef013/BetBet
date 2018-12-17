@@ -59,25 +59,32 @@ namespace BetBet.Data
                 }
             }             
         }
-        public void ExecuteCMD(string command)
+
+        public bool ExecuteCMD(string command)
         {
+            bool result;
+
             using (MySqlCommand cmd = new MySqlCommand(command, connection))
             {
                 try
                 {
                     OpenConnectionIfClosed();
                     cmd.ExecuteNonQuery();
+                    result = true;
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
+                    result = false;
                 }
                 finally
                 {
                     connection.Close();
                 }
             }
+            return result;
         }
+
         public int ExecuteAndGetID(string command)
         {
             int id = 0;
@@ -120,9 +127,9 @@ namespace BetBet.Data
                     connection.Close();
                 }
             }
-
             return result;
         }
+
         public int GetInt(string command)
         {
             int result = 0;
@@ -146,44 +153,43 @@ namespace BetBet.Data
             return result;
         }
 
-        public MySqlDataReader ReadMysql(string command)
+        public decimal GetDecimal(string command)
         {
-            
-            //using (MySqlCommand cmd = new MySqlCommand($"SELECT * FROM teams", connection))
-            // {
-            MySqlCommand cmd = new MySqlCommand(command, connection);
+            decimal result = 0;
+
+            using (MySqlCommand cmd = new MySqlCommand(command, connection))
+            {
                 try
                 {
                     OpenConnectionIfClosed();
-                    MySqlDataReader reader = cmd.ExecuteReader();
-                    return reader;
-                    /*while (reader.Read())
-                    {
-                        Team team = new Team
-                        {
-                            TeamID = (int)reader["TeamID"],
-                            TeamName = (string)reader["TeamName"],
-                            City = (string)reader["City"],
-                            GamesPlayed = (int)reader["GamesPlayed"],
-                            GamesWon = (int)reader["GamesWon"],
-                            Draws = (int)reader["Draws"],
-                            GamesLost = (int)reader["GamesLost"],
-                            GoalsFor = (int)reader["GoalsFor"],
-                            GoalsAgainst = (int)reader["GoalsAgainst"],
-                            GoalSaldo = (int)reader["GoalSaldo"],
-                            Points = (int)reader["Points"],
-                        };
-                        teamList.Add(team);
-                    }
-                    return teamList;*/
+                    result = (decimal)cmd.ExecuteScalar();
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
-                    return null;
                 }
-                                 
-            //}
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return result;
+        }
+
+        public MySqlDataReader ReadMysql(string command)
+        {
+            MySqlCommand cmd = new MySqlCommand(command, connection);
+            try
+            {
+                OpenConnectionIfClosed();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                return reader;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
         }
     }
 }

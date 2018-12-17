@@ -35,8 +35,14 @@ namespace BetBet.Controllers
 
             if (ModelState.IsValid)
             {
-                User newUser = new User(user.Username, user.Password);
+                User newUser = new User
+                {
+                    Username = user.Username,
+                    Password = user.Password
+                };
+
                 status = userservice.CreateUser(newUser);
+
                 if ( status == true)
                 {
                     message = "Account created successfully.";

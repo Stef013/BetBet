@@ -7,6 +7,8 @@ using MySql.Data.MySqlClient;
 using BetBet.Model;
 using System.Diagnostics;
 using System.Data;
+using System.Threading;
+using System.Globalization;
 
 namespace BetBet.Data
 {
@@ -64,6 +66,16 @@ namespace BetBet.Data
             }
 
             return result;
+        }
+
+        public decimal GetBalance(User user)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("nl-NL");
+
+            string command = $"SELECT Balance FROM users WHERE UserID = '{user.UserID}'";
+            decimal balance = database.GetDecimal(command);
+
+            return balance;
         }
 
         public bool Delete(User user)

@@ -10,7 +10,7 @@ namespace BetBet.Logic
 {
     public class UserService
     {
-        UserRepository UserRep = new UserRepository();
+        UserRepository userRep = new UserRepository();
 
         public bool CreateUser(User user)
         {
@@ -20,7 +20,7 @@ namespace BetBet.Logic
 
             if (user != null)
             {
-                usercheck = UserRep.Create(user);
+                usercheck = userRep.Create(user);
                 
                 return usercheck;
             }
@@ -40,9 +40,14 @@ namespace BetBet.Logic
 
         public User getLoggedinUserData(string username)
         {
-            User user = new User(0, username, false);
-            user.UserID = UserRep.GetID(user);
-            user.IsAdmin = UserRep.GetIsAdmin(user);
+            User user = new User
+            {
+                Username = username
+            };
+
+            user.UserID = userRep.GetID(user);
+            user.Balance = userRep.GetBalance(user);
+            user.IsAdmin = userRep.GetIsAdmin(user);
 
             return user;
         }
@@ -57,7 +62,7 @@ namespace BetBet.Logic
             else
             {
                 password = Hash(password);
-                bool checkPassword = UserRep.ComparePassword(username, password);
+                bool checkPassword = userRep.ComparePassword(username, password);
 
                 return checkPassword;
             }

@@ -8,12 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using BetBet.Model;
 using BetBet.ViewModels;
+using BetBet.Logic;
 
 namespace BetBet.Controllers
 {
     public class BetController : Controller
     {
-       
+        BetService betservice = new BetService();
 
         // GET: Bets
         public ActionResult Index()
@@ -33,12 +34,27 @@ namespace BetBet.Controllers
             if (loggedInUser != null)
             {
                 UpcomingMatch match = (UpcomingMatch)Session["SelectedMatch"];
-                BetViewModel newbet = new BetViewModel();
-                newbet.Match = match;
-                return View(newbet);
-            }
 
-            return RedirectToAction("Login", "User");
+                bool betExists = betservice.CheckIfBetExists(match.MatchID, loggedInUser.UserID);
+
+                if (betExists == false)
+                {
+                    BetViewModel newbet = new BetViewModel
+                    {
+                        Match = match
+                    };
+                   
+                    return View(newbet);
+                }
+                else
+                {
+                    return RedirectToAction("UpcomingMatches", "Match");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "User");
+            }
         }
 
         // POST: Bets/Create
@@ -69,9 +85,16 @@ namespace BetBet.Controllers
                                 Prediction = bet.Prediction,
                                 Amount = bet.Amount
                             };
-                            //--------------------------Bet aanmaken afmaken, service/repository-------------------------
-                            status = true;
-                            message = "Bet succesfully placed!";
+                           
+                            status = betservice.CreateBet(newbet);
+                            if (status == true)
+                            {
+                                message = "Bet succesfully placed!";
+                            }
+                            else
+                            {
+                                message = "Database Error!";
+                            }
                         }
                         else
                         {
@@ -81,7 +104,7 @@ namespace BetBet.Controllers
                     }
                     else
                     {
-                        message = "Bet amount must be higher than 5,-";
+                        message = "Bet amount must be higher than 5,- or try to use a comma.";
                     }
 
                 }
@@ -98,7 +121,7 @@ namespace BetBet.Controllers
             ViewBag.Status = status;
             ViewBag.Message = message;
 
-            return View();
+            return View(bet);
         }
     }
 }
