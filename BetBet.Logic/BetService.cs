@@ -11,6 +11,7 @@ namespace BetBet.Logic
     public class BetService
     {
         BetRepository betrep = new BetRepository();
+        MatchRepository matchrep = new MatchRepository();
 
         public bool CheckIfBetExists(int matchID, int userID)
         {
@@ -35,6 +36,20 @@ namespace BetBet.Logic
             bool result = betrep.Create(bet);
 
             return result;
+        }
+
+        public List<Bet> GetBetsFromUser(User user)
+        {
+            List<Bet> betList = new List<Bet>();
+
+            betList = betrep.GetBets(user);
+
+            foreach (Bet bet in betList)
+            {
+                bet.Match = matchrep.GetUpcomingMatch(bet.MatchID);
+            }
+
+            return betList;
         }
     }
 }

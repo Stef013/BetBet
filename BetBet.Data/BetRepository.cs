@@ -1,4 +1,5 @@
 ﻿using BetBet.Model;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -37,6 +38,29 @@ namespace BetBet.Data
         public bool Update(Bet bet)
         {
             throw new NotImplementedException();
+        }
+
+        public List<Bet> GetBets(User user)
+        {
+            List<Bet> TeamList = new List<Bet>();
+
+            string command = $"SELECT * FROM Bets WHERE UserID = '{user.UserID}'";
+            MySqlDataReader reader = database.ReadMysql(command);
+
+            while (reader.Read())
+            {
+                Bet bet = new Bet
+                {
+                    MatchID = (int)reader["MatchID"],
+                    Amount = (decimal)reader["Amount"],
+                    Prediction = (PredictionEnum)reader["Prediction"]
+
+                };
+                TeamList.Add(bet);
+            }
+
+            database.CloseConnection();
+            return TeamList;
         }
 
         public int CheckBet(int matchID, int userID)

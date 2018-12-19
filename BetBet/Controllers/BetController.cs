@@ -15,15 +15,26 @@ namespace BetBet.Controllers
     public class BetController : Controller
     {
         BetService betservice = new BetService();
+        UserService userservice = new UserService();
 
-        // GET: Bets
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult BetList()
         {
-            return View();
-        }
+            User loggedInUser = (User)Session["LoggedInUser"];
 
-        // GET: Bets/Details/5
-        
+            if (loggedInUser != null)
+            {
+                List<Bet> betList = new List<Bet>();
+                betList = betservice.GetBetsFromUser(loggedInUser);
+
+                //------------------hier gebleven, zorgen dat lijst in de view komt dmv model.--------------------
+                return View(betList);
+            }
+            else
+            {
+                return RedirectToAction("Login", "User");
+            }
+        }
 
         // GET: Bets/Create
         [HttpGet]
@@ -72,46 +83,40 @@ namespace BetBet.Controllers
 
             if (ModelState.IsValid)
             {
-                if (bet.Prediction != 0)
+                if (bet.Amount > 5)
                 {
-                    if(bet.Amount > 5)
+                    if (bet.Amount < loggedinUser.Balance)
                     {
-                        if(bet.Amount < loggedinUser.Balance)
+                        Bet newbet = new Bet()
                         {
-                            Bet newbet = new Bet()
-                            {
-                                UserID = loggedinUser.UserID,
-                                MatchID = match.MatchID,
-                                Prediction = bet.Prediction,
-                                Amount = bet.Amount
-                            };
-                           
-                            status = betservice.CreateBet(newbet);
-                            if (status == true)
-                            {
-                                message = "Bet succesfully placed!";
-                            }
-                            else
-                            {
-                                message = "Database Error!";
-                            }
+                            UserID = loggedinUser.UserID,
+                            MatchID = match.MatchID,
+                            Prediction = bet.Prediction,
+                            Amount = bet.Amount
+                        };
+
+                        status = betservice.CreateBet(newbet);
+                        if (status == true)
+                        {
+                            message = "Bet succesfully placed!";
+                            userservice.RemoveFunds(loggedinUser, newbet.Amount);
                         }
                         else
                         {
-                            message = "Not enough funds to make this bet.";
+                            message = "Database Error!";
                         }
-                        
                     }
                     else
                     {
-                        message = "Bet amount must be higher than 5,- or try to use a comma.";
+                        message = "Not enough funds to make this bet.";
                     }
 
                 }
                 else
                 {
-                    message = "No prediction selected.";
-                }  
+                    message = "Bet amount must be higher than 5,- or try to use a comma.";
+                }
+
             }
             else
             {

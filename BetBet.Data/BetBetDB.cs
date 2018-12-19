@@ -41,7 +41,7 @@ namespace BetBet.Data
         public void ExecuteCMD(MySqlCommand command)
         {
             command.Connection = connection;
-            //using (MySqlCommand cmd = new MySqlCommand(command, connection))
+            
             using (command)
             {
                 try
@@ -183,6 +183,22 @@ namespace BetBet.Data
             {
                 OpenConnectionIfClosed();
                 MySqlDataReader reader = cmd.ExecuteReader();
+                return reader;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
+        public MySqlDataReader Read(MySqlCommand command)
+        {
+            command.Connection = connection;
+
+            try
+            {
+                OpenConnectionIfClosed();
+                MySqlDataReader reader = command.ExecuteReader();
                 return reader;
             }
             catch (Exception ex)

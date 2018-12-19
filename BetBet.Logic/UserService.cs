@@ -67,5 +67,21 @@ namespace BetBet.Logic
                 return checkPassword;
             }
         }
+
+        public void AddFunds(User user, decimal amount)
+        {
+            decimal newBalance = user.Balance + amount;
+            user.Balance = newBalance;
+
+            userRep.UpdateBalance(user);
+        }
+
+        public void RemoveFunds(User user, decimal amount)
+        {
+            decimal newBalance = user.Balance - amount;
+            user.Balance = newBalance;
+
+            userRep.UpdateBalance(user);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -49,6 +50,31 @@ namespace BetBet.Data
             return result;
         }
 
+        public UpcomingMatch GetUpcomingMatch(int matchID)
+        {
+            UpcomingMatch match = null;
+
+            MySqlCommand command = new MySqlCommand("CreateUser");
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@matchID", MySqlDbType.Int32).Value = matchID;
+            
+            MySqlDataReader reader = database.Read(command);
+
+            while(reader.Read())
+            {
+                int hometeamID = (int)reader["HomeTeamID"];
+                int awayteamID = (int)reader["AwayTeamID"];
+                string hometeamName = GetHomeTeamName((int)reader["HomeTeamID"]);
+                string awayteamName = GetAwayTeamName((int)reader["AwayTeamID"]);
+                DateTime date = (DateTime)reader["Date"];
+                match = new UpcomingMatch(matchID,hometeamID, awayteamID, hometeamName, awayteamName, 0, 0, 0, date);
+            }
+
+            database.CloseConnection();
+
+            return match;
+        }
+
         public int GetID(Match match)
         {
             string command = $"SELECT MatchID FROM matchparticipants WHERE HomeTeam = '{match.HomeTeamID}' AND AwayTeam = {match.AwayTeamID}'";
@@ -73,6 +99,22 @@ namespace BetBet.Data
             return id;
         }
 
+        public string GetHomeTeamName(int teamid)
+        {
+            string command = $"SELECT TeamName FROM teams WHERE TeamID = '{teamid}'";
+            string name = database.getString(command);
+
+            return name;
+        }
+
+        public string GetAwayTeamName(int teamid)
+        {
+            string command = $"SELECT AwayName FROM teams WHERE TeamID = '{teamid}'";
+            string name = database.getString(command);
+
+            return name;
+        }
+
         public bool Delete(Match match)
         {
             if (match != null)
@@ -87,15 +129,15 @@ namespace BetBet.Data
                 return false;
             }
         }
+
         public bool Update(Match match)
         {
-            //----------------------Moet nog gevuld worden---------------------
+            
             return true;
         }
 
         public bool AddFinishedMatch(FinishedMatch match)
         {
-            //-------------------------------------------------query fixen------------------------------------------
             string command = $"UPDATE matches SET `IsFinished`= {1},`ScoreHome`= {match.ScoreHome},`ScoreAway`= {match.ScoreAway},`CardsHome`= {match.CardsHome}," +
                 $"`CardsAway`= {match.CardsAway} WHERE MatchID = '{match.MatchID}'";
 
