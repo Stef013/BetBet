@@ -1,0 +1,47 @@
+﻿@model BetBet.ViewModels.BetViewModel
+
+@{
+    ViewBag.Title = "BetList";
+}
+
+<h2>BetList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Date
+        </th>
+        <th>
+            Match
+        </th>
+        <th>
+            Amount
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.BetList) {
+        <tr>
+            <td>
+                @*------------------------------Date.ToShortDate string error fxen -----------------------------------------------------*@
+                @Html.DisplayFor(modelItem => item.Match.Date.ToString())
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Match.HomeTeamName) - @Html.DisplayFor(modelItem => item.Match.AwayTeamName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+     }
+
+</table>

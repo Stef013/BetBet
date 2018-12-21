@@ -49,11 +49,12 @@ namespace BetBet.Data
 
             while (reader.Read())
             {
+                Enum.TryParse((string)reader["Prediction"], out PredictionEnum prediction);
                 Bet bet = new Bet
                 {
                     MatchID = (int)reader["MatchID"],
                     Amount = (decimal)reader["Amount"],
-                    Prediction = (PredictionEnum)reader["Prediction"]
+                    Prediction = prediction
 
                 };
                 TeamList.Add(bet);

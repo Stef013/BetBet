@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using BetBet.Model;
@@ -15,5 +16,6 @@ namespace BetBet.ViewModels
         [Required(AllowEmptyStrings = false, ErrorMessage = "Amount can't be empty")]
         public decimal Amount { get; set; }
         public PredictionEnum Prediction { get; set; }
+        public List<Bet> BetList { get; set; }
     }
 }

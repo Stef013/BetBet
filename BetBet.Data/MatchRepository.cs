@@ -52,9 +52,11 @@ namespace BetBet.Data
 
         public UpcomingMatch GetUpcomingMatch(int matchID)
         {
-            UpcomingMatch match = null;
+            int hometeamID = 0;
+            int awayteamID = 0;
+            DateTime date = Convert.ToDateTime("01-01-1900");
 
-            MySqlCommand command = new MySqlCommand("CreateUser");
+            MySqlCommand command = new MySqlCommand("GetMatch");
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add("@matchID", MySqlDbType.Int32).Value = matchID;
             
@@ -62,15 +64,18 @@ namespace BetBet.Data
 
             while(reader.Read())
             {
-                int hometeamID = (int)reader["HomeTeamID"];
-                int awayteamID = (int)reader["AwayTeamID"];
-                string hometeamName = GetHomeTeamName((int)reader["HomeTeamID"]);
-                string awayteamName = GetAwayTeamName((int)reader["AwayTeamID"]);
-                DateTime date = (DateTime)reader["Date"];
-                match = new UpcomingMatch(matchID,hometeamID, awayteamID, hometeamName, awayteamName, 0, 0, 0, date);
+                hometeamID = (int)reader["HomeTeamID"];
+                awayteamID = (int)reader["AwayTeamID"];
+                date = (DateTime)reader["Date"];
             }
-
             database.CloseConnection();
+
+            string hometeamName = GetTeamName(hometeamID);
+            string awayteamName = GetTeamName(awayteamID);
+
+            UpcomingMatch match = new UpcomingMatch(matchID, hometeamID, awayteamID, hometeamName, awayteamName, 0, 0, 0, date);
+
+            
 
             return match;
         }
@@ -99,21 +104,15 @@ namespace BetBet.Data
             return id;
         }
 
-        public string GetHomeTeamName(int teamid)
+        public string GetTeamName(int teamid)
         {
-            string command = $"SELECT TeamName FROM teams WHERE TeamID = '{teamid}'";
+            string command = $"SELECT Teamname FROM teams WHERE TeamID = '{teamid}'";
             string name = database.getString(command);
 
             return name;
         }
 
-        public string GetAwayTeamName(int teamid)
-        {
-            string command = $"SELECT AwayName FROM teams WHERE TeamID = '{teamid}'";
-            string name = database.getString(command);
-
-            return name;
-        }
+        
 
         public bool Delete(Match match)
         {

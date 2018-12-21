@@ -39,7 +39,6 @@ else
         <div class="form-horizontal">
             <div ALIGN="center">
                 <h2><b>@Model.Match.HomeTeamName - @Model.Match.AwayTeamName</b></h2><br />
-                @*Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
 
                 <p><h4><b>Who will win the match?:</b></h4></p>
                 @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.HomeTeam)@Html.Label(Model.Match.HomeTeamName + "  (" + Model.Match.MultiplierHome + ")  ")

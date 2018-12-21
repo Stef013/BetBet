@@ -27,8 +27,11 @@ namespace BetBet.Controllers
                 List<Bet> betList = new List<Bet>();
                 betList = betservice.GetBetsFromUser(loggedInUser);
 
+                BetViewModel betmodel = new BetViewModel();
+
+                betmodel.BetList = betList;
                 //------------------hier gebleven, zorgen dat lijst in de view komt dmv model.--------------------
-                return View(betList);
+                return View(betmodel);
             }
             else
             {
