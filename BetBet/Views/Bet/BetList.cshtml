@@ -1,14 +1,14 @@
-﻿@model BetBet.ViewModels.BetViewModel
+﻿
 
 @{
     ViewBag.Title = "BetList";
 }
 
-<h2>BetList</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+<h2><b>Bets</b></h2>
+
+
 <table class="table">
     <tr>
         <th>
@@ -23,25 +23,25 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model.BetList) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
-                @*------------------------------Date.ToShortDate string error fxen -----------------------------------------------------*@
-                @Html.DisplayFor(modelItem => item.Match.Date.ToString())
+                @item.Match.Date.ToShortDateString()
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Match.HomeTeamName) - @Html.DisplayFor(modelItem => item.Match.AwayTeamName)
+                @item.Match.HomeTeamName - @item.Match.AwayTeamName
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Amount)
+                € @item.Amount
             </td>
-            
+
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
-     }
+    }
 
 </table>

@@ -6,7 +6,7 @@
     <title>@ViewBag.Title - BetBet</title>
     <script type="text/javascript">
         $(function () { // will trigger when the document is ready
-           $('.datepicker').datepicker(); //Initialise any date pickers
+            $('.datepicker').datepicker(); //Initialise any date pickers
         });
     </script>
     @Styles.Render("~/css/bootstrap.css")
@@ -28,12 +28,56 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Matches", "UpcomingMatches", "Match")</li>
-                    <li>@Html.ActionLink("Bets", "Index", "Bets")</li>
+                    <li>@Html.ActionLink("Bets", "BetList", "Bet")</li>
                     <li>@Html.ActionLink("Ranking", "Ranking", "Team")</li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <li class="btn-group nav">
+                                <button type="button" class="btn navbar-btn" style="background-color:forestgreen">@User.Identity.Name</button>
+                                <button type="button" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">My Account</a></li>
+                                    <li><a href="#">View Profile</a></li>
+                                    <li><a href="#">Edit Profile</a></li>
+                                    <li><a href="#">Change Password</a></li>
+                                    <li><a href="#">Setting</a></li>
+                                    <li><a href="#">Logout</a></li>
+                                </ul>
+                            </li>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">
+                                        Log off
+                                        <span class="glyphicon glyphicon-log-out"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        }
+                    }
+                    else
+                    {
+                        
+                            <li>
+                                <a href="@Url.Action("Login", "User")">
+                                    <span class="glyphicon glyphicon-log-in"></span>
+                                    Login
+                                </a>
+                            </li>
+                        
+                    }
                 </ul>
             </div>
         </div>
     </div>
+
+
+    
     <div class="container body-content">
         @RenderBody()
         <hr />

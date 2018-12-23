@@ -9,18 +9,19 @@ namespace BetBet.Controllers
 {
     public class HomeController : Controller
     {
-        
+        [Authorize]
         public ActionResult Index()
         {
             User loggedInUser = (User)Session["LoggedInUser"];
 
-            if ( loggedInUser != null)
+            /*if ( loggedInUser != null)
             {
                 TempData["LoggedInUser"] = loggedInUser.Username;
                 return View();
             }
 
-            return RedirectToAction("Login", "User");
+            return RedirectToAction("Login", "User");*/
+            return View();
         }
 
         public ActionResult About()

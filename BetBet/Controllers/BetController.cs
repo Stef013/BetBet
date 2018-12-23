@@ -17,6 +17,7 @@ namespace BetBet.Controllers
         BetService betservice = new BetService();
         UserService userservice = new UserService();
 
+        [Authorize]
         [HttpGet]
         public ActionResult BetList()
         {
@@ -30,8 +31,8 @@ namespace BetBet.Controllers
                 BetViewModel betmodel = new BetViewModel();
 
                 betmodel.BetList = betList;
-                //------------------hier gebleven, zorgen dat lijst in de view komt dmv model.--------------------
-                return View(betmodel);
+                
+                return View(betList);
             }
             else
             {
@@ -39,41 +40,32 @@ namespace BetBet.Controllers
             }
         }
 
-        // GET: Bets/Create
+        [Authorize]
         [HttpGet]
         public ActionResult Create()
         {
             User loggedInUser = (User)Session["LoggedInUser"];
 
-            if (loggedInUser != null)
+            UpcomingMatch match = (UpcomingMatch)Session["SelectedMatch"];
+
+            bool betExists = betservice.CheckIfBetExists(match.MatchID, loggedInUser.UserID);
+
+            if (betExists == false)
             {
-                UpcomingMatch match = (UpcomingMatch)Session["SelectedMatch"];
-
-                bool betExists = betservice.CheckIfBetExists(match.MatchID, loggedInUser.UserID);
-
-                if (betExists == false)
+                BetViewModel newbet = new BetViewModel
                 {
-                    BetViewModel newbet = new BetViewModel
-                    {
-                        Match = match
-                    };
-                   
-                    return View(newbet);
-                }
-                else
-                {
-                    return RedirectToAction("UpcomingMatches", "Match");
-                }
+                    Match = match
+                };
+
+                return View(newbet);
             }
             else
             {
-                return RedirectToAction("Login", "User");
+                return RedirectToAction("UpcomingMatches", "Match");
             }
         }
 
-        // POST: Bets/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(BetViewModel bet)
