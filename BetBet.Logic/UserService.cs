@@ -73,7 +73,7 @@ namespace BetBet.Logic
             decimal newBalance = user.Balance + amount;
             user.Balance = newBalance;
 
-            userRep.UpdateBalance(user);
+            userRep.Update(user);
         }
 
         public void RemoveFunds(User user, decimal amount)
@@ -81,7 +81,7 @@ namespace BetBet.Logic
             decimal newBalance = user.Balance - amount;
             user.Balance = newBalance;
 
-            userRep.UpdateBalance(user);
+            userRep.Update(user);
         }
     }
 }

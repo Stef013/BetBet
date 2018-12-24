@@ -35,7 +35,7 @@ namespace BetBet.Data
             throw new NotImplementedException();
         }
 
-        public bool Update(Bet bet)
+        public void Update(Bet bet)
         {
             throw new NotImplementedException();
         }

@@ -70,12 +70,10 @@ namespace BetBet.Data
             }
             database.CloseConnection();
 
-            string hometeamName = GetTeamName(hometeamID);
-            string awayteamName = GetTeamName(awayteamID);
+            string hometeamName = teamrep.GetName(hometeamID);
+            string awayteamName = teamrep.GetName(awayteamID);
 
             UpcomingMatch match = new UpcomingMatch(matchID, hometeamID, awayteamID, hometeamName, awayteamName, 0, 0, 0, date);
-
-            
 
             return match;
         }
@@ -102,17 +100,7 @@ namespace BetBet.Data
             int id = database.GetInt(command);
 
             return id;
-        }
-
-        public string GetTeamName(int teamid)
-        {
-            string command = $"SELECT Teamname FROM teams WHERE TeamID = '{teamid}'";
-            string name = database.getString(command);
-
-            return name;
-        }
-
-        
+        }   
 
         public bool Delete(Match match)
         {
@@ -129,16 +117,15 @@ namespace BetBet.Data
             }
         }
 
-        public bool Update(Match match)
+        public void Update(Match match)
         {
             
-            return true;
+            //--------------------------------
         }
 
         public bool AddFinishedMatch(FinishedMatch match)
         {
-            string command = $"UPDATE matches SET `IsFinished`= {1},`ScoreHome`= {match.ScoreHome},`ScoreAway`= {match.ScoreAway},`CardsHome`= {match.CardsHome}," +
-                $"`CardsAway`= {match.CardsAway} WHERE MatchID = '{match.MatchID}'";
+            string command = $"UPDATE matches SET `IsFinished`= {1},`ScoreHome`= {match.ScoreHome},`ScoreAway`= {match.ScoreAway} WHERE MatchID = '{match.MatchID}'";
 
             database.ExecuteCMD(command);
             return true;
@@ -211,11 +198,10 @@ namespace BetBet.Data
                 DateTime date = (DateTime)reader["Date"];
                 int scoreHome = (int)reader["ScoreHome"];
                 int scoreAway = (int)reader["ScoreAway"];
-                int cardsHome = (int)reader["CardsHome"];
-                int cardsAway = (int)reader["CardsAway"];
+                
 
                 FinishedMatch match = new FinishedMatch(matchID, homeTeamID, awayTeamID, homeTeamName, awayTeamName, multiplierHome, multiplierAway, multiplierDraw, date, 
-                    scoreHome, scoreAway, cardsHome, cardsAway);
+                    scoreHome, scoreAway);
 
                 matchList.Add(match);
             }

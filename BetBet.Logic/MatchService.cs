@@ -11,6 +11,7 @@ namespace BetBet.Logic
     public class MatchService
     {
         MatchRepository matchrep = new MatchRepository();
+        TeamService teamservice = new TeamService();
 
         public bool CreateMatch(Match match)
         {
@@ -34,21 +35,19 @@ namespace BetBet.Logic
             return matchList;
         }
 
-        public FinishedMatch GenerateResult(UpcomingMatch match)
+        public void GenerateResult(UpcomingMatch match)
         {
             Random random = new Random();
 
             int scoreHome = random.Next(0, 5);
             int scoreAway = random.Next(0, 5);
-            int cardsHome = random.Next(0, 4);
-            int cardsAway = random.Next(0, 4);
 
             FinishedMatch finishedmatch = new FinishedMatch(match.MatchID, match.HomeTeamID, match.AwayTeamID, match.HomeTeamName, match.AwayTeamName, match.MultiplierHome,
-                match.MultiplierAway, match.MultiplierDraw, match.Date, scoreHome, scoreAway, cardsHome, cardsAway);
+                match.MultiplierAway, match.MultiplierDraw, match.Date, scoreHome, scoreAway);
 
             matchrep.AddFinishedMatch(finishedmatch);
+            teamservice.CalculatePoints(finishedmatch);
 
-            return finishedmatch;
         }
     }
 }

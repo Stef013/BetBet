@@ -42,22 +42,17 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">My Account</a></li>
-                                    <li><a href="#">View Profile</a></li>
-                                    <li><a href="#">Edit Profile</a></li>
-                                    <li><a href="#">Change Password</a></li>
-                                    <li><a href="#">Setting</a></li>
-                                    <li><a href="#">Logout</a></li>
+                                    <li>@Html.ActionLink("Matches", "UpcomingMatches", "Match")</li>
                                 </ul>
                             </li>
-                            <ul class="nav navbar-nav navbar-right">
+                            
                                 <li>
                                     <a href="javascript:document.getElementById('logoutForm').submit()">
                                         Log off
                                         <span class="glyphicon glyphicon-log-out"></span>
                                     </a>
                                 </li>
-                            </ul>
+                            
                         }
                     }
                     else

@@ -78,15 +78,6 @@ namespace BetBet.Data
             return balance;
         }
 
-        public void UpdateBalance(User user)
-        {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-
-            string command = $"UPDATE users SET Balance = '{user.Balance.ToString(CultureInfo.InvariantCulture)}' WHERE UserID = '{user.UserID}'";
-            database.ExecuteCMD(command);
-        }
-
-
         public bool Delete(User user)
         {
             if (user != null)
@@ -102,10 +93,12 @@ namespace BetBet.Data
             }
         }
 
-        public bool Update(User user)
+        public void Update(User user)
         {
-            //---------------------------------- moet nog code bij------------------------------------------------
-            return true;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
+            string command = $"UPDATE users SET Balance = '{user.Balance.ToString(CultureInfo.InvariantCulture)}' WHERE UserID = '{user.UserID}'";
+            database.ExecuteCMD(command);
         }
 
         public bool ComparePassword(string username, string password)

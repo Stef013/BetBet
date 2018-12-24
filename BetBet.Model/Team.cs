@@ -15,7 +15,7 @@ namespace BetBet.Model
         public int GamesWon { get; set; }
         public int GamesLost { get; set; }
         public int Draws { get; set; }
-        public int GoalsFor { get; set; }
+        public int Goals { get; set; }
         public int GoalsAgainst { get; set; }
         public int GoalSaldo { get; set; }
         public int Points { get; set; }

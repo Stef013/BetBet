@@ -11,6 +11,6 @@ namespace BetBet.Data
         int GetID(T obj);
         bool Create(T obj);
         bool Delete(T obj);
-        bool Update(T obj);
+        void Update(T obj);
     }
 }

@@ -18,7 +18,7 @@ namespace BetBet.Controllers
 
         User loggedInUser;
         
-        // GET: Match
+        
         [Authorize]
         public ActionResult UpcomingMatches()
         {
@@ -49,7 +49,6 @@ namespace BetBet.Controllers
 
         public ActionResult GetSelectedMatch(int count)
         {
-            //----------------------------------Fixen---------------------------------------------------
             UpcomingMatch match = (UpcomingMatch)TempData["Match" + count];
             Session["SelectedMatch"] = match;
             return RedirectToAction("Create", "Bet");
