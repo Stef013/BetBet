@@ -68,11 +68,11 @@ namespace BetBet.Data
             return result;
         }
 
-        public decimal GetBalance(User user)
+        public decimal GetBalance(int userID)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("nl-NL");
 
-            string command = $"SELECT Balance FROM users WHERE UserID = '{user.UserID}'";
+            string command = $"SELECT Balance FROM users WHERE UserID = '{userID}'";
             decimal balance = database.GetDecimal(command);
 
             return balance;

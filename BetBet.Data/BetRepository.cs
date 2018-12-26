@@ -40,28 +40,55 @@ namespace BetBet.Data
             throw new NotImplementedException();
         }
 
-        public List<Bet> GetBets(User user)
+        public List<Bet> GetBetsByUser(User user)
         {
-            List<Bet> TeamList = new List<Bet>();
+            List<Bet> BetList = new List<Bet>();
 
-            string command = $"SELECT * FROM Bets WHERE UserID = '{user.UserID}'";
+            string command = $"SELECT * FROM bets WHERE UserID = '{user.UserID}'";
             MySqlDataReader reader = database.ReadMysql(command);
 
             while (reader.Read())
             {
-                Enum.TryParse((string)reader["Prediction"], out PredictionEnum prediction);
+                Enum.TryParse((string)reader["Prediction"], out MatchResult prediction);
                 Bet bet = new Bet
                 {
+                    BetID = (int)reader["BetID"],
                     MatchID = (int)reader["MatchID"],
                     Amount = (decimal)reader["Amount"],
                     Prediction = prediction
 
                 };
-                TeamList.Add(bet);
+                BetList.Add(bet);
             }
 
             database.CloseConnection();
-            return TeamList;
+            return BetList;
+        }
+
+        public List<Bet> GetBetsByMatch(FinishedMatch match)
+        {
+            List<Bet> BetList = new List<Bet>();
+
+            string command = $"SELECT * FROM bets WHERE MatchID = '{match.MatchID}'";
+            MySqlDataReader reader = database.ReadMysql(command);
+
+            while (reader.Read())
+            {
+                Enum.TryParse((string)reader["Prediction"], out MatchResult prediction);
+                Bet bet = new Bet
+                {
+                    BetID = (int)reader["BetID"],
+                    UserID = (int)reader["UserID"],
+                    MatchID = (int)reader["MatchID"],
+                    Amount = (decimal)reader["Amount"],
+                    Prediction = prediction
+
+                };
+                BetList.Add(bet);
+            }
+
+            database.CloseConnection();
+            return BetList;
         }
 
         public int CheckBet(int matchID, int userID)

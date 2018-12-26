@@ -11,7 +11,9 @@ namespace BetBet.Logic
     public class BetService
     {
         BetRepository betrep = new BetRepository();
-        MatchRepository matchrep = new MatchRepository();
+        //MatchRepository matchrep = new MatchRepository();
+        MatchService matchservice;
+        UserService userservice;
 
         public bool CheckIfBetExists(int matchID, int userID)
         {
@@ -40,16 +42,55 @@ namespace BetBet.Logic
 
         public List<Bet> GetBetsFromUser(User user)
         {
-            List<Bet> betList = new List<Bet>();
+            matchservice = new MatchService();
 
-            betList = betrep.GetBets(user);
+            List<Bet> betList = new List<Bet>();
+            betList = betrep.GetBetsByUser(user);
 
             foreach (Bet bet in betList)
             {
-                bet.Match = matchrep.GetUpcomingMatch(bet.MatchID);
+                bet.Match = matchservice.GetUpcomingMatch(bet.MatchID);
             }
 
             return betList;
+        }
+
+        public void Payout (FinishedMatch match)
+        {
+            List<Bet> betList = new List<Bet>();
+
+            betList = betrep.GetBetsByMatch(match);
+
+            foreach (Bet bet in betList)
+            {
+                if (bet.Prediction == match.Result)
+                {
+                    userservice = new UserService();
+
+                    User user = new User
+                    {
+                        UserID = bet.UserID,
+                        Balance = userservice.GetBalance(bet.UserID)
+                    };
+
+                    if (bet.Prediction == MatchResult.HomeTeam)
+                    {
+                        bet.Amount = bet.Amount * match.MultiplierHome;
+                    }
+
+                    else if (bet.Prediction == MatchResult.AwayTeam)
+                    {
+                        bet.Amount = bet.Amount * match.MultiplierAway;
+                    }
+
+                    else
+                    {
+                        bet.Amount = bet.Amount * match.MultiplierDraw;
+                    }
+
+                    userservice.AddFunds(user, bet.Amount);
+                }
+            }
         }
     }
 }

@@ -46,7 +46,7 @@ namespace BetBet.Logic
             };
 
             user.UserID = userRep.GetID(user);
-            user.Balance = userRep.GetBalance(user);
+            user.Balance = userRep.GetBalance(user.UserID);
             user.IsAdmin = userRep.GetIsAdmin(user);
 
             return user;
@@ -66,6 +66,13 @@ namespace BetBet.Logic
 
                 return checkPassword;
             }
+        }
+
+        public decimal GetBalance (int userID)
+        {
+            decimal balance = userRep.GetBalance(userID);
+
+            return balance;
         }
 
         public void AddFunds(User user, decimal amount)

@@ -9,9 +9,10 @@ namespace BetBet.Model
     public class Enums
     {
         
+
     }
 
-    public enum PredictionEnum
+    public enum MatchResult
     {
         HomeTeam,
         AwayTeam,

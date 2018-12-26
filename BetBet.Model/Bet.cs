@@ -13,6 +13,6 @@ namespace BetBet.Model
         public int MatchID { get; set; }
         public UpcomingMatch Match { get; set; }
         public decimal Amount { get; set; }
-        public PredictionEnum Prediction { get; set; }
+        public MatchResult Prediction { get; set; }
     }
 }

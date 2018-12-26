@@ -11,7 +11,8 @@ namespace BetBet.Logic
     public class MatchService
     {
         MatchRepository matchrep = new MatchRepository();
-        TeamService teamservice = new TeamService();
+        TeamService teamservice;
+        BetService betservice;
 
         public bool CreateMatch(Match match)
         {
@@ -27,6 +28,14 @@ namespace BetBet.Logic
             return matchList;
         }
 
+        public UpcomingMatch GetUpcomingMatch(int matchID)
+        {
+            UpcomingMatch match;
+            match = matchrep.GetUpcomingMatch(matchID);
+
+            return match;
+        }
+
         public List<FinishedMatch> GetFinishedMatches()
         {
             List<FinishedMatch> matchList = new List<FinishedMatch>();
@@ -37,17 +46,40 @@ namespace BetBet.Logic
 
         public void GenerateResult(UpcomingMatch match)
         {
+            teamservice = new TeamService();
+            betservice = new BetService();
+
             Random random = new Random();
 
-            int scoreHome = random.Next(0, 5);
+            /*int scoreHome = random.Next(0, 5);
             int scoreAway = random.Next(0, 5);
 
+            MatchResult result;
+
+            if (scoreHome > scoreAway)
+            {
+                result = MatchResult.HomeTeam;
+            }
+            else if(scoreHome < scoreAway)
+            {
+                result = MatchResult.AwayTeam;
+            }
+            else
+            {
+                result = MatchResult.Draw;
+            }*/
+
+            int scoreHome = 3;
+            int scoreAway = 1;
+
+            MatchResult result = MatchResult.HomeTeam;
+
             FinishedMatch finishedmatch = new FinishedMatch(match.MatchID, match.HomeTeamID, match.AwayTeamID, match.HomeTeamName, match.AwayTeamName, match.MultiplierHome,
-                match.MultiplierAway, match.MultiplierDraw, match.Date, scoreHome, scoreAway);
+                match.MultiplierAway, match.MultiplierDraw, match.Date, scoreHome, scoreAway, result);
 
             matchrep.AddFinishedMatch(finishedmatch);
             teamservice.CalculatePoints(finishedmatch);
-
+            betservice.Payout(finishedmatch);
         }
     }
 }

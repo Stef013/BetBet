@@ -15,7 +15,7 @@ namespace BetBet.ViewModels
         [Display(Name = "Amount:")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Amount can't be empty")]
         public decimal Amount { get; set; }
-        public PredictionEnum Prediction { get; set; }
+        public MatchResult Prediction { get; set; }
         public List<Bet> BetList { get; set; }
     }
 }

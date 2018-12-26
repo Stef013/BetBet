@@ -41,9 +41,9 @@ else
                 <h2><b>@Model.Match.HomeTeamName - @Model.Match.AwayTeamName</b></h2><br />
 
                 <p><h4><b>Who will win the match?:</b></h4></p>
-                @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.HomeTeam)@Html.Label(Model.Match.HomeTeamName + "  (" + Model.Match.MultiplierHome + ")  ")
-                @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.Draw)@Html.Label("X" + "  (" + Model.Match.MultiplierDraw + ")  ")
-                @Html.RadioButtonFor(model => model.Prediction, PredictionEnum.AwayTeam)@Html.Label(Model.Match.AwayTeamName + "  (" + Model.Match.MultiplierAway + ")  ")<br />
+                @Html.RadioButtonFor(model => model.Prediction, MatchResult.HomeTeam)@Html.Label(Model.Match.HomeTeamName + "  (" + Model.Match.MultiplierHome + ")  ")
+                @Html.RadioButtonFor(model => model.Prediction, MatchResult.Draw)@Html.Label("X" + "  (" + Model.Match.MultiplierDraw + ")  ")
+                @Html.RadioButtonFor(model => model.Prediction, MatchResult.AwayTeam)@Html.Label(Model.Match.AwayTeamName + "  (" + Model.Match.MultiplierAway + ")  ")<br />
                 <br />
 
                 <div class="form-group">

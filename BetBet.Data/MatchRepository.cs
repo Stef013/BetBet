@@ -50,34 +50,6 @@ namespace BetBet.Data
             return result;
         }
 
-        public UpcomingMatch GetUpcomingMatch(int matchID)
-        {
-            int hometeamID = 0;
-            int awayteamID = 0;
-            DateTime date = Convert.ToDateTime("01-01-1900");
-
-            MySqlCommand command = new MySqlCommand("GetMatch");
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add("@matchID", MySqlDbType.Int32).Value = matchID;
-            
-            MySqlDataReader reader = database.Read(command);
-
-            while(reader.Read())
-            {
-                hometeamID = (int)reader["HomeTeamID"];
-                awayteamID = (int)reader["AwayTeamID"];
-                date = (DateTime)reader["Date"];
-            }
-            database.CloseConnection();
-
-            string hometeamName = teamrep.GetName(hometeamID);
-            string awayteamName = teamrep.GetName(awayteamID);
-
-            UpcomingMatch match = new UpcomingMatch(matchID, hometeamID, awayteamID, hometeamName, awayteamName, 0, 0, 0, date);
-
-            return match;
-        }
-
         public int GetID(Match match)
         {
             string command = $"SELECT MatchID FROM matchparticipants WHERE HomeTeam = '{match.HomeTeamID}' AND AwayTeam = {match.AwayTeamID}'";
@@ -125,10 +97,38 @@ namespace BetBet.Data
 
         public bool AddFinishedMatch(FinishedMatch match)
         {
-            string command = $"UPDATE matches SET `IsFinished`= {1},`ScoreHome`= {match.ScoreHome},`ScoreAway`= {match.ScoreAway} WHERE MatchID = '{match.MatchID}'";
+            string command = $"UPDATE matches SET `IsFinished`= {1},`ScoreHome`= {match.ScoreHome},`ScoreAway`= {match.ScoreAway}, `Result`= '{match.Result.ToString()}' WHERE MatchID = '{match.MatchID}'";
 
             database.ExecuteCMD(command);
             return true;
+        }
+
+        public UpcomingMatch GetUpcomingMatch(int matchID)
+        {
+            int hometeamID = 0;
+            int awayteamID = 0;
+            DateTime date = Convert.ToDateTime("01-01-1900");
+
+            MySqlCommand command = new MySqlCommand("GetMatch");
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@matchID", MySqlDbType.Int32).Value = matchID;
+
+            MySqlDataReader reader = database.Read(command);
+
+            while (reader.Read())
+            {
+                hometeamID = (int)reader["HomeTeamID"];
+                awayteamID = (int)reader["AwayTeamID"];
+                date = (DateTime)reader["Date"];
+            }
+            database.CloseConnection();
+
+            string hometeamName = teamrep.GetName(hometeamID);
+            string awayteamName = teamrep.GetName(awayteamID);
+
+            UpcomingMatch match = new UpcomingMatch(matchID, hometeamID, awayteamID, hometeamName, awayteamName, 0, 0, 0, date);
+
+            return match;
         }
 
         public List<UpcomingMatch> GetUpcomingMatches()
@@ -142,7 +142,6 @@ namespace BetBet.Data
             while (reader.Read())
             {
                 int matchID = (int)reader["MatchID"];
-
 
                 //De ID's en namen zet ik op null omdat ik ze nog niet kan ophalen uit de database omdat de datareader nog openstaat.
                 int homeTeamID = 0;
@@ -198,10 +197,10 @@ namespace BetBet.Data
                 DateTime date = (DateTime)reader["Date"];
                 int scoreHome = (int)reader["ScoreHome"];
                 int scoreAway = (int)reader["ScoreAway"];
-                
+                Enum.TryParse((string)reader["Result"], out MatchResult result);
 
                 FinishedMatch match = new FinishedMatch(matchID, homeTeamID, awayTeamID, homeTeamName, awayTeamName, multiplierHome, multiplierAway, multiplierDraw, date, 
-                    scoreHome, scoreAway);
+                    scoreHome, scoreAway, result);
 
                 matchList.Add(match);
             }
