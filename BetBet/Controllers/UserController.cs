@@ -14,11 +14,6 @@ namespace BetBet.Controllers
     {
         private UserService userservice = new UserService();
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         public ActionResult Create()
         {
@@ -109,13 +104,52 @@ namespace BetBet.Controllers
             return View();
         }
 
-
         [Authorize]
         [HttpPost]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "User");
+        }
+
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(SettingsViewModel settings)
+        {
+            bool status = false;
+            string message;
+
+            if (ModelState.IsValid)
+            {
+                User loggedInUser = (User)Session["LoggedInUser"];
+
+                bool oldPasswordCheck = userservice.ComparePassword(loggedInUser.Username, settings.OldPassword);
+
+                if (oldPasswordCheck == true)
+                {
+                    userservice.ChangePassword(loggedInUser.UserID, settings.NewPassword);
+                    status = true;
+                    message = "Password successfully changed!";
+                }
+                else
+                {
+                    message = "Current password is invalid";
+                }
+            }
+            else
+            {
+                message = "Invalid request";
+            }
+
+            ViewBag.Status = status;
+            ViewBag.Message = message;
+
+            return View();
         }
     }
 }

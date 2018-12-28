@@ -13,9 +13,8 @@ namespace BetBet.Controllers
 {
     public class MatchController : Controller
     {
-        TeamService teamservice = new TeamService();
         MatchService matchService = new MatchService();
-
+        TeamService teamservice;
         User loggedInUser;
         
         
@@ -54,17 +53,16 @@ namespace BetBet.Controllers
             return RedirectToAction("Create", "Bet");
         }
 
-
         [HttpGet]
         public ActionResult Create()
         {
             MatchViewModel mv = new MatchViewModel();
+            teamservice = new TeamService();
 
             List<Team> TeamList = new List<Team>();
             TeamList = teamservice.GetTeams();
 
             mv.TeamList = TeamList.ToList();
-
            
             return View(mv);
         }

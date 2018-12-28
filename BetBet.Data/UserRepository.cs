@@ -101,6 +101,12 @@ namespace BetBet.Data
             database.ExecuteCMD(command);
         }
 
+        public void ChangePassword(int userID, string password)
+        {
+            string command = $"UPDATE users SET Password = '{password}' WHERE UserID = '{userID}'";
+            database.ExecuteCMD(command);
+        }
+
         public bool ComparePassword(string username, string password)
         {
             string getPW = $"SELECT Password FROM Users WHERE Username = '{username}'";

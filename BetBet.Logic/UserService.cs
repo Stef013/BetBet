@@ -52,6 +52,12 @@ namespace BetBet.Logic
             return user;
         }
 
+        public void ChangePassword(int userid, string password)
+        {
+            password = Hash(password);
+            userRep.ChangePassword(userid, password);
+        }
+
         public bool ComparePassword(string username, string password)
         {
             if (string.IsNullOrEmpty(password) || string.IsNullOrWhiteSpace(password) 

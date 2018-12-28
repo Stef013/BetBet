@@ -20,8 +20,6 @@ namespace BetBet.ViewModels
         [MinLength(6, ErrorMessage = "Minimum 6 characters required")]
         public string Password { get; set; }
 
-
-        [NotMapped]
         [Display(Name = "Confirm Password")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Passwords do not match")]

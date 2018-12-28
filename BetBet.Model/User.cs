@@ -16,18 +16,6 @@ namespace BetBet.Model
         public decimal Balance { get; set; }
         public bool IsAdmin { get; set; }
 
-        /*public User (string username, string password)
-        {
-            Username = username;
-            Password = password;
-        }
-
-        public User (int userid, string username, decimal balance, bool isadmin)
-        {
-            UserID = userid;
-            Username = username;
-            Balance = balance;
-            IsAdmin = isadmin;
-        }*/
+        
     }
 }

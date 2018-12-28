@@ -163,6 +163,7 @@
     </Compile>
     <Compile Include="ViewModels\BetViewModel.cs" />
     <Compile Include="ViewModels\MatchViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\UserLoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -270,6 +271,7 @@
     <Content Include="Views\Match\UpcomingMatches.cshtml" />
     <Content Include="Views\Match\FinishedMatches.cshtml" />
     <Content Include="Views\Bet\BetList.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BetBet.Logic\BetBet.Logic.csproj">
