@@ -79,14 +79,14 @@ namespace BetBet.Controllers
 
             if (hometeamID != 0 && awayteamID != 0 && hometeamID != awayteamID)
             {
-                if (match.MultiplierTeamHome != 0 && match.MultiplierTeamAway != 0 && match.MultiplierDraw != 0)
+                if (match.MultiplierTeamHome > 1 && match.MultiplierTeamAway > 1 && match.MultiplierDraw > 1)
                 {
                     UpcomingMatch newMatch = new UpcomingMatch(hometeamID, awayteamID, match.MultiplierTeamHome, match.MultiplierTeamAway, match.MultiplierDraw, match.Date);
                     status = matchService.CreateMatch(newMatch);
 
                     if (status == true)
                     {
-                        message = "Match created successfully.";
+                        message = "Match created successfully!";
                     }
                     else
                     {
@@ -95,7 +95,7 @@ namespace BetBet.Controllers
                 }
                 else
                 {
-                    message = "Multipliers are invalid.";
+                    message = "Multipliers are invalid! The values must be greater than and decimals must be separated with a comma.";
                 }
                     
             }
@@ -104,10 +104,13 @@ namespace BetBet.Controllers
                 message = "Select 2 different teams.";
             }
 
+            teamservice = new TeamService();
+            match.TeamList = teamservice.GetTeams();
+
             ViewBag.Status = status;
             ViewBag.Message = message;
 
-            return View();
+            return View(match);
         }
     }
 }

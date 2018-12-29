@@ -44,6 +44,22 @@ namespace BetBet.Logic
             return matchList;
         }
 
+        public List<FinishedMatch> GetFinishedMatchesByTeam(int id)
+        {
+            List<FinishedMatch> matchList = matchrep.GetFinishedMatches();
+            List<FinishedMatch> TeamMatchList = new List<FinishedMatch>();
+
+            foreach(FinishedMatch match in matchList)
+            {
+                if (match.HomeTeamID == id || match.AwayTeamID == id)
+                {
+                    TeamMatchList.Add(match);
+                }                
+            }
+
+            return TeamMatchList;
+        }
+
         public void GenerateResult(UpcomingMatch match)
         {
             teamservice = new TeamService();
@@ -51,7 +67,7 @@ namespace BetBet.Logic
 
             Random random = new Random();
 
-            /*int scoreHome = random.Next(0, 5);
+            int scoreHome = random.Next(0, 5);
             int scoreAway = random.Next(0, 5);
 
             MatchResult result;
@@ -67,12 +83,7 @@ namespace BetBet.Logic
             else
             {
                 result = MatchResult.Draw;
-            }*/
-
-            int scoreHome = 3;
-            int scoreAway = 1;
-
-            MatchResult result = MatchResult.HomeTeam;
+            }
 
             FinishedMatch finishedmatch = new FinishedMatch(match.MatchID, match.HomeTeamID, match.AwayTeamID, match.HomeTeamName, match.AwayTeamName, match.MultiplierHome,
                 match.MultiplierAway, match.MultiplierDraw, match.Date, scoreHome, scoreAway, result);

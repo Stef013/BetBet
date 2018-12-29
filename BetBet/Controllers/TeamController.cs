@@ -12,19 +12,38 @@ namespace BetBet.Controllers
     public class TeamController : Controller
     {
         TeamService teamservice = new TeamService();
-
-        public ActionResult Index()
-        {
-            return View();
-        }
+        MatchService matchservice;
 
         public ActionResult Ranking()
         {
-            List<Team> TeamList = new List<Team>();
+            RankingViewModel vmodel = new RankingViewModel();
+            vmodel.TeamList = teamservice.GetTeams();
+            return View(vmodel);
+        }
 
-            TeamList = teamservice.GetTeams();
+        public ActionResult Details(int id)
+        {
+            matchservice = new MatchService();
+            Team team = teamservice.GetTeam(id);
 
-            return View(TeamList);
+            TeamViewModel vmodel = new TeamViewModel
+            {
+                TeamID = team.TeamID,
+                TeamName = team.TeamName,
+                City = team.City,
+                GamesPlayed = team.GamesPlayed,
+                GamesWon = team.GamesWon,
+                Draws = team.Draws,
+                GamesLost = team.GamesLost,
+                GoalsFor = team.GoalsFor,
+                GoalsAgainst = team.GoalsAgainst,
+                GoalDifferential = team.GoalDifferential,
+                Points = team.Points,
+            };
+
+            vmodel.MatchList = matchservice.GetFinishedMatchesByTeam(id);
+
+            return View(vmodel);
         }
     }
 }

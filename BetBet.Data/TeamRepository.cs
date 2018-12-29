@@ -30,6 +30,35 @@ namespace BetBet.Data
             return result;
         }
 
+        public Team GetTeam(int id)
+        {
+            Team team = new Team();
+
+            string command = $"SELECT * FROM teams WHERE TeamID = '{id}'";
+            MySqlDataReader reader = database.ReadMysql(command);
+
+            while (reader.Read())
+            {
+                team = new Team
+                {
+                    TeamID = (int)reader["TeamID"],
+                    TeamName = (string)reader["TeamName"],
+                    City = (string)reader["City"],
+                    GamesPlayed = (int)reader["GamesPlayed"],
+                    GamesWon = (int)reader["GamesWon"],
+                    Draws = (int)reader["Draws"],
+                    GamesLost = (int)reader["GamesLost"],
+                    GoalsFor = (int)reader["GoalsFor"],
+                    GoalsAgainst = (int)reader["GoalsAgainst"],
+                    GoalDifferential = (int)reader["GoalDifferential"],
+                    Points = (int)reader["Points"],
+                };
+            }
+
+            database.CloseConnection();
+            return team;
+        }
+
         public List<Team> GetTeams()
         {
             List<Team> TeamList = new List<Team>();
@@ -48,9 +77,9 @@ namespace BetBet.Data
                     GamesWon = (int)reader["GamesWon"],
                     Draws = (int)reader["Draws"],
                     GamesLost = (int)reader["GamesLost"],
-                    Goals = (int)reader["Goals"],
+                    GoalsFor = (int)reader["GoalsFor"],
                     GoalsAgainst = (int)reader["GoalsAgainst"],
-                    GoalSaldo = (int)reader["GoalSaldo"],
+                    GoalDifferential = (int)reader["GoalDifferential"],
                     Points = (int)reader["Points"],
                 };
                 TeamList.Add(team);
@@ -78,15 +107,15 @@ namespace BetBet.Data
                 team.GamesWon = team.GamesWon + (int)reader["GamesWon"];
                 team.Draws = team.Draws + (int)reader["Draws"];
                 team.GamesLost = team.GamesLost + (int)reader["GamesLost"];
-                team.Goals = team.Goals + (int)reader["Goals"];
+                team.GoalsFor = team.GoalsFor + (int)reader["GoalsFor"];
                 team.GoalsAgainst = team.GoalsAgainst + (int)reader["GoalsAgainst"];
-                team.GoalSaldo = team.Goals - team.GoalsAgainst;
+                team.GoalDifferential = team.GoalsFor - team.GoalsAgainst;
                 team.Points = team.Points + (int)reader["Points"];
             }
 
             database.CloseConnection();
 
-            string UpdateTeam = $"UPDATE teams SET GamesPlayed = '{team.GamesPlayed}', GamesWon ='{team.GamesWon}', Draws = '{team.Draws}', GamesLost = '{team.GamesLost}', Goals = '{team.Goals}', GoalsAgainst = '{team.GoalsAgainst}', GoalSaldo = '{team.GoalSaldo}', Points = '{team.Points}' WHERE TeamID = '{team.TeamID}'";
+            string UpdateTeam = $"UPDATE teams SET GamesPlayed = '{team.GamesPlayed}', GamesWon ='{team.GamesWon}', Draws = '{team.Draws}', GamesLost = '{team.GamesLost}', GoalsFor = '{team.GoalsFor}', GoalsAgainst = '{team.GoalsAgainst}', GoalDifferential = '{team.GoalDifferential}', Points = '{team.Points}' WHERE TeamID = '{team.TeamID}'";
             database.ExecuteCMD(UpdateTeam);
 
         }

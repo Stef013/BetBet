@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BetBet.Model.Team>
+﻿@model BetBet.ViewModels.RankingViewModel
 
 @{
     ViewBag.Title = "Ranking";
@@ -9,7 +9,7 @@
 <table class="table">
     <tr>
         <th>
-            Place
+            Pos
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TeamName)
@@ -21,10 +21,10 @@
             @Html.DisplayNameFor(model => model.GamesWon)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GamesLost)
+            @Html.DisplayNameFor(model => model.Draws)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Draws)
+            @Html.DisplayNameFor(model => model.GamesLost)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.GoalsFor)
@@ -33,7 +33,7 @@
             @Html.DisplayNameFor(model => model.GoalsAgainst)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GoalSaldo)
+            @Html.DisplayNameFor(model => model.GoalDifferential)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Points)
@@ -41,7 +41,7 @@
     </tr>
     @{int count = 0;}
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.TeamList)
     {
         count++;
         <tr>
@@ -49,7 +49,7 @@
                 @count
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TeamName)
+                @Html.ActionLink(item.TeamName, "Details", new { id = item.TeamID })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GamesPlayed)
@@ -58,10 +58,10 @@
                 @Html.DisplayFor(modelItem => item.GamesWon)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GamesLost)
+                @Html.DisplayFor(modelItem => item.Draws)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Draws)
+                @Html.DisplayFor(modelItem => item.GamesLost)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GoalsFor)
@@ -70,7 +70,7 @@
                 @Html.DisplayFor(modelItem => item.GoalsAgainst)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GoalSaldo)
+                @Html.DisplayFor(modelItem => item.GoalDifferential)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Points)

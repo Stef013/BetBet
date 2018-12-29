@@ -12,6 +12,14 @@ namespace BetBet.Logic
     {
         TeamRepository TeamRep = new TeamRepository();
 
+        public Team GetTeam(int id)
+        {
+            Team team = new Team();
+            team = TeamRep.GetTeam(id);
+
+            return team;
+        }
+
         public List<Team> GetTeams ()
         {
             List<Team> TeamList = new List<Team>();
@@ -53,7 +61,7 @@ namespace BetBet.Logic
             Team hometeam = new Team
             {
                 TeamID = match.HomeTeamID,
-                Goals = match.ScoreHome,
+                GoalsFor = match.ScoreHome,
                 GoalsAgainst = match.ScoreAway,
                 GamesWon = homeWin,
                 GamesLost = homeLoss,
@@ -64,7 +72,7 @@ namespace BetBet.Logic
             Team awayteam = new Team
             {
                 TeamID = match.AwayTeamID,
-                Goals = match.ScoreAway,
+                GoalsFor = match.ScoreAway,
                 GoalsAgainst = match.ScoreHome,
                 GamesWon = awayWin,
                 GamesLost = awayLoss,
