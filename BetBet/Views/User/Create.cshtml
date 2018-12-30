@@ -7,7 +7,7 @@
 }
 
 <h2>Create Account</h2>
-@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+@if (ViewBag.Status == true && Convert.ToBoolean(ViewBag.Status))
 {
     if (ViewBag.Message != null)
     {

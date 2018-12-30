@@ -25,7 +25,7 @@ namespace BetBet.ViewModels
         [Compare("NewPassword", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-        [Display(Name = "Amount:")]
+        [Display(Name = "Amount: ")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Amount can't be empty")]
         public decimal Funds { get; set; }
     }

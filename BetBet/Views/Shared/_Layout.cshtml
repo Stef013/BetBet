@@ -27,44 +27,33 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Matches", "UpcomingMatches", "Match")</li>
-                    <li>@Html.ActionLink("Bets", "BetList", "Bet")</li>
-                    <li>@Html.ActionLink("Ranking", "Ranking", "Team")</li>
                     @if (Request.IsAuthenticated)
                     {
+                        <li>@Html.ActionLink("Matches", "UpcomingMatches", "Match")</li>
+                        <li>@Html.ActionLink("Bets", "BetList", "Bet")</li>
+                        <li>@Html.ActionLink("Ranking", "Ranking", "Team")</li>
+                        <li>@Html.ActionLink("Account", "AccountSettings", "User")</li>
+
                         using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                         {
                             @Html.AntiForgeryToken()
-                            <li class="btn-group nav">
-                                <button type="button" class="btn navbar-btn" style="background-color:forestgreen">@User.Identity.Name</button>
-                                <button type="button" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">
-                                    <span class="caret"></span>
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>@Html.ActionLink("Matches", "UpcomingMatches", "Match")</li>
-                                </ul>
-                            </li>
                             
-                                <li>
-                                    <a href="javascript:document.getElementById('logoutForm').submit()">
-                                        Log off
-                                        <span class="glyphicon glyphicon-log-out"></span>
-                                    </a>
-                                </li>
-                            
+                            <li>
+                                <a href="javascript:document.getElementById('logoutForm').submit()">
+                                    Log off
+                                    <span class="glyphicon glyphicon-log-out"></span>
+                                </a>
+                            </li>                            
                         }
                     }
                     else
                     {
-                        
-                            <li>
-                                <a href="@Url.Action("Login", "User")">
-                                    <span class="glyphicon glyphicon-log-in"></span>
-                                    Login
-                                </a>
-                            </li>
-                        
+                        <li>
+                            <a href="@Url.Action("Login", "User")">
+                                <span class="glyphicon glyphicon-log-in"></span>
+                                Login
+                            </a>
+                        </li>
                     }
                 </ul>
             </div>

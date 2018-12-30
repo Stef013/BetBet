@@ -112,8 +112,9 @@ namespace BetBet.Controllers
             return RedirectToAction("Login", "User");
         }
 
+        [Authorize]
         [HttpGet]
-        public ActionResult ChangePassword()
+        public ActionResult AccountSettings()
         {
             return View();
         }
@@ -149,7 +150,47 @@ namespace BetBet.Controllers
             ViewBag.Status = status;
             ViewBag.Message = message;
 
-            return View();
+            return View("AccountSettings");
         }
+
+        [HttpPost]
+        public ActionResult UpdateBalance(string DepositButton, string WithdrawButton, SettingsViewModel settings)
+        {
+            bool status = false;
+            string message;
+            User loggedInUser = (User)Session["LoggedInUser"];
+
+            if (DepositButton != null )
+            {
+
+                userservice.AddFunds(loggedInUser, settings.Funds);
+                loggedInUser.Balance = loggedInUser.Balance + settings.Funds;
+                status = true;
+                message = "Funds added to you account balance.";
+            }
+            else if (WithdrawButton != null)
+            {
+                if (settings.Funds < loggedInUser.Balance)
+                {
+                    userservice.RemoveFunds(loggedInUser, settings.Funds);
+                    loggedInUser.Balance = loggedInUser.Balance - settings.Funds;
+                    status = true;
+                    message = "Funds removed from your account balance.";
+                }
+                else
+                {
+                    message = "Can't withdraw more than your balance.";
+                }
+            }
+            else
+            {
+                message = "Invalid request";
+            }
+            
+            ViewBag.Status = status;
+            ViewBag.Message = message;
+            return View("AccountSettings");
+        }
+        
     }
 }
