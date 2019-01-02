@@ -78,19 +78,14 @@ namespace BetBet.Data
             return balance;
         }
 
-        public bool Delete(User user)
+        public bool Delete(int id)
         {
-            if (user != null)
-            {
-                int id = GetID(user);
-                string command = $"DELETE * Where UserID =  '{id}'";
-                database.ExecuteCMD(command);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            string command = $"DELETE * Where UserID =  '{id}'";
+            bool result = database.ExecuteCMD(command);
+
+            return result;
+
+
         }
 
         public void Update(User user)

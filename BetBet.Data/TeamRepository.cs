@@ -91,7 +91,7 @@ namespace BetBet.Data
 
         
 
-        public bool Delete(Team team)
+        public bool Delete(int id)
         {
             return true;
         }

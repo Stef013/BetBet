@@ -8,9 +8,10 @@ namespace BetBet.Data
 {
     public interface IRepository<T>  where T : class
     {
-        int GetID(T obj);
         bool Create(T obj);
-        bool Delete(T obj);
+        //List<T> Read(T obj);
+        int GetID(T obj);
         void Update(T obj);
+        bool Delete(int id);
     }
 }

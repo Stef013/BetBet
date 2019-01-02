@@ -123,5 +123,30 @@ namespace BetBet.Controllers
 
             return View(bet);
         }
+
+        public ActionResult Delete(int betID, decimal amount)
+        {
+            bool status = false;
+            string message;
+
+            User loggedInUser = (User)Session["LoggedInUser"];
+
+            bool isDeleted = betservice.DeleteBet(betID, amount, loggedInUser);
+            
+            if (isDeleted == true)
+            {
+                status = true;
+                message = "Bet successfully deleted , placed funds have been returned to your account.";
+            }
+            else
+            {
+                message = "Database Error!";
+            }
+
+            ViewBag.Status = status;
+            ViewBag.Message = message;
+
+            return RedirectToAction("BetList");
+        }
     }
 }

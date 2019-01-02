@@ -9,11 +9,17 @@
             $('.datepicker').datepicker(); //Initialise any date pickers
         });
     </script>
+
+    <script type="text/javascript">
+        ShowModelPopUp = function () {
+            window.showModalDialog('/Bet/OpenModelPopup', "WindowPopup", 'width=400px,height=400px');
+        }
+    </script>
+
     @Styles.Render("~/css/bootstrap.css")
     @Scripts.Render("~/css/modern-business.css")
-
-
 </head>
+
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -59,8 +65,6 @@
             </div>
         </div>
     </div>
-
-
     
     <div class="container body-content">
         @RenderBody()

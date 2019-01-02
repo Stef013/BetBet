@@ -6,23 +6,10 @@ using System.Threading.Tasks;
 
 namespace BetBet.Model
 {
-    public class Enums
-    {
-        
-
-    }
-
     public enum MatchResult
     {
         HomeTeam,
         AwayTeam,
-        Draw,
-    }
-
-    public enum MatchResultEnum
-    {
-        Win,
-        Loss,
         Draw,
     }
 }

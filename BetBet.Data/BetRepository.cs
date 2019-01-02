@@ -17,17 +17,27 @@ namespace BetBet.Data
         public bool Create(Bet bet)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-
-            //----------------------------Prediction value insert fixen-------------------------------------------\\
+            
             string command = $"INSERT INTO bets (MatchID, UserID, Amount, Prediction) VALUES ('{bet.MatchID}','{bet.UserID}','{bet.Amount.ToString(CultureInfo.InvariantCulture)}','{bet.Prediction.ToString()}')";
             bool result = database.ExecuteCMD(command);
 
             return result;
         }
 
-        public bool Delete(Bet bet)
+        public int DeleteBetValidation(int userID, int betID)
         {
-            throw new NotImplementedException();
+            string command = $"SELECT BetID FROM bets WHERE UserID = '{userID}' AND BetID = '{betID}'";
+            int result = database.GetInt(command);
+
+            return result;
+        }
+
+        public bool Delete(int id)
+        {
+            string command = $"DELETE FROM bets WHERE BetID = '{id}'";
+            bool result = database.ExecuteCMD(command);
+
+            return result;        
         }
 
         public int GetID(Bet bet)
@@ -99,5 +109,7 @@ namespace BetBet.Data
 
             return result;
         }
+
+        
     }
 }

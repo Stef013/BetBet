@@ -40,6 +40,31 @@ namespace BetBet.Logic
             return result;
         }
 
+        public bool DeleteBet(int betID, decimal amount, User user)
+        {
+            int isAuthorized = betrep.DeleteBetValidation(user.UserID, betID);
+            bool success;
+
+            if (isAuthorized != 0)
+            {
+                success = betrep.Delete(betID);
+
+                if (success == true)
+                {
+                    userservice = new UserService();
+                    userservice.AddFunds(user, amount);
+                }
+                
+            }
+            else
+            {
+                success = false;
+            }
+
+            return success;
+        }
+
+
         public List<Bet> GetBetsFromUser(User user)
         {
             matchservice = new MatchService();

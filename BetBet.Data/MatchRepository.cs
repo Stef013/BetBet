@@ -74,19 +74,12 @@ namespace BetBet.Data
             return id;
         }   
 
-        public bool Delete(Match match)
+        public bool Delete(int id)
         {
-            if (match != null)
-            {
-                int id = GetID(match);
-                string command = $"DELETE * FROM match Where MatchID =  '{id}'";
-                database.ExecuteCMD(command);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            string command = $"DELETE * FROM match Where MatchID =  '{id}'";
+            database.ExecuteCMD(command);
+            return true;
+
         }
 
         public void Update(Match match)

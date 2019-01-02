@@ -1,13 +1,28 @@
 ﻿
-
 @{
     ViewBag.Title = "BetList";
 }
 
 
-
 <h2><b>Bets</b></h2>
 
+
+@*-------------------------------Viewbag fixen en zorgen dat finished bets in apparte tabel komen-----------------------------*@
+@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+{
+    if (ViewBag.Status == true)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong>@ViewBag.Message
+        </div>
+    }
+    if (ViewBag.Status == false)
+    {
+        <div class="alert alert-danger">
+            <strong>Error!</strong>@ViewBag.Message
+        </div>
+    }
+}
 
 <table class="table">
     <tr>
@@ -38,8 +53,8 @@
 
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "Delete", new { betID = item.BetID, amount = item.Amount })
+
             </td>
         </tr>
     }
