@@ -12,7 +12,7 @@ namespace BetBet.Model
         {
 
         }
-        public UpcomingMatch(int matchID, int hometeamID, int awayteamID, string hometeamname, string awayteamname, decimal multiplierhome, decimal multiplieraway, decimal multiplierdraw, DateTime date) : base(matchID, hometeamID, awayteamID, hometeamname, awayteamname, multiplierhome, multiplieraway, multiplierdraw, date)
+        public UpcomingMatch(int matchID, Team homeTeam, Team awayTeam, decimal multiplierhome, decimal multiplieraway, decimal multiplierdraw, DateTime date) : base(matchID, homeTeam, awayTeam, multiplierhome, multiplieraway, multiplierdraw, date)
         {
 
         }

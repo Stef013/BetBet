@@ -5,96 +5,90 @@
 }
 
 
-<div>
+
     <h1>@Html.DisplayFor(model => model.TeamName)</h1>
     <h3>@Html.DisplayFor(model => model.City)</h3>
     <hr />
 
     <div class="row">
-        <div style="float: left">
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.GamesPlayed)
-                </dt>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.GamesPlayed)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.GamesPlayed)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.GamesPlayed)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.GamesWon)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.GamesWon)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.GamesWon)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.GamesWon)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.GamesLost)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.GamesLost)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.GamesLost)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.GamesLost)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Draws)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Draws)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Draws)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Draws)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.GoalsFor)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.GoalsFor)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.GoalsFor)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.GoalsFor)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.GoalsAgainst)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.GoalsAgainst)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.GoalsAgainst)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.GoalsAgainst)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.GoalDifferential)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.GoalDifferential)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.GoalDifferential)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.GoalDifferential)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Points)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Points)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Points)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Points)
+            </dd>
 
-            </dl>
-            <br />
+        </dl>
+        <br />
 
-        </div>
-        <div style="float: right">
-            <h4><b>Latest Matches</b></h4>
-            @foreach (var item in Model.MatchList)
-            {
-                <h5>@item.Date.ToShortDateString() @item.HomeTeamName @item.ScoreHome - @item.ScoreAway @item.AwayTeamName</h5>
-            }
+    </div>    
+        
+ <h4><b>Latest Matches</b></h4>
+@foreach (var item in Model.MatchList)
+ {
+      <h5>@item.Date.ToShortDateString() @item.HomeTeam.TeamName @item.ScoreHome - @item.ScoreAway @item.AwayTeam.TeamName</h5>
+ }           
 
-        </div>
-    </div>
-    
 
-   
-
-</div>
+<br />
 <p>
     @Html.ActionLink("Back to Ranking", "Ranking")
 </p>

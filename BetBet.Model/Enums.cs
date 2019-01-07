@@ -10,6 +10,12 @@ namespace BetBet.Model
     {
         HomeTeam,
         AwayTeam,
-        Draw,
+        Draw
+    }
+
+    public enum BetResult
+    {
+        Won,
+        Lost
     }
 }

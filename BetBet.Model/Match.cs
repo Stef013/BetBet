@@ -9,6 +9,8 @@ namespace BetBet.Model
     public abstract class Match
     {
         public int MatchID { get; set; }
+        public Team HomeTeam { get; set; }
+        public Team AwayTeam { get; set; }
         public int HomeTeamID { get; set; }
         public int AwayTeamID { get; set; }
         public string HomeTeamName { get; set; }
@@ -29,13 +31,11 @@ namespace BetBet.Model
             Date = date;
         }
 
-        public Match(int matchID, int hometeamID, int awayteamID, string hometeamname, string awayteamname, decimal multiplierteamhome, decimal multiplierteamaway, decimal multiplierdraw, DateTime date)
+        public Match(int matchID, Team homeTeam, Team awayTeam, decimal multiplierteamhome, decimal multiplierteamaway, decimal multiplierdraw, DateTime date)
         {
             MatchID = matchID;
-            HomeTeamID = hometeamID;
-            AwayTeamID = awayteamID;
-            HomeTeamName = hometeamname;
-            AwayTeamName = awayteamname;
+            HomeTeam = homeTeam;
+            AwayTeam = awayTeam;
             MultiplierHome = multiplierteamhome;
             MultiplierAway = multiplierteamaway;
             MultiplierDraw = multiplierdraw;

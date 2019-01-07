@@ -261,11 +261,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Bet\Create.cshtml" />
-    <Content Include="Views\Bet\Delete.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Team\Ranking.cshtml" />
@@ -273,7 +270,6 @@
     <Content Include="Views\Match\UpcomingMatches.cshtml" />
     <Content Include="Views\Match\FinishedMatches.cshtml" />
     <Content Include="Views\Bet\BetList.cshtml" />
-    <Content Include="Views\User\AccountSettings1.cshtml" />
     <Content Include="Views\Team\Details.cshtml" />
     <Content Include="Views\User\AccountSettings.cshtml" />
   </ItemGroup>
@@ -300,9 +296,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Test\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

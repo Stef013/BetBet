@@ -17,7 +17,12 @@ namespace BetBet.Controllers
         public ActionResult Ranking()
         {
             RankingViewModel vmodel = new RankingViewModel();
-            vmodel.TeamList = teamservice.GetTeams();
+            List<Team> teamList = teamservice.GetTeams();
+
+            teamList = teamList.OrderByDescending(P => P.Points).ThenByDescending(G => G.GoalDifferential).ToList();
+
+            vmodel.TeamList = teamList;
+
             return View(vmodel);
         }
 

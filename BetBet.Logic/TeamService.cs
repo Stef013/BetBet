@@ -60,7 +60,7 @@ namespace BetBet.Logic
 
             Team hometeam = new Team
             {
-                TeamID = match.HomeTeamID,
+                TeamID = match.HomeTeam.TeamID,
                 GoalsFor = match.ScoreHome,
                 GoalsAgainst = match.ScoreAway,
                 GamesWon = homeWin,
@@ -71,7 +71,7 @@ namespace BetBet.Logic
 
             Team awayteam = new Team
             {
-                TeamID = match.AwayTeamID,
+                TeamID = match.AwayTeam.TeamID,
                 GoalsFor = match.ScoreAway,
                 GoalsAgainst = match.ScoreHome,
                 GamesWon = awayWin,

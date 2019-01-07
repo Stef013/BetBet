@@ -164,7 +164,6 @@ namespace BetBet.Controllers
             {
 
                 userservice.AddFunds(loggedInUser, settings.Funds);
-                loggedInUser.Balance = loggedInUser.Balance + settings.Funds;
                 status = true;
                 message = "Funds added to you account balance.";
             }
@@ -173,7 +172,6 @@ namespace BetBet.Controllers
                 if (settings.Funds < loggedInUser.Balance)
                 {
                     userservice.RemoveFunds(loggedInUser, settings.Funds);
-                    loggedInUser.Balance = loggedInUser.Balance - settings.Funds;
                     status = true;
                     message = "Funds removed from your account balance.";
                 }

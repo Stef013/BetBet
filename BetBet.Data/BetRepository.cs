@@ -42,12 +42,16 @@ namespace BetBet.Data
 
         public int GetID(Bet bet)
         {
-            throw new NotImplementedException();
+            string command = $"SELECT BetID FROM bets WHERE UserID = '{bet.UserID}' AND MatchID = '{bet.MatchID}'";
+            int id = database.GetInt(command);
+
+            return id;
         }
 
         public void Update(Bet bet)
         {
-            throw new NotImplementedException();
+            string command = $"UPDATE `bets` SET `HasEnded`= '{1}',`Result`= '{bet.Result.ToString()}',`Earned`= '{bet.Earned}' WHERE BetID = '{bet.BetID}'";
+            database.ExecuteCMD(command);
         }
 
         public List<Bet> GetBetsByUser(User user)
@@ -60,12 +64,16 @@ namespace BetBet.Data
             while (reader.Read())
             {
                 Enum.TryParse((string)reader["Prediction"], out MatchResult prediction);
+                Enum.TryParse((string)reader["Result"], out BetResult result);
                 Bet bet = new Bet
                 {
                     BetID = (int)reader["BetID"],
                     MatchID = (int)reader["MatchID"],
                     Amount = (decimal)reader["Amount"],
-                    Prediction = prediction
+                    Prediction = prediction,
+                    HasEnded = (bool)reader["HasEnded"],
+                    Result = result,
+                    Earned = (decimal)reader["Earned"]
 
                 };
                 BetList.Add(bet);
@@ -85,13 +93,18 @@ namespace BetBet.Data
             while (reader.Read())
             {
                 Enum.TryParse((string)reader["Prediction"], out MatchResult prediction);
+                Enum.TryParse((string)reader["Result"], out BetResult result);
                 Bet bet = new Bet
                 {
                     BetID = (int)reader["BetID"],
                     UserID = (int)reader["UserID"],
                     MatchID = (int)reader["MatchID"],
                     Amount = (decimal)reader["Amount"],
-                    Prediction = prediction
+                    Prediction = prediction,
+                    HasEnded = (bool)reader["HasEnded"],
+                    Result = result,
+                    Earned = (decimal)reader["Earned"]
+
 
                 };
                 BetList.Add(bet);
@@ -109,7 +122,5 @@ namespace BetBet.Data
 
             return result;
         }
-
-        
     }
 }

@@ -1,29 +1,14 @@
-﻿
+﻿@using BetBet.Model;
+
 @{
     ViewBag.Title = "BetList";
 }
 
-
 <h2><b>Bets</b></h2>
 
 
-@*-------------------------------Viewbag fixen en zorgen dat finished bets in apparte tabel komen-----------------------------*@
-@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
-{
-    if (ViewBag.Status == true)
-    {
-        <div class="alert alert-success">
-            <strong>Success!</strong>@ViewBag.Message
-        </div>
-    }
-    if (ViewBag.Status == false)
-    {
-        <div class="alert alert-danger">
-            <strong>Error!</strong>@ViewBag.Message
-        </div>
-    }
-}
-
+<h3>Current bets</h3>
+<hr />
 <table class="table">
     <tr>
         <th>
@@ -33,30 +18,88 @@
             Match
         </th>
         <th>
-            Amount
+            Amount Placed
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        if (item.Match is UpcomingMatch)
+        {
+            <tr>
+                <td>
+                    @item.Match.Date.ToShortDateString()
+                </td>
+                <td>
+                    @item.Match.HomeTeam.TeamName - @item.Match.AwayTeam.TeamName
+                </td>
+                <td>
+                    € @item.Amount
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { betID = item.BetID, amount = item.Amount })
+                </td>
+            </tr>
+        }
+
+    }
+
+</table>
+<hr />
+<br />
+
+<h3>Ended bets</h3>
+<hr />
+<table class="table">
+    <tr>
+        <th>
+            Date
+        </th>
+        <th>
+            Match
+        </th>
+        <th>
+            Amount Placed
+        </th>
+        <th>
+            Result
+        </th>
+        <th>
+            Amount Earned
         </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @item.Match.Date.ToShortDateString()
-            </td>
-            <td>
-                @item.Match.HomeTeamName - @item.Match.AwayTeamName
-            </td>
-            <td>
-                € @item.Amount
-            </td>
+        if (item.Match is FinishedMatch)
+        {
+            <tr>
+                <td>
+                    @item.Match.Date.ToShortDateString()
+                </td>
+                <td>
+                    @item.Match.HomeTeam.TeamName @item.Match.ScoreHome - @item.Match.ScoreAway @item.Match.AwayTeam.TeamName
+                </td>
+                <td>
+                    € @item.Amount
+                </td>
+                <td>
+                    @item.Result.ToString()
+                </td>
+                <td>
+                    € @item.Earned
+                </td>
 
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { betID = item.BetID, amount = item.Amount })
-
-            </td>
-        </tr>
+            </tr>
+        }
     }
 
 </table>
+
+
+

@@ -74,7 +74,14 @@ namespace BetBet.Logic
 
             foreach (Bet bet in betList)
             {
-                bet.Match = matchservice.GetUpcomingMatch(bet.MatchID);
+                if (bet.HasEnded == true)
+                {
+                    bet.Match = matchservice.GetFinishedMatch(bet.MatchID);
+                }
+                else
+                {
+                    bet.Match = matchservice.GetUpcomingMatch(bet.MatchID);
+                }
             }
 
             return betList;
@@ -100,20 +107,30 @@ namespace BetBet.Logic
 
                     if (bet.Prediction == MatchResult.HomeTeam)
                     {
-                        bet.Amount = bet.Amount * match.MultiplierHome;
+                        bet.Earned = bet.Amount * match.MultiplierHome;
                     }
 
                     else if (bet.Prediction == MatchResult.AwayTeam)
                     {
-                        bet.Amount = bet.Amount * match.MultiplierAway;
+                        bet.Earned = bet.Amount * match.MultiplierAway;
                     }
 
                     else
                     {
-                        bet.Amount = bet.Amount * match.MultiplierDraw;
+                        bet.Earned = bet.Amount * match.MultiplierDraw;
                     }
 
-                    userservice.AddFunds(user, bet.Amount);
+                    bet.Result = BetResult.Won;
+
+                    betrep.Update(bet);
+                    userservice.AddFunds(user, bet.Earned);
+                }
+                else
+                {
+                    bet.Result = BetResult.Lost;
+                    bet.Earned = 0;
+
+                    betrep.Update(bet);
                 }
             }
         }

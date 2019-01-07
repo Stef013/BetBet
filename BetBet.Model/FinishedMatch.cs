@@ -12,8 +12,8 @@ namespace BetBet.Model
         public int ScoreAway { get; set; }
         public MatchResult Result { get; set; } 
 
-        public FinishedMatch (int matchID, int hometeamID, int awayteamID, string hometeamname, string awayteamname, decimal multiplierhome, decimal multiplieraway, decimal multiplierdraw, 
-            DateTime date, int scoreteamhome, int scoreteamaway, MatchResult result) : base(matchID, hometeamID, awayteamID, hometeamname, awayteamname, multiplierhome, multiplieraway, multiplierdraw, date)
+        public FinishedMatch (int matchID, Team homeTeam, Team awayTeam, decimal multiplierhome, decimal multiplieraway, decimal multiplierdraw, 
+            DateTime date, int scoreteamhome, int scoreteamaway, MatchResult result) : base(matchID, homeTeam, awayTeam, multiplierhome, multiplieraway, multiplierdraw, date)
         {
             ScoreHome = scoreteamhome;
             ScoreAway = scoreteamaway;

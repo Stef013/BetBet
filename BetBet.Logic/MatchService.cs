@@ -36,6 +36,14 @@ namespace BetBet.Logic
             return match;
         }
 
+        public FinishedMatch GetFinishedMatch(int matchID)
+        {
+            FinishedMatch match;
+            match = matchrep.GetFinishedMatch(matchID);
+
+            return match;
+        }
+
         public List<FinishedMatch> GetFinishedMatches()
         {
             List<FinishedMatch> matchList = new List<FinishedMatch>();
@@ -51,7 +59,7 @@ namespace BetBet.Logic
 
             foreach(FinishedMatch match in matchList)
             {
-                if (match.HomeTeamID == id || match.AwayTeamID == id)
+                if (match.HomeTeam.TeamID == id || match.AwayTeam.TeamID == id)
                 {
                     TeamMatchList.Add(match);
                 }                
@@ -85,7 +93,7 @@ namespace BetBet.Logic
                 result = MatchResult.Draw;
             }
 
-            FinishedMatch finishedmatch = new FinishedMatch(match.MatchID, match.HomeTeamID, match.AwayTeamID, match.HomeTeamName, match.AwayTeamName, match.MultiplierHome,
+            FinishedMatch finishedmatch = new FinishedMatch(match.MatchID, match.HomeTeam, match.AwayTeam, match.MultiplierHome,
                 match.MultiplierAway, match.MultiplierDraw, match.Date, scoreHome, scoreAway, result);
 
             matchrep.AddFinishedMatch(finishedmatch);

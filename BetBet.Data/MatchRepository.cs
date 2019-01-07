@@ -85,7 +85,7 @@ namespace BetBet.Data
         public void Update(Match match)
         {
             
-            //--------------------------------
+            //-----------------------------
         }
 
         public bool AddFinishedMatch(FinishedMatch match)
@@ -98,9 +98,12 @@ namespace BetBet.Data
 
         public UpcomingMatch GetUpcomingMatch(int matchID)
         {
-            int hometeamID = 0;
-            int awayteamID = 0;
             DateTime date = Convert.ToDateTime("01-01-1900");
+            Team homeTeam = new Team();
+            Team awayTeam = new Team();
+            decimal multiplierHome = 0;
+            decimal multiplierAway = 0;
+            decimal multiplierDraw = 0;
 
             MySqlCommand command = new MySqlCommand("GetMatch");
             command.CommandType = CommandType.StoredProcedure;
@@ -110,16 +113,20 @@ namespace BetBet.Data
 
             while (reader.Read())
             {
-                hometeamID = (int)reader["HomeTeamID"];
-                awayteamID = (int)reader["AwayTeamID"];
+                homeTeam.TeamID = (int)reader["HomeTeamID"];
+                awayTeam.TeamID = (int)reader["AwayTeamID"];
+                multiplierHome = (decimal)reader["MultiplierHome"];
+                multiplierAway = (decimal)reader["MultiplierAway"];
+                multiplierDraw = (decimal)reader["MultiplierDraw"];
                 date = (DateTime)reader["Date"];
             }
+
             database.CloseConnection();
 
-            string hometeamName = teamrep.GetName(hometeamID);
-            string awayteamName = teamrep.GetName(awayteamID);
+            homeTeam.TeamName = teamrep.GetName(homeTeam.TeamID);
+            awayTeam.TeamName= teamrep.GetName(awayTeam.TeamID);
 
-            UpcomingMatch match = new UpcomingMatch(matchID, hometeamID, awayteamID, hometeamName, awayteamName, 0, 0, 0, date);
+            UpcomingMatch match = new UpcomingMatch(matchID, homeTeam , awayTeam, multiplierHome, multiplierAway, multiplierDraw, date);
 
             return match;
         }
@@ -136,18 +143,15 @@ namespace BetBet.Data
             {
                 int matchID = (int)reader["MatchID"];
 
-                //De ID's en namen zet ik op null omdat ik ze nog niet kan ophalen uit de database omdat de datareader nog openstaat.
-                int homeTeamID = 0;
-                int awayTeamID = 0;
-                string homeTeamName = null;
-                string awayTeamName = null;
+                Team homeTeam = new Team();
+                Team awayTeam = new Team();
                
                 decimal multiplierHome = (decimal)reader["MultiplierHome"];
                 decimal multiplierAway = (decimal)reader["MultiplierAway"];
                 decimal multiplierDraw = (decimal)reader["MultiplierDraw"];
                 DateTime date = (DateTime)reader["Date"];
                 
-                UpcomingMatch match = new UpcomingMatch(matchID, homeTeamID, awayTeamID, homeTeamName, awayTeamName, multiplierHome, multiplierAway, multiplierDraw, date);
+                UpcomingMatch match = new UpcomingMatch(matchID, homeTeam, awayTeam, multiplierHome, multiplierAway, multiplierDraw, date);
                
                 matchList.Add(match);
             }
@@ -157,10 +161,10 @@ namespace BetBet.Data
             //Hier worden de ID's en namen van de teams uit de database gehaald en in de lijst geplaatst.
             foreach (UpcomingMatch m in matchList)
             {
-                m.HomeTeamID = GetHomeTeamID(m.MatchID);
-                m.AwayTeamID = GetAwayTeamID(m.MatchID);
-                m.HomeTeamName = teamrep.GetName(m.HomeTeamID);
-                m.AwayTeamName = teamrep.GetName(m.AwayTeamID);
+                m.HomeTeam.TeamID = GetHomeTeamID(m.MatchID);
+                m.AwayTeam.TeamID = GetAwayTeamID(m.MatchID);
+                m.HomeTeam.TeamName = teamrep.GetName(m.HomeTeam.TeamID);
+                m.AwayTeam.TeamName = teamrep.GetName(m.AwayTeam.TeamID);
             }
             return matchList;
         }
@@ -177,12 +181,8 @@ namespace BetBet.Data
             {
                 int matchID = (int)reader["MatchID"];
 
-
-                //De ID's en namen zet ik op null omdat ik ze nog niet kan ophalen uit de database omdat de datareader nog openstaat.
-                int homeTeamID = 0;
-                int awayTeamID = 0;
-                string homeTeamName = null;
-                string awayTeamName = null;
+                Team homeTeam = new Team();
+                Team awayTeam = new Team();
 
                 decimal multiplierHome = (decimal)reader["MultiplierHome"];
                 decimal multiplierAway = (decimal)reader["MultiplierAway"];
@@ -192,9 +192,8 @@ namespace BetBet.Data
                 int scoreAway = (int)reader["ScoreAway"];
                 Enum.TryParse((string)reader["Result"], out MatchResult result);
 
-                FinishedMatch match = new FinishedMatch(matchID, homeTeamID, awayTeamID, homeTeamName, awayTeamName, multiplierHome, multiplierAway, multiplierDraw, date, 
-                    scoreHome, scoreAway, result);
-
+                FinishedMatch match = new FinishedMatch(matchID, homeTeam, awayTeam, multiplierHome, multiplierAway, multiplierDraw, date, scoreHome, scoreAway, result);
+                
                 matchList.Add(match);
             }
 
@@ -203,14 +202,52 @@ namespace BetBet.Data
             //Hier worden de ID's en namen van de teams uit de database gehaald en in de lijst geplaatst.
             foreach (FinishedMatch m in matchList)
             {
-                m.HomeTeamID = GetHomeTeamID(m.MatchID);
-                m.AwayTeamID = GetAwayTeamID(m.MatchID);
-                m.HomeTeamName = teamrep.GetName(m.HomeTeamID);
-                m.AwayTeamName = teamrep.GetName(m.AwayTeamID);
+                m.HomeTeam.TeamID = GetHomeTeamID(m.MatchID);
+                m.AwayTeam.TeamID = GetAwayTeamID(m.MatchID);
+                m.HomeTeam.TeamName = teamrep.GetName(m.HomeTeam.TeamID);
+                m.AwayTeam.TeamName = teamrep.GetName(m.AwayTeam.TeamID);
             }
             return matchList;
         }
 
+        public FinishedMatch GetFinishedMatch(int matchID)
+        {
+            DateTime date = Convert.ToDateTime("01-01-1900");
+            Team homeTeam = new Team();
+            Team awayTeam = new Team();
+            decimal multiplierHome = 0;
+            decimal multiplierAway = 0;
+            decimal multiplierDraw = 0;
+            int scoreHome = 0;
+            int scoreAway = 0;
+            MatchResult result = 0;
 
+
+            string command = $"SELECT * FROM matches WHERE IsFinished = '1' AND MatchID = '{matchID}'";
+
+            MySqlDataReader reader = database.ReadMysql(command);
+
+            while (reader.Read())
+            {
+                multiplierHome = (decimal)reader["MultiplierHome"];
+                multiplierAway = (decimal)reader["MultiplierAway"];
+                multiplierDraw = (decimal)reader["MultiplierDraw"];
+                date = (DateTime)reader["Date"];
+                scoreHome = (int)reader["ScoreHome"];
+                scoreAway = (int)reader["ScoreAway"];
+                Enum.TryParse((string)reader["Result"], out result);
+            }
+
+            database.CloseConnection();
+
+            homeTeam.TeamID = GetHomeTeamID(matchID);
+            awayTeam.TeamID = GetAwayTeamID(matchID);
+            homeTeam.TeamName = teamrep.GetName(homeTeam.TeamID);
+            awayTeam.TeamName = teamrep.GetName(awayTeam.TeamID);
+
+            FinishedMatch match = new FinishedMatch(matchID, homeTeam, awayTeam, multiplierHome, multiplierAway, multiplierDraw, date, scoreHome, scoreAway, result);
+                            
+            return match;
+        }
     }
 }
