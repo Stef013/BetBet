@@ -23,12 +23,19 @@ namespace BetBet.Controllers
         {
             loggedInUser = (User)Session["LoggedInUser"];
 
-            List<UpcomingMatch> matchList = new List<UpcomingMatch>();
-            matchList = matchService.GetUpcomingMatches();
+            if (loggedInUser != null)
+            {
+                List<UpcomingMatch> matchList = new List<UpcomingMatch>();
+                matchList = matchService.GetUpcomingMatches();
 
-            TempData["IsAdmin"] = loggedInUser.IsAdmin;
+                TempData["IsAdmin"] = loggedInUser.IsAdmin;
 
-            return View(matchList);
+                return View(matchList);
+            }
+            else
+            {
+                return RedirectToAction("Login", "User");
+            }
         }
 
         public ActionResult FinishedMatches()

@@ -16,12 +16,11 @@ namespace BetBet.Controllers
 
             if ( loggedInUser != null)
             {
-                TempData["LoggedInUser"] = loggedInUser.Username;
+                
                 return View();
             }
 
             return RedirectToAction("Login", "User");
-            //return View();
         }
         
     }

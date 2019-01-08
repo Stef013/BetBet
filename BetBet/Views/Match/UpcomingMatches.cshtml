@@ -10,9 +10,6 @@
 </div>
 <hr />
 
-
-
-
 @{
     bool IsAdmin = (bool)TempData["IsAdmin"];
 
@@ -47,7 +44,7 @@
             <div class="row">
 
                 <div ALIGN="center">
-                    <h3><b>@item.HomeTeamName vs @item.AwayTeamName</b></h3>
+                    <h3><b>@item.HomeTeam.TeamName - @item.AwayTeam.TeamName</b></h3>
                     <h4><b>@item.Date.ToShortDateString()</b></h4>
                     <a href="@Url.Action("GetSelectedMatch", "Match", new RouteValueDictionary { { "count", count} })" class="btn btn-default">Bet</a>
                 </div>

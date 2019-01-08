@@ -116,7 +116,18 @@ namespace BetBet.Controllers
         [HttpGet]
         public ActionResult AccountSettings()
         {
-            return View();
+            User loggedInUser = (User)Session["loggedInUser"];
+
+            if (loggedInUser != null)
+            {
+                TempData["IsAdmin"] = loggedInUser.IsAdmin;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "User");
+            }
+
         }
 
         [HttpPost]

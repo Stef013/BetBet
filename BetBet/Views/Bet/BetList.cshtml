@@ -21,6 +21,9 @@
             Amount Placed
         </th>
         <th>
+            Prediction
+        </th>
+        <th>
 
         </th>
     </tr>
@@ -30,20 +33,23 @@
     {
         if (item.Match is UpcomingMatch)
         {
-            <tr>
-                <td>
-                    @item.Match.Date.ToShortDateString()
-                </td>
-                <td>
-                    @item.Match.HomeTeam.TeamName - @item.Match.AwayTeam.TeamName
-                </td>
-                <td>
-                    € @item.Amount
-                </td>
-                <td>
-                    @Html.ActionLink("Delete", "Delete", new { betID = item.BetID, amount = item.Amount })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @item.Match.Date.ToShortDateString()
+            </td>
+            <td>
+                @item.Match.HomeTeam.TeamName - @item.Match.AwayTeam.TeamName
+            </td>
+            <td>
+                € @item.Amount
+            </td>
+            <td>
+                  @item.Prediction.ToString()
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { betID = item.BetID, amount = item.Amount })
+            </td>
+        </tr>
         }
 
     }
@@ -64,6 +70,9 @@
         </th>
         <th>
             Amount Placed
+        </th>
+        <th>
+            Prediction
         </th>
         <th>
             Result
@@ -89,7 +98,10 @@
                     € @item.Amount
                 </td>
                 <td>
-                    @item.Result.ToString()
+                      @item.Prediction.ToString()
+                </td>
+                <td>
+                      @item.Result.ToString()
                 </td>
                 <td>
                     € @item.Earned

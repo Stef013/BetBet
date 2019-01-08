@@ -38,8 +38,9 @@ namespace BetBet.Data
             connection.Close();
         }
 
-        public void ExecuteCMD(MySqlCommand command)
+        public bool ExecuteCMD(MySqlCommand command)
         {
+            bool result;
             command.Connection = connection;
             
             using (command)
@@ -47,17 +48,20 @@ namespace BetBet.Data
                 try
                 {
                     OpenConnectionIfClosed();
-                    command.ExecuteNonQuery();         
+                    command.ExecuteNonQuery();
+                    result = true;
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
+                    result = false;
                 }
                 finally
                 {
                     connection.Close();
                 }
-            }             
+            }
+            return result;
         }
 
         public bool ExecuteCMD(string command)
@@ -85,16 +89,18 @@ namespace BetBet.Data
             return result;
         }
 
-        public int ExecuteAndGetID(string command)
+        public int ExecuteAndGetID(MySqlCommand command)
         {
             int id = 0;
-            using (MySqlCommand cmd = new MySqlCommand(command, connection))
+            command.Connection = connection;
+
+            using (command)
             {
                 try
                 {
                     OpenConnectionIfClosed();
-                    cmd.ExecuteNonQuery();
-                    id = (int)cmd.LastInsertedId;
+                    command.ExecuteNonQuery();
+                    id = (int)command.LastInsertedId;
                 }
                 catch (Exception ex)
                 {
@@ -105,18 +111,25 @@ namespace BetBet.Data
                     connection.Close();
                 }
             }
+
+            
+
+
             return id;
         }
 
-        public string getString(string command)
+        public string getString(MySqlCommand command)
         {
+            command.Connection = connection;
+
             string result = null;
-            using (MySqlCommand cmd = new MySqlCommand(command, connection))
+
+            using (command)
             {
                 try
                 {
                     OpenConnectionIfClosed();
-                    result = (string)cmd.ExecuteScalar();
+                    result = (string)command.ExecuteScalar();
                 }
                 catch (Exception ex)
                 {
@@ -130,16 +143,18 @@ namespace BetBet.Data
             return result;
         }
 
-        public int GetInt(string command)
+        public int GetInt(MySqlCommand command)
         {
             int result = 0;
 
-            using (MySqlCommand cmd = new MySqlCommand(command, connection))
+            command.Connection = connection;
+
+            using (command)
             {
                 try
                 {
                     OpenConnectionIfClosed();
-                    result = (int)cmd.ExecuteScalar();
+                    result = (int)command.ExecuteScalar();
                 }
                 catch (Exception ex)
                 {
@@ -153,16 +168,18 @@ namespace BetBet.Data
             return result;
         }
 
-        public decimal GetDecimal(string command)
+        public decimal GetDecimal(MySqlCommand command)
         {
+            command.Connection = connection;
+
             decimal result = 0;
 
-            using (MySqlCommand cmd = new MySqlCommand(command, connection))
+            using (command)
             {
                 try
                 {
                     OpenConnectionIfClosed();
-                    result = (decimal)cmd.ExecuteScalar();
+                    result = (decimal)command.ExecuteScalar();
                 }
                 catch (Exception ex)
                 {

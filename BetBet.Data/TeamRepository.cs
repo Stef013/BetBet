@@ -8,23 +8,19 @@ using BetBet.Model;
 
 namespace BetBet.Data
 {
-    public class TeamRepository : IRepository<Team>
+    public class TeamRepository
     {
         BetBetDB database = new BetBetDB();
 
-        public bool Create(Team team)
-        {
-            return true;
-        }
-
-        public int GetID(Team team)
-        {
-            return 1;
-        }
+        
 
         public string GetName(int id)
         {
-            string command = $"SELECT TeamName FROM teams WHERE TeamID = '{id}'";
+            //string command = $"SELECT TeamName FROM teams WHERE TeamID = '{id}'";
+
+            MySqlCommand command = new MySqlCommand(@"SELECT TeamName FROM teams WHERE TeamID = @teamid;");
+            command.Parameters.AddWithValue("@teamid", id);
+            
             string result = database.getString(command);
 
             return result;
@@ -34,8 +30,12 @@ namespace BetBet.Data
         {
             Team team = new Team();
 
-            string command = $"SELECT * FROM teams WHERE TeamID = '{id}'";
-            MySqlDataReader reader = database.ReadMysql(command);
+            //string command = $"SELECT * FROM teams WHERE TeamID = '{id}'";
+
+            MySqlCommand command = new MySqlCommand(@"SELECT * FROM teams WHERE TeamID = @teamid;");
+            command.Parameters.AddWithValue("@teamid", id);
+
+            MySqlDataReader reader = database.Read(command);
 
             while (reader.Read())
             {
@@ -63,8 +63,10 @@ namespace BetBet.Data
         {
             List<Team> TeamList = new List<Team>();
 
-            string command = $"SELECT * FROM teams";
-            MySqlDataReader reader = database.ReadMysql(command);
+            //string command = $"SELECT * FROM teams";
+
+            MySqlCommand command = new MySqlCommand(@"SELECT * FROM teams");
+            MySqlDataReader reader = database.Read(command);
             
             while (reader.Read())
             {
@@ -89,17 +91,12 @@ namespace BetBet.Data
             return TeamList;
         }
 
-        
-
-        public bool Delete(int id)
-        {
-            return true;
-        }
-
         public void Update (Team team)
         {
-            string getTeam = $"SELECT * FROM teams WHERE TeamID = '{team.TeamID}'";
-            MySqlDataReader reader = database.ReadMysql(getTeam);
+            MySqlCommand getTeam = new MySqlCommand(@"SELECT * FROM teams WHERE TeamID = @teamid;");
+            getTeam.Parameters.AddWithValue("@teamid", team.TeamID);
+            //string getTeam = $"SELECT * FROM teams WHERE TeamID = '{team.TeamID}'";
+            MySqlDataReader reader = database.Read(getTeam);
 
             while (reader.Read())
             {
@@ -115,9 +112,20 @@ namespace BetBet.Data
 
             database.CloseConnection();
 
-            string UpdateTeam = $"UPDATE teams SET GamesPlayed = '{team.GamesPlayed}', GamesWon ='{team.GamesWon}', Draws = '{team.Draws}', GamesLost = '{team.GamesLost}', GoalsFor = '{team.GoalsFor}', GoalsAgainst = '{team.GoalsAgainst}', GoalDifferential = '{team.GoalDifferential}', Points = '{team.Points}' WHERE TeamID = '{team.TeamID}'";
-            database.ExecuteCMD(UpdateTeam);
+            MySqlCommand UpdateTeam = new MySqlCommand(@"UPDATE teams SET GamesPlayed = @gamesplayed, GamesWon = @gameswon, Draws = @draws, GamesLost = @gameslost, GoalsFor = @goalsfor, GoalsAgainst = @goalsagainst, GoalDifferential = @goaldifferential, Points = @points WHERE TeamID = @teamid;");
+            UpdateTeam.Parameters.AddWithValue("@gamesplayed", team.GamesPlayed);
+            UpdateTeam.Parameters.AddWithValue("@gameswon", team.GamesWon);
+            UpdateTeam.Parameters.AddWithValue("@draws", team.Draws);
+            UpdateTeam.Parameters.AddWithValue("@gameslost", team.GamesLost);
+            UpdateTeam.Parameters.AddWithValue("@goalsfor", team.GoalsFor);
+            UpdateTeam.Parameters.AddWithValue("@goalsagainst", team.GoalsAgainst);
+            UpdateTeam.Parameters.AddWithValue("@goaldifferential", team.GoalDifferential);
+            UpdateTeam.Parameters.AddWithValue("@points", team.Points);
+            UpdateTeam.Parameters.AddWithValue("@teamid", team.TeamID);
 
+
+            //string UpdateTeam = $"UPDATE teams SET GamesPlayed = '{team.GamesPlayed}', GamesWon ='{team.GamesWon}', Draws = '{team.Draws}', GamesLost = '{team.GamesLost}', GoalsFor = '{team.GoalsFor}', GoalsAgainst = '{team.GoalsAgainst}', GoalDifferential = '{team.GoalDifferential}', Points = '{team.Points}' WHERE TeamID = '{team.TeamID}'";
+            database.ExecuteCMD(UpdateTeam);
         }
     }
 }

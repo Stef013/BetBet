@@ -10,15 +10,21 @@ using System.Threading.Tasks;
 
 namespace BetBet.Data
 {
-    public class BetRepository : IRepository<Bet>
+    public class BetRepository : IRepository<Bet, Bet>
     {
         BetBetDB database = new BetBetDB();
 
         public bool Create(Bet bet)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-            
-            string command = $"INSERT INTO bets (MatchID, UserID, Amount, Prediction) VALUES ('{bet.MatchID}','{bet.UserID}','{bet.Amount.ToString(CultureInfo.InvariantCulture)}','{bet.Prediction.ToString()}')";
+
+            MySqlCommand command = new MySqlCommand(@"INSERT INTO bets(MatchID, UserID, Amount, Prediction) VALUES(@matchid, @userid, @amount, @prediction)");
+            command.Parameters.AddWithValue("@matchid", bet.MatchID);
+            command.Parameters.AddWithValue("@userid", bet.UserID);
+            command.Parameters.AddWithValue("@amount", bet.Amount.ToString(CultureInfo.InvariantCulture));
+            command.Parameters.AddWithValue("@prediction", bet.Prediction.ToString());
+
+            //string command = $"INSERT INTO bets (MatchID, UserID, Amount, Prediction) VALUES ('{bet.MatchID}','{bet.UserID}','{bet.Amount.ToString(CultureInfo.InvariantCulture)}','{bet.Prediction.ToString()}')";
             bool result = database.ExecuteCMD(command);
 
             return result;
@@ -26,7 +32,11 @@ namespace BetBet.Data
 
         public int DeleteBetValidation(int userID, int betID)
         {
-            string command = $"SELECT BetID FROM bets WHERE UserID = '{userID}' AND BetID = '{betID}'";
+            MySqlCommand command = new MySqlCommand(@"SELECT BetID FROM bets WHERE UserID = @userid AND BetID = @betid;");
+            command.Parameters.AddWithValue("@userid", userID);
+            command.Parameters.AddWithValue("@betid", betID);
+
+            //string command = $"SELECT BetID FROM bets WHERE UserID = '{userID}' AND BetID = '{betID}'";
             int result = database.GetInt(command);
 
             return result;
@@ -34,7 +44,10 @@ namespace BetBet.Data
 
         public bool Delete(int id)
         {
-            string command = $"DELETE FROM bets WHERE BetID = '{id}'";
+            MySqlCommand command = new MySqlCommand(@"DELETE FROM bets WHERE BetID = @id");
+            command.Parameters.AddWithValue("@id", id);
+
+            //string command = $"DELETE FROM bets WHERE BetID = '{id}'";
             bool result = database.ExecuteCMD(command);
 
             return result;        
@@ -42,7 +55,10 @@ namespace BetBet.Data
 
         public int GetID(Bet bet)
         {
-            string command = $"SELECT BetID FROM bets WHERE UserID = '{bet.UserID}' AND MatchID = '{bet.MatchID}'";
+            MySqlCommand command = new MySqlCommand(@"DELETE FROM bets WHERE BetID = @id");
+            command.Parameters.AddWithValue("@id", bet.BetID);
+
+            //string command = $"SELECT BetID FROM bets WHERE UserID = '{bet.UserID}' AND MatchID = '{bet.MatchID}'";
             int id = database.GetInt(command);
 
             return id;
@@ -50,7 +66,13 @@ namespace BetBet.Data
 
         public void Update(Bet bet)
         {
-            string command = $"UPDATE `bets` SET `HasEnded`= '{1}',`Result`= '{bet.Result.ToString()}',`Earned`= '{bet.Earned}' WHERE BetID = '{bet.BetID}'";
+            MySqlCommand command = new MySqlCommand(@"UPDATE bets SET `HasEnded`= @hasended,`Result`= @result,`Earned`= @earned WHERE BetID = @betid;");
+            command.Parameters.AddWithValue("@hasended", 1);
+            command.Parameters.AddWithValue("@result", bet.Result.ToString());
+            command.Parameters.AddWithValue("@earned", bet.Earned);
+            command.Parameters.AddWithValue("@betid", bet.BetID);
+
+            //string command = $"UPDATE `bets` SET `HasEnded`= '{1}',`Result`= '{bet.Result.ToString()}',`Earned`= '{bet.Earned}' WHERE BetID = '{bet.BetID}'";
             database.ExecuteCMD(command);
         }
 
@@ -58,8 +80,11 @@ namespace BetBet.Data
         {
             List<Bet> BetList = new List<Bet>();
 
-            string command = $"SELECT * FROM bets WHERE UserID = '{user.UserID}'";
-            MySqlDataReader reader = database.ReadMysql(command);
+            MySqlCommand command = new MySqlCommand(@"SELECT * FROM bets WHERE UserID = @userid;");
+            command.Parameters.AddWithValue("@userid", user.UserID);
+
+            //string command = $"SELECT * FROM bets WHERE UserID = '{user.UserID}'";
+            MySqlDataReader reader = database.Read(command);
 
             while (reader.Read())
             {
@@ -87,8 +112,11 @@ namespace BetBet.Data
         {
             List<Bet> BetList = new List<Bet>();
 
-            string command = $"SELECT * FROM bets WHERE MatchID = '{match.MatchID}'";
-            MySqlDataReader reader = database.ReadMysql(command);
+            MySqlCommand command = new MySqlCommand(@"SELECT * FROM bets WHERE MatchID = @matchid;");
+            command.Parameters.AddWithValue("@matchid", match.MatchID);
+
+            //string command = $"SELECT * FROM bets WHERE MatchID = '{match.MatchID}'";
+            MySqlDataReader reader = database.Read(command);
 
             while (reader.Read())
             {
@@ -116,7 +144,11 @@ namespace BetBet.Data
 
         public int CheckBet(int matchID, int userID)
         {
-            string command = $"SELECT BetID FROM bets WHERE MatchID = '{matchID}' AND UserID = '{userID}'";
+            MySqlCommand command = new MySqlCommand(@"SELECT BetID FROM bets WHERE MatchID = @matchid AND UserID = @userid;");
+            command.Parameters.AddWithValue("@matchid", matchID);
+            command.Parameters.AddWithValue("@userid", userID);
+
+           // string command = $"SELECT BetID FROM bets WHERE MatchID = '{matchID}' AND UserID = '{userID}'";
 
             int result = database.GetInt(command);
 

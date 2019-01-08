@@ -23,7 +23,8 @@ namespace BetBet.Logic
         public List<UpcomingMatch> GetUpcomingMatches()
         {
             List<UpcomingMatch> matchList = new List<UpcomingMatch>();
-            matchList = matchrep.GetUpcomingMatches();
+            int isFinished = 0;
+            matchList = matchrep.GetUpcomingMatches(isFinished);
 
             return matchList;
         }
@@ -47,14 +48,16 @@ namespace BetBet.Logic
         public List<FinishedMatch> GetFinishedMatches()
         {
             List<FinishedMatch> matchList = new List<FinishedMatch>();
-            matchList = matchrep.GetFinishedMatches();
+            int isFinished = 1;
+            matchList = matchrep.GetFinishedMatches(isFinished);
 
             return matchList;
         }
 
         public List<FinishedMatch> GetFinishedMatchesByTeam(int id)
         {
-            List<FinishedMatch> matchList = matchrep.GetFinishedMatches();
+            int isFinished = 1;
+            List<FinishedMatch> matchList = matchrep.GetFinishedMatches(isFinished);
             List<FinishedMatch> TeamMatchList = new List<FinishedMatch>();
 
             foreach(FinishedMatch match in matchList)
@@ -96,7 +99,7 @@ namespace BetBet.Logic
             FinishedMatch finishedmatch = new FinishedMatch(match.MatchID, match.HomeTeam, match.AwayTeam, match.MultiplierHome,
                 match.MultiplierAway, match.MultiplierDraw, match.Date, scoreHome, scoreAway, result);
 
-            matchrep.AddFinishedMatch(finishedmatch);
+            matchrep.Update(finishedmatch);
             teamservice.CalculatePoints(finishedmatch);
             betservice.Payout(finishedmatch);
         }
