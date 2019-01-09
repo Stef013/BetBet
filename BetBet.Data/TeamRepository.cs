@@ -8,7 +8,7 @@ using BetBet.Model;
 
 namespace BetBet.Data
 {
-    public class TeamRepository
+    public class TeamRepository : ITeamRepository
     {
         BetBetDB database = new BetBetDB();
 

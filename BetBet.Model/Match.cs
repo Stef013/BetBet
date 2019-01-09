@@ -13,8 +13,6 @@ namespace BetBet.Model
         public Team AwayTeam { get; set; }
         public int HomeTeamID { get; set; }
         public int AwayTeamID { get; set; }
-        public string HomeTeamName { get; set; }
-        public string AwayTeamName { get; set; }
         public decimal MultiplierHome { get; set; }
         public decimal MultiplierAway { get; set; }
         public decimal MultiplierDraw { get; set; }

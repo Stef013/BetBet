@@ -11,7 +11,7 @@ using MySql.Data.MySqlClient;
 
 namespace BetBet.Data
 {
-    public class MatchRepository : IRepository<Match, FinishedMatch>
+    public class MatchRepository : IMatchRepository
     {
         BetBetDB database = new BetBetDB();
         TeamRepository teamrep = new TeamRepository();

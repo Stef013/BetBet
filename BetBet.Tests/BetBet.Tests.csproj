@@ -107,8 +107,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="UserTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -117,6 +119,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BetBet.Data\BetBet.Data.csproj">
+      <Project>{EBAE9492-BFFB-406E-AC01-1730AA763E2D}</Project>
+      <Name>BetBet.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetBet.Logic\BetBet.Logic.csproj">
+      <Project>{EF5DD5A4-6DBB-47B1-B012-ADEE869BDCAE}</Project>
+      <Name>BetBet.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetBet.Model\BetBet.Model.csproj">
+      <Project>{F83E1682-A137-4415-A0B9-3456B33104EA}</Project>
+      <Name>BetBet.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BetBet\BetBet.MVC.csproj">
       <Project>{9E3E139B-CB4C-4885-86CE-9DE3691B8C9F}</Project>
       <Name>BetBet.MVC</Name>

@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace BetBet.Data
 {
-    public class UserRepository : IRepository<User, User>
+    public class UserRepository : IUserRepository
     {
         BetBetDB database = new BetBetDB();
 

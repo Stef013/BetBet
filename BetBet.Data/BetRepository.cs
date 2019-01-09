@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BetBet.Data
 {
-    public class BetRepository : IRepository<Bet, Bet>
+    public class BetRepository : IBetRepository
     {
         BetBetDB database = new BetBetDB();
 

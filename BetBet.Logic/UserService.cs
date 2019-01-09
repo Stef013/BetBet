@@ -10,7 +10,17 @@ namespace BetBet.Logic
 {
     public class UserService
     {
-        UserRepository userRep = new UserRepository();
+        IUserRepository userRep = new UserRepository();
+
+        public UserService(IUserRepository userRepository)
+        {
+            userRep = userRepository;
+        }
+        public UserService()
+        {
+
+        }
+
 
         public bool CreateUser(User user)
         {
