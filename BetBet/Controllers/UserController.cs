@@ -27,7 +27,6 @@ namespace BetBet.Controllers
             bool status = false;
             string message;
 
-
             if (ModelState.IsValid)
             {
                 User newUser = new User

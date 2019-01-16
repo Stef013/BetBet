@@ -64,31 +64,6 @@ namespace BetBet.Data
             return result;
         }
 
-        public bool ExecuteCMD(string command)
-        {
-            bool result;
-
-            using (MySqlCommand cmd = new MySqlCommand(command, connection))
-            {
-                try
-                {
-                    OpenConnectionIfClosed();
-                    cmd.ExecuteNonQuery();
-                    result = true;
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                    result = false;
-                }
-                finally
-                {
-                    connection.Close();
-                }
-            }
-            return result;
-        }
-
         public int ExecuteAndGetID(MySqlCommand command)
         {
             int id = 0;
@@ -111,9 +86,6 @@ namespace BetBet.Data
                     connection.Close();
                 }
             }
-
-            
-
 
             return id;
         }
@@ -193,21 +165,7 @@ namespace BetBet.Data
             return result;
         }
 
-        public MySqlDataReader ReadMysql(string command)
-        {
-            MySqlCommand cmd = new MySqlCommand(command, connection);
-            try
-            {
-                OpenConnectionIfClosed();
-                MySqlDataReader reader = cmd.ExecuteReader();
-                return reader;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                return null;
-            }
-        }
+        
         public MySqlDataReader Read(MySqlCommand command)
         {
             command.Connection = connection;

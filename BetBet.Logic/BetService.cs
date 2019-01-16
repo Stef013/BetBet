@@ -11,7 +11,6 @@ namespace BetBet.Logic
     public class BetService
     {
         BetRepository betrep = new BetRepository();
-        //MatchRepository matchrep = new MatchRepository();
         MatchService matchservice;
         UserService userservice;
 

@@ -20,7 +20,7 @@ namespace BetBet.Logic
             return team;
         }
 
-        public List<Team> GetTeams ()
+        public List<Team> GetTeams()
         {
             List<Team> TeamList = new List<Team>();
 

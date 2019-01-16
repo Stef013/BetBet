@@ -21,8 +21,7 @@ namespace BetBet.Data
 
             MySqlCommand checkUsername = new MySqlCommand(@"SELECT Username FROM users WHERE Username = @username;");
             checkUsername.Parameters.AddWithValue("@username", user.Username);
-
-            //string checkUsername = $"SELECT Username FROM users WHERE Username = '{user.Username}'";
+            
              var namecheck = database.getString(checkUsername);
 
             if(namecheck == null)
@@ -57,9 +56,7 @@ namespace BetBet.Data
         public bool GetIsAdmin(User user)
         {
             bool result;
-
-            //string command = $"SELECT IsAdmin FROM users WHERE UserID = '{user.UserID}'";
-
+            
             MySqlCommand command = new MySqlCommand(@"SELECT IsAdmin FROM users WHERE UserID = @userid;");
             command.Parameters.AddWithValue("@userid", user.UserID);
 
@@ -80,8 +77,7 @@ namespace BetBet.Data
         public decimal GetBalance(int userID)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("nl-NL");
-
-            //string command = $"SELECT Balance FROM users WHERE UserID = '{userID}'";
+            
             MySqlCommand command = new MySqlCommand(@"SELECT Balance FROM users WHERE UserID = @userid;");
             command.Parameters.AddWithValue("@userid", userID);
             decimal balance = database.GetDecimal(command);
@@ -92,8 +88,7 @@ namespace BetBet.Data
         public void Update(User user)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-
-            //string command = $"UPDATE users SET Balance = '{user.Balance.ToString(CultureInfo.InvariantCulture)}' WHERE UserID = '{user.UserID}'";
+            
             MySqlCommand command = new MySqlCommand(@"UPDATE users SET Balance = @balance WHERE UserID = @userid;");
             command.Parameters.AddWithValue("@userid", user.UserID);
             command.Parameters.AddWithValue("@balance", user.Balance.ToString(CultureInfo.InvariantCulture));
@@ -103,7 +98,6 @@ namespace BetBet.Data
 
         public void ChangePassword(int userID, string password)
         {
-            //string command = $"UPDATE users SET Password = '{password}' WHERE UserID = '{userID}'";
             MySqlCommand command = new MySqlCommand(@"UPDATE users SET Password = @password WHERE UserID = @userid;");
             command.Parameters.AddWithValue("@password", password);
             command.Parameters.AddWithValue("@userid", userID);
@@ -114,7 +108,7 @@ namespace BetBet.Data
         {
             MySqlCommand command = new MySqlCommand(@"SELECT Password FROM users WHERE Username = @username;");
             command.Parameters.AddWithValue("@username", username);
-            //string getPW = $"SELECT Password FROM Users WHERE Username = '{username}'";
+            
             string pw = database.getString(command);
 
             if (pw != null)

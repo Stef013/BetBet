@@ -289,7 +289,7 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #40d590;
+  color: #04ff66;
   text-decoration: none;
 }
 a:hover,
@@ -1413,7 +1413,7 @@ pre code {
 }
 table {
   max-width: 100%;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.30);
 }
 th {
   text-align: left;
@@ -2396,7 +2396,7 @@ input[type="button"].btn-block {
   font-family: 'Glyphicons Halflings';
   font-style: normal;
   font-weight: normal;
-  line-height: 1;
+  line-height: 2.3;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -3457,7 +3457,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .nav {
   margin-bottom: 0;
-  padding-left: 0;
+  padding-left: 1;
   list-style: none;
 }
 .nav > li {
@@ -3467,7 +3467,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 10px 15px;
+  padding: 10px 20px;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -3748,7 +3748,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   float: left;
   padding: 9.5px 15px;
   font-size: 24px;
-  line-height: 21px;
+  line-height: 28px;
   height: 40px;
 }
 .navbar-brand:hover,
@@ -3822,15 +3822,15 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 @media (min-width: 768px) {
   .navbar-nav {
-    float: left;
-    margin: 0;
+    /*float: left;*/
+    margin: 5px;
   }
   .navbar-nav > li {
     float: left;
   }
   .navbar-nav > li > a {
-    padding-top: 9.5px;
-    padding-bottom: 9.5px;
+    padding-top: 1px;
+    padding-bottom: 1px;
   }
   .navbar-nav.navbar-right:last-child {
     margin-right: -15px;
@@ -4037,25 +4037,25 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {
-  color: #ebebeb;
+  color: #fff;
   background-color: transparent;
 }
 .navbar-inverse .navbar-text {
-  color: #ebebeb;
+  color: #fff;
 }
 .navbar-inverse .navbar-nav > li > a {
-  color: #ebebeb;
+  color: #fff;
 }
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
-  color: #ebebeb;
-  background-color: #c85e17;
+  color: #fff;
+  background-color: #197249cc;
 }
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
-  color: #ebebeb;
-  background-color: #c85e17;
+  color: #fff;
+  background-color: #4e5d6c;
 }
 .navbar-inverse .navbar-nav > .disabled > a,
 .navbar-inverse .navbar-nav > .disabled > a:hover,
@@ -4068,10 +4068,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-inverse .navbar-toggle:hover,
 .navbar-inverse .navbar-toggle:focus {
-  background-color: #c85e17;
+  background-color: #4e5d6c;
 }
 .navbar-inverse .navbar-toggle .icon-bar {
-  background-color: #ebebeb;
+  background-color: #fff;
 }
 .navbar-inverse .navbar-collapse,
 .navbar-inverse .navbar-form {
@@ -5709,7 +5709,7 @@ button.close {
   -webkit-box-shadow: none;
   box-shadow: none;
   border: none;
-  font-size: 12px;
+  font-size: 16px;
 }
 .btn {
   font-weight: 300;
@@ -5722,7 +5722,7 @@ button.close {
   font-size: 12px;
 }
 body {
-  font-weight: 300;
+  font-weight: 400;
 }
 .text-primary,
 .text-primary:hover {
@@ -5766,7 +5766,7 @@ body {
 }
 table,
 .table {
-  font-size: 12px;
+  font-size: 16px;
 }
 table a,
 .table a {

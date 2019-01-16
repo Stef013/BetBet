@@ -14,7 +14,7 @@ namespace BetBet.Data
     public class MatchRepository : IMatchRepository
     {
         BetBetDB database = new BetBetDB();
-        TeamRepository teamrep = new TeamRepository();
+        TeamRepository teamrep;
         
         public bool Create(Match match)
         {
@@ -33,14 +33,8 @@ namespace BetBet.Data
                 command.Parameters.AddWithValue("@multiplierdraw", match.MultiplierDraw.ToString(CultureInfo.InvariantCulture));
                 command.Parameters.AddWithValue("@isfinished", 0);
                 
-
-                //string createMatchCMD = $"INSERT INTO matches (Date, MultiplierHome, MultiplierAway, MultiplierDraw, IsFinished) VALUES " +
-                //   $"('{match.Date.ToString("yyyy-MM-dd")}','{match.MultiplierHome.ToString(CultureInfo.InvariantCulture)}','{match.MultiplierAway.ToString(CultureInfo.InvariantCulture)}','{match.MultiplierDraw.ToString(CultureInfo.InvariantCulture)}','{0}')";
-
                 int matchID = database.ExecuteAndGetID(command);
-
                 
-
                 if (matchID != 0)
                 {
                     MySqlCommand addParticipantsCMD = new MySqlCommand(@"INSERT INTO matchparticipants (MatchID, HomeTeamID, AwayTeamID) VALUES (@matchid, @hometeamid, @awayteamid)");
@@ -48,7 +42,7 @@ namespace BetBet.Data
                     addParticipantsCMD.Parameters.AddWithValue("@matchid", matchID);
                     addParticipantsCMD.Parameters.AddWithValue("@hometeamid", match.HomeTeamID);
                     addParticipantsCMD.Parameters.AddWithValue("@awayteamid", match.AwayTeamID);
-                    //string addParticipantsCMD = $"INSERT INTO matchparticipants (MatchID, HomeTeamID, AwayTeamID) VALUES ('{matchID}','{match.HomeTeamID}','{match.AwayTeamID}')";
+                    
                     database.ExecuteCMD(addParticipantsCMD);
                     result = true;
                 }
@@ -70,8 +64,7 @@ namespace BetBet.Data
             MySqlCommand command = new MySqlCommand(@"SELECT MatchID FROM matchparticipants WHERE HomeTeam = @hometeamID AND AwayTeam = @awayteamID;");
             command.Parameters.AddWithValue("@hometeamID", match.HomeTeamID);
             command.Parameters.AddWithValue("@awayteamID", match.AwayTeamID);
-
-           // string command = $"SELECT MatchID FROM matchparticipants WHERE HomeTeam = '{match.HomeTeamID}' AND AwayTeam = {match.AwayTeamID}'";
+            
             int id = database.GetInt(command);
 
             return id;
@@ -79,8 +72,6 @@ namespace BetBet.Data
 
         public void Update(FinishedMatch match)
         {
-            //string command = $"UPDATE matches SET `IsFinished`= {1},`ScoreHome`= {match.ScoreHome},`ScoreAway`= {match.ScoreAway}, `Result`= '{match.Result.ToString()}' WHERE MatchID = '{match.MatchID}'";
-
             MySqlCommand command = new MySqlCommand(@"UPDATE matches SET `IsFinished`= @isfinished,`ScoreHome`= @scorehome,`ScoreAway`= @scoreaway, `Result`= @result WHERE MatchID = @matchid;");
             command.Parameters.AddWithValue("@isfinished", 1);
             command.Parameters.AddWithValue("@scorehome", match.ScoreHome);
@@ -93,6 +84,8 @@ namespace BetBet.Data
 
         public UpcomingMatch GetUpcomingMatch(int matchID)
         {
+            teamrep = new TeamRepository();
+
             DateTime date = Convert.ToDateTime("01-01-1900");
             Team homeTeam = new Team();
             Team awayTeam = new Team();
@@ -128,6 +121,7 @@ namespace BetBet.Data
 
         public List<UpcomingMatch> GetUpcomingMatches(int isFinished)
         {
+            teamrep = new TeamRepository();
             List<UpcomingMatch> matchList = new List<UpcomingMatch>();
             
             MySqlCommand command = new MySqlCommand("GetMatches");
@@ -159,7 +153,8 @@ namespace BetBet.Data
 
             //Hier worden de namen van de teams uit de database gehaald en in de lijst geplaatst.
             foreach (UpcomingMatch m in matchList)
-            {                m.HomeTeam.TeamName = teamrep.GetName(m.HomeTeam.TeamID);
+            {
+                m.HomeTeam.TeamName = teamrep.GetName(m.HomeTeam.TeamID);
                 m.AwayTeam.TeamName = teamrep.GetName(m.AwayTeam.TeamID);
             }
             return matchList;
@@ -167,6 +162,7 @@ namespace BetBet.Data
 
         public List<FinishedMatch> GetFinishedMatches(int isFinished)
         {
+            teamrep = new TeamRepository();
             List<FinishedMatch> matchList = new List<FinishedMatch>();
 
             MySqlCommand command = new MySqlCommand("GetMatches");
@@ -210,6 +206,8 @@ namespace BetBet.Data
 
         public FinishedMatch GetFinishedMatch(int matchID)
         {
+            teamrep = new TeamRepository();
+
             DateTime date = Convert.ToDateTime("01-01-1900");
             Team homeTeam = new Team();
             Team awayTeam = new Team();

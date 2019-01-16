@@ -21,7 +21,6 @@ namespace BetBet.Logic
 
         }
 
-
         public bool CreateUser(User user)
         {
             bool usercheck = false;

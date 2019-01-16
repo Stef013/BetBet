@@ -15,7 +15,5 @@ namespace BetBet.Model
         public string Password { get; set; }
         public decimal Balance { get; set; }
         public bool IsAdmin { get; set; }
-
-        
     }
 }

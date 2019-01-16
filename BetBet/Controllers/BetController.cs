@@ -15,7 +15,6 @@ namespace BetBet.Controllers
     public class BetController : Controller
     {
         BetService betservice = new BetService();
-        UserService userservice = new UserService();
 
         [Authorize]
         [HttpGet]
@@ -75,6 +74,7 @@ namespace BetBet.Controllers
 
             User loggedinUser = (User)Session["LoggedInUser"];
             UpcomingMatch match = (UpcomingMatch)Session["SelectedMatch"];
+            UserService userservice = new UserService();
 
             if (ModelState.IsValid)
             {

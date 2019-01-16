@@ -11,13 +11,9 @@ namespace BetBet.Data
     public class TeamRepository : ITeamRepository
     {
         BetBetDB database = new BetBetDB();
-
         
-
         public string GetName(int id)
         {
-            //string command = $"SELECT TeamName FROM teams WHERE TeamID = '{id}'";
-
             MySqlCommand command = new MySqlCommand(@"SELECT TeamName FROM teams WHERE TeamID = @teamid;");
             command.Parameters.AddWithValue("@teamid", id);
             
@@ -29,8 +25,6 @@ namespace BetBet.Data
         public Team GetTeam(int id)
         {
             Team team = new Team();
-
-            //string command = $"SELECT * FROM teams WHERE TeamID = '{id}'";
 
             MySqlCommand command = new MySqlCommand(@"SELECT * FROM teams WHERE TeamID = @teamid;");
             command.Parameters.AddWithValue("@teamid", id);
@@ -63,8 +57,6 @@ namespace BetBet.Data
         {
             List<Team> TeamList = new List<Team>();
 
-            //string command = $"SELECT * FROM teams";
-
             MySqlCommand command = new MySqlCommand(@"SELECT * FROM teams");
             MySqlDataReader reader = database.Read(command);
             
@@ -95,7 +87,7 @@ namespace BetBet.Data
         {
             MySqlCommand getTeam = new MySqlCommand(@"SELECT * FROM teams WHERE TeamID = @teamid;");
             getTeam.Parameters.AddWithValue("@teamid", team.TeamID);
-            //string getTeam = $"SELECT * FROM teams WHERE TeamID = '{team.TeamID}'";
+            
             MySqlDataReader reader = database.Read(getTeam);
 
             while (reader.Read())
@@ -112,6 +104,8 @@ namespace BetBet.Data
 
             database.CloseConnection();
 
+
+            // Update de team, Stored procedure hiervan doet vreemd
             MySqlCommand UpdateTeam = new MySqlCommand(@"UPDATE teams SET GamesPlayed = @gamesplayed, GamesWon = @gameswon, Draws = @draws, GamesLost = @gameslost, GoalsFor = @goalsfor, GoalsAgainst = @goalsagainst, GoalDifferential = @goaldifferential, Points = @points WHERE TeamID = @teamid;");
             UpdateTeam.Parameters.AddWithValue("@gamesplayed", team.GamesPlayed);
             UpdateTeam.Parameters.AddWithValue("@gameswon", team.GamesWon);
@@ -122,9 +116,7 @@ namespace BetBet.Data
             UpdateTeam.Parameters.AddWithValue("@goaldifferential", team.GoalDifferential);
             UpdateTeam.Parameters.AddWithValue("@points", team.Points);
             UpdateTeam.Parameters.AddWithValue("@teamid", team.TeamID);
-
-
-            //string UpdateTeam = $"UPDATE teams SET GamesPlayed = '{team.GamesPlayed}', GamesWon ='{team.GamesWon}', Draws = '{team.Draws}', GamesLost = '{team.GamesLost}', GoalsFor = '{team.GoalsFor}', GoalsAgainst = '{team.GoalsAgainst}', GoalDifferential = '{team.GoalDifferential}', Points = '{team.Points}' WHERE TeamID = '{team.TeamID}'";
+            
             database.ExecuteCMD(UpdateTeam);
         }
     }
