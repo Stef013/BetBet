@@ -115,7 +115,7 @@ input,
 optgroup,
 select,
 textarea {
-  color: inherit;
+  /*color: inherit;*/
   font: inherit;
   margin: 0;
 }
@@ -3693,7 +3693,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-fixed-top .navbar-collapse,
   .navbar-static-top .navbar-collapse,
   .navbar-fixed-bottom .navbar-collapse {
-    padding-left: 0;
+    padding-left: 50px;
     padding-right: 0;
   }
 }
@@ -3829,8 +3829,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     float: left;
   }
   .navbar-nav > li > a {
-    padding-top: 1px;
-    padding-bottom: 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   .navbar-nav.navbar-right:last-child {
     margin-right: -15px;

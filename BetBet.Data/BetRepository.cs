@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -17,14 +18,15 @@ namespace BetBet.Data
         public bool Create(Bet bet)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-
-            MySqlCommand command = new MySqlCommand(@"INSERT INTO bets(MatchID, UserID, Amount, Prediction) VALUES(@matchid, @userid, @amount, @prediction)");
+            
+            MySqlCommand command = new MySqlCommand("CreateBet");
+            command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@matchid", bet.MatchID);
             command.Parameters.AddWithValue("@userid", bet.UserID);
             command.Parameters.AddWithValue("@amount", bet.Amount.ToString(CultureInfo.InvariantCulture));
             command.Parameters.AddWithValue("@prediction", bet.Prediction.ToString());
 
-             bool result = database.ExecuteCMD(command);
+            bool result = database.ExecuteCMD(command);
 
             return result;
         }
@@ -52,9 +54,10 @@ namespace BetBet.Data
 
         public int GetID(Bet bet)
         {
-            MySqlCommand command = new MySqlCommand(@"DELETE FROM bets WHERE BetID = @id");
-            command.Parameters.AddWithValue("@id", bet.BetID);
-            
+            MySqlCommand command = new MySqlCommand(@"SELECT BetID FROM bets WHERE MatchID = @matchid AND UserID = @userid");
+            command.Parameters.AddWithValue("@matchid", bet.MatchID);
+            command.Parameters.AddWithValue("@userid", bet.UserID);
+
             int id = database.GetInt(command);
 
             return id;
@@ -62,11 +65,12 @@ namespace BetBet.Data
 
         public void Update(Bet bet)
         {
-            MySqlCommand command = new MySqlCommand(@"UPDATE bets SET `HasEnded`= @hasended,`Result`= @result,`Earned`= @earned WHERE BetID = @betid;");
+            MySqlCommand command = new MySqlCommand("UpdateBet");
+            command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@hasended", 1);
             command.Parameters.AddWithValue("@result", bet.Result.ToString());
             command.Parameters.AddWithValue("@earned", bet.Earned);
-            command.Parameters.AddWithValue("@betid", bet.BetID);
+            command.Parameters.AddWithValue("@bid", bet.BetID);
             
             database.ExecuteCMD(command);
         }

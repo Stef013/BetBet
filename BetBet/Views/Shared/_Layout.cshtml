@@ -39,7 +39,7 @@
                         <li>@Html.ActionLink("Bets", "BetList", "Bet")</li>
                         <li>@Html.ActionLink("Ranking", "Ranking", "Team")</li>
                         <li>@Html.ActionLink("Account", "AccountSettings", "User")</li>
-
+                        
                         using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                         {
                             @Html.AntiForgeryToken()
@@ -52,15 +52,7 @@
                             </li>                            
                         }
                     }
-                    else
-                    {
-                        <li>
-                            <a href="@Url.Action("Login", "User")">
-                                <span class="glyphicon glyphicon-log-in"></span>
-                                Login
-                            </a>
-                        </li>
-                    }
+                    
                 </ul>
             </div>
         </div>

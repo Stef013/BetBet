@@ -169,32 +169,36 @@ namespace BetBet.Controllers
             bool status = false;
             string message;
             User loggedInUser = (User)Session["LoggedInUser"];
-
-            if (DepositButton != null )
+            if (settings.Funds > 0)
             {
-
-                userservice.AddFunds(loggedInUser, settings.Funds);
-                status = true;
-                message = "Funds added to you account balance.";
-            }
-            else if (WithdrawButton != null)
-            {
-                if (settings.Funds < loggedInUser.Balance)
+                if (DepositButton != null)
                 {
-                    userservice.RemoveFunds(loggedInUser, settings.Funds);
+                    userservice.AddFunds(loggedInUser, settings.Funds);
                     status = true;
-                    message = "Funds removed from your account balance.";
+                    message = "Funds added to you account balance.";
+                }
+                else if (WithdrawButton != null)
+                {
+                    if (settings.Funds <= loggedInUser.Balance)
+                    {
+                        userservice.RemoveFunds(loggedInUser, settings.Funds);
+                        status = true;
+                        message = "Funds removed from your account balance.";
+                    }
+                    else
+                    {
+                        message = "Can't withdraw more than your balance.";
+                    }
                 }
                 else
                 {
-                    message = "Can't withdraw more than your balance.";
+                    message = "Invalid request";
                 }
             }
             else
             {
-                message = "Invalid request";
+                message = "Please insert an amount";
             }
-            
             ViewBag.Status = status;
             ViewBag.Message = message;
             return View("AccountSettings");

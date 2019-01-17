@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using BetBet.Model;
+using System.Data;
 
 namespace BetBet.Data
 {
@@ -104,9 +105,9 @@ namespace BetBet.Data
 
             database.CloseConnection();
 
+            MySqlCommand UpdateTeam = new MySqlCommand("UpdateTeam");
+            UpdateTeam.CommandType = CommandType.StoredProcedure;
 
-            // Update de team, Stored procedure hiervan doet vreemd
-            MySqlCommand UpdateTeam = new MySqlCommand(@"UPDATE teams SET GamesPlayed = @gamesplayed, GamesWon = @gameswon, Draws = @draws, GamesLost = @gameslost, GoalsFor = @goalsfor, GoalsAgainst = @goalsagainst, GoalDifferential = @goaldifferential, Points = @points WHERE TeamID = @teamid;");
             UpdateTeam.Parameters.AddWithValue("@gamesplayed", team.GamesPlayed);
             UpdateTeam.Parameters.AddWithValue("@gameswon", team.GamesWon);
             UpdateTeam.Parameters.AddWithValue("@draws", team.Draws);
@@ -115,7 +116,7 @@ namespace BetBet.Data
             UpdateTeam.Parameters.AddWithValue("@goalsagainst", team.GoalsAgainst);
             UpdateTeam.Parameters.AddWithValue("@goaldifferential", team.GoalDifferential);
             UpdateTeam.Parameters.AddWithValue("@points", team.Points);
-            UpdateTeam.Parameters.AddWithValue("@teamid", team.TeamID);
+            UpdateTeam.Parameters.AddWithValue("@tmid", team.TeamID);
             
             database.ExecuteCMD(UpdateTeam);
         }

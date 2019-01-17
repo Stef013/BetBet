@@ -16,7 +16,7 @@ namespace BetBet.Tests
         {
             //IUserRepository userRep = new UserRepository();
             IUserRepository userRep = new FakeUserRepository();
-            UserService userService = new UserService(userRep);
+            //UserService userService = new UserService(userRep);
         }
     }
 }

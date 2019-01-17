@@ -89,8 +89,9 @@ namespace BetBet.Data
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             
-            MySqlCommand command = new MySqlCommand(@"UPDATE users SET Balance = @balance WHERE UserID = @userid;");
-            command.Parameters.AddWithValue("@userid", user.UserID);
+            MySqlCommand command = new MySqlCommand("UpdateBalance");
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@uid", user.UserID);
             command.Parameters.AddWithValue("@balance", user.Balance.ToString(CultureInfo.InvariantCulture));
 
             database.ExecuteCMD(command);
@@ -98,9 +99,10 @@ namespace BetBet.Data
 
         public void ChangePassword(int userID, string password)
         {
-            MySqlCommand command = new MySqlCommand(@"UPDATE users SET Password = @password WHERE UserID = @userid;");
+            MySqlCommand command = new MySqlCommand("ChangePassword");
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@uid", userID);
             command.Parameters.AddWithValue("@password", password);
-            command.Parameters.AddWithValue("@userid", userID);
             database.ExecuteCMD(command);
         }
 

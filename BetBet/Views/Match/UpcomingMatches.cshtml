@@ -5,7 +5,7 @@
 }
 
 <div class="row">
-    <div style="float: left"> <h2>Upcoming Matches</h2></div>
+    <div style="float: left"> <h2><b>Upcoming Matches</b></h2></div>
     <div style="float: right"><h2><b> @Html.ActionLink("Finished Matches>", "FinishedMatches")</b></h2></div>
 </div>
 <hr />
@@ -37,12 +37,12 @@
     }
     else
     {
+        int count = 1;
         foreach (var item in Model)
         {
-            int count = 1;
-            TempData["Match" + count] = item;
+            TempData["Match" + count.ToString()] = item;
             <div class="row">
-
+                
                 <div ALIGN="center">
                     <h3><b>@item.HomeTeam.TeamName - @item.AwayTeam.TeamName</b></h3>
                     <h4><b>@item.Date.ToShortDateString()</b></h4>

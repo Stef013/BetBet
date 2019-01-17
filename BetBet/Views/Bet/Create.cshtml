@@ -2,8 +2,8 @@
 @using BetBet.Model;
 
 @{
-    
     ViewBag.Title = "Create";
+    User loggedInUser = (User)Session["loggedInUser"];
 }
 
 
@@ -28,7 +28,7 @@ else
 {
     
     Model.Match = (UpcomingMatch)Session["SelectedMatch"];
-    
+    <h3>Balance: € @loggedInUser.Balance</h3>
 
     using (Html.BeginForm())
     {
