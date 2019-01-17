@@ -18,10 +18,9 @@
         <p>
             @Html.ActionLink("Create New Match", "Create")
         </p>
-
+        int count = 1;
         foreach (var item in Model)
         {
-            int count = 1;
             TempData["Match" + count] = item;
             <div class="row">
 
